@@ -7,7 +7,8 @@ let data = [
     [{color: 3, symbol: 'A'}, {color: 3, symbol: 'C'}, {color: 2, symbol: 'B'}],
     [{color: 2, symbol: 'C'}, {color: 1, symbol: 'A'}, undefined]
 ];
-let isFileOk = true;
+
+/*let isFileOk = true;
 
 if(typeof process.argv !== "object" || process.argv['f'] == null){
     console.log(chalk.red('Please use "-f" parameter to set path to config file'));
@@ -42,6 +43,6 @@ else{
         console.log(chalk.yellow('================================'));
         console.log(chalk.yellow('loading test data instead'));
     }
-}
+}*/
 
 drawBoard(data);
