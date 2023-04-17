@@ -24,21 +24,9 @@ export interface tileDataInterface {
 }
 
 /**
- * @description A tile object from a kanon board.
- * Should handle its own state logic.
+ * @description Draw text from a tile object.
  */
-export default class Tile {
-
-    color: number;
-    symbol: string;
-
-    constructor(tileData: tileDataInterface){
-        this.color = tileData.color;
-        this.symbol = tileData.symbol
-    }
-
-    drawChalkText = () => {
-        const drawTextFunction = chalk[Colors[this.color]];
-        return drawTextFunction(this.symbol)
-    }
-};
+export const drawChalkText = (tileData: tileDataInterface): string => {
+    const drawTextFunction = chalk[Colors[tileData.color]];
+    return drawTextFunction(tileData.symbol)
+}
