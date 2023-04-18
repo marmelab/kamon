@@ -23,7 +23,7 @@ export interface tileDataInterface {
     symbol: string
 }
 
-export const drawChalkText = (tileData: tileDataInterface): string => {
-    const drawTextFunction = chalk[Colors[tileData.color]];
-    return drawTextFunction(tileData.symbol)
+export const generateCliText = (tileData: tileDataInterface): string => {
+    const dynamicChalk = chalk[Colors[tileData.color]];
+    return dynamicChalk(tileData.symbol)
 }

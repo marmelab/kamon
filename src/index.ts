@@ -1,5 +1,5 @@
 const fs = require('fs');
-import { drawBoard } from './board/board';
+import { paintBoard } from './board/board';
 
 const gameConfig = [
     [undefined, {color: 1, symbol: 'C'}, {color: 2, symbol: 'A'}],
@@ -7,4 +7,4 @@ const gameConfig = [
     [{color: 2, symbol: 'C'}, {color: 1, symbol: 'A'}, undefined]
 ];
 
-drawBoard(gameConfig);
+paintBoard(gameConfig);
