@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'fs';
+import * as path from 'path';
 import { Command } from 'commander';
 import {Board} from "../board/board"
 import chalk from "chalk";
