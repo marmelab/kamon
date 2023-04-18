@@ -17,7 +17,7 @@ const renderLine = (lines: Tile[]): string => {
     }, line)
 }
 
-export const paintBoard = (data: Board) => {
+export const renderBoard = (data: Board) => {
     data.forEach(lines => {
         console.log(renderLine(lines))
     })
