@@ -1,9 +1,9 @@
 import expect from "expect";
-import {Tile, generateCliText} from "./tile";
+import {Tile, renderTile} from "./tile";
 
-describe("generateCliText", () => {
+describe("renderTile", () => {
     it("Testing with Tile input", () => {
         const MOCK_TILE = {color: "blue", symbol: "A"} as Tile;
-        expect(generateCliText(MOCK_TILE)).toMatch(/A/);
+        expect(renderTile(MOCK_TILE)).toMatch(/A/);
     });
 });
