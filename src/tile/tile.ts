@@ -1,32 +1,14 @@
 import chalk from "chalk";
 
-enum Colors {
-    'yellow',
-    'blue',
-    'red',
-    'green',
-    'cyan',
-    'white'
+type Colors = 'yellow' | 'blue' | 'red' | 'green' | 'cyan' | 'white'
+type Symbols = 'A' | 'B' | 'C' | 'D' | 'E' | 'F'
+
+export interface Tile {
+    color: Colors,
+    symbol: Symbols
 }
 
-enum Symbols {
-    A = 'A',
-    B = 'B', 
-    C = 'C', 
-    D = 'D', 
-    E = 'E',
-    F = 'F'
-}
-
-export interface tileDataInterface {
-    color: number,
-    symbol: string
-}
-
-/**
- * @description Draw text from a tile object.
- */
-export const drawChalkText = (tileData: tileDataInterface): string => {
-    const drawTextFunction = chalk[Colors[tileData.color]];
-    return drawTextFunction(tileData.symbol)
+export const generateCliText = (tile: Tile): string => {
+    const dynamicChalk = chalk[tile.color];
+    return dynamicChalk(tile.symbol)
 }
