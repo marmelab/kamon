@@ -1,10 +1,10 @@
 const fs = require('fs');
-import { paintBoard } from './board/board';
+import { Board, paintBoard } from './board/board';
 
-const gameConfig = [
-    [undefined, {color: 1, symbol: 'C'}, {color: 2, symbol: 'A'}],
-    [{color: 3, symbol: 'A'}, {color: 3, symbol: 'C'}, {color: 2, symbol: 'B'}],
-    [{color: 2, symbol: 'C'}, {color: 1, symbol: 'A'}, undefined]
+const gameConfig: Board = [
+    [undefined, {color: 'blue', symbol: 'C'}, {color: 'yellow', symbol: 'A'}],
+    [{color: 'green', symbol: 'A'}, {color: 'green', symbol: 'C'}, {color: 'red', symbol: 'B'}],
+    [{color: 'red', symbol: 'C'}, {color: 'blue', symbol: 'A'}, undefined]
 ];
 
 paintBoard(gameConfig);

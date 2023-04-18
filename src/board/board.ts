@@ -1,11 +1,12 @@
 import chalk from "chalk";
-import {generateCliText, tileDataInterface} from "../tile/tile";
+import {generateCliText, Tile} from "../tile/tile";
 
-type boardData = Array<Array<undefined|tileDataInterface>>
+type NullableTile = Tile|undefined
+export type Board = NullableTile[][]
 
 const BLANK_CHAR = chalk.black(' ')
 
-const generateLine = (lines: Array<tileDataInterface>): string => {
+const generateLine = (lines: Tile[]): string => {
     const line = ''        
     return lines.reduce((accumulator, tile) => {
         if (tile == undefined) {
@@ -16,7 +17,7 @@ const generateLine = (lines: Array<tileDataInterface>): string => {
     }, line)
 }
 
-export const paintBoard = (data: boardData) => {
+export const paintBoard = (data: Board) => {
     data.forEach(lines => {
         console.log(generateLine(lines))
     })
