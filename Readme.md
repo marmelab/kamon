@@ -12,10 +12,20 @@ Play the game of Kamon on the console
 yarn
 ```
 
+Also, you can run make 
+```sh
+make install
+```
+
 ### Playing
 
 ```sh
 yarn start
+```
+
+Also, you can run make 
+```sh
+make run
 ```
 
 ### Developing
