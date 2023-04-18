@@ -8,7 +8,7 @@ export interface Tile {
     symbol: Symbols
 }
 
-export const generateCliText = (tile: Tile): string => {
+export const renderTile = (tile: Tile): string => {
     const dynamicChalk = chalk[tile.color];
     return dynamicChalk(tile.symbol)
 }
