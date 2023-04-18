@@ -1,8 +1,9 @@
 import { Board } from "../board/board"
-import { Color, Symbol, Tile } from "../tile/tile"
+import { Color, Symbol, Tile, blackHoleTile } from "../tile/tile"
 
-const symbols: Symbol[]= ['A', 'B', 'C', 'D', 'E', 'F']
+const symbols: Symbol[]= ['A', 'B', 'C', 'D', 'E', 'F', 'O']
 const colors: Color[] = ['yellow', 'blue', 'red', 'green', 'cyan', 'white']
+
 const getRandom = <T>(array:T[]): T => array[Math.floor(Math.random()*array.length)]
 
 const getRandomSymbol = (): Symbol => getRandom(symbols)
@@ -15,10 +16,15 @@ const createRandomTile = (): Tile  => {
     }
 }
 
-const createRandomTiles = (number: number): Tile[] => {
+const createRandomTiles = (number: number = 4, insertBlackHole: boolean = false): Tile[] => {
     const tiles = []
+    const insertBlackHoleAt = Math.floor(Math.random() * number)
     for (let index = 0; index < number; index++) {
-        tiles.push(createRandomTile())
+        if (insertBlackHole && insertBlackHoleAt === index) {
+            tiles.push(blackHoleTile)
+        } else {
+            tiles.push(createRandomTile())
+        }
     }
     return tiles
 }
@@ -34,12 +40,14 @@ const createUndefinedTiles = (number: number): undefined[] => {
 export const createRandomConfig = (): Board => {
 
     const lineNumber = 7
+    const randomConfig = []
+    const insertBlackHoleAt = Math.floor(Math.random() * lineNumber)
     let undefinedNumber = 3
     let pillsNumber = 4
-    const randomConfig = []
 
     for (let index = 0; index < lineNumber; index++) {
-        randomConfig.push([...createUndefinedTiles(undefinedNumber), ...createRandomTiles(pillsNumber), ...createUndefinedTiles(undefinedNumber)])
+        const tiles = createRandomTiles(pillsNumber, index === insertBlackHoleAt ? true : false)
+        randomConfig.push([...createUndefinedTiles(undefinedNumber), ...tiles, ...createUndefinedTiles(undefinedNumber)])
 
         if (index < 3) {
             pillsNumber++
