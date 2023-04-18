@@ -1,5 +1,4 @@
-const fs = require('fs');
-import { Board, paintBoard } from './board/board';
+import { Board, renderBoard } from './board/board';
 
 const gameConfig: Board = [
     [undefined, {color: 'blue', symbol: 'C'}, {color: 'yellow', symbol: 'A'}],
@@ -7,4 +6,4 @@ const gameConfig: Board = [
     [{color: 'red', symbol: 'C'}, {color: 'blue', symbol: 'A'}, undefined]
 ];
 
-paintBoard(gameConfig);
+renderBoard(gameConfig);
