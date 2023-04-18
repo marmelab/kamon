@@ -19,7 +19,8 @@ const parseBoardFromPath = (filePath:string):Board => {
         fileContent = fs.readFileSync(filePath, 'utf8')
     }
     catch(error){
-        console.error(chalk.red(CANNOT_READ_FILE_ERROR))
+        console.error(chalk.red(CANNOT_READ_FILE_ERROR));
+        return null;
     }
 
     if(fileContent != null){
@@ -28,6 +29,7 @@ const parseBoardFromPath = (filePath:string):Board => {
         }
         catch(error){
             console.error(chalk.red(CANNOT_READ_FILE_ERROR))
+            return null;
         }
     }
     return board;
