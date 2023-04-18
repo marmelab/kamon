@@ -23,9 +23,6 @@ export interface tileDataInterface {
     symbol: string
 }
 
-/**
- * @description Draw text from a tile object.
- */
 export const drawChalkText = (tileData: tileDataInterface): string => {
     const drawTextFunction = chalk[Colors[tileData.color]];
     return drawTextFunction(tileData.symbol)
