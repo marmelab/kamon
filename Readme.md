@@ -5,17 +5,17 @@ Play the game of Kamon on the console
 ## Requirements
 
 - Node.js
+- yarn
 
 ## Installation
-
+ 
 ```sh
-yarn
+make install
 ```
 
 ### Playing
-
 ```sh
-yarn start
+make run
 ```
 
 ### Developing
