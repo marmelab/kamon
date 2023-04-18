@@ -1,5 +1,5 @@
 import { Tile } from "../tile/tile";
-import {generateLine, BLANK_CHAR, Board, paintBoard, NullableTile} from "./board"
+import {generateLine, Board, paintBoard, NullableTile} from "./board"
 
 describe("generateLine", () => {
     it("Testing a line with both undefined and Tile values", () => {

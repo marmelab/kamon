@@ -1,12 +1,12 @@
 import chalk from "chalk";
 import {generateCliText, Tile} from "../tile/tile";
 
-type NullableTile = Tile|undefined|"undefined"
+export type NullableTile = Tile|undefined|"undefined"
 export type Board = NullableTile[][]
 
 const BLANK_CHAR = chalk.black(' ')
 
-const generateLine = (lines: NullableTile[]): string => {
+export const generateLine = (lines: NullableTile[]): string => {
     const line = ''        
     return lines.reduce((accumulator, tile) => {
         if (tile == undefined || tile == "undefined") {
