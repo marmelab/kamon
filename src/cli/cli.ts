@@ -10,7 +10,9 @@ export const initCLI = () => {
 }
 
 export const getFilePath = ():string => {
-    return program.opts()['filepath'];
+    const filePathParameter = program.opts()['filepath'];
+
+    return filePathParameter != null ? filePathParameter : `${__dirname}/../../save.json`
 }
 
 

@@ -11,7 +11,7 @@ export interface Tile {
     lastPlayed: boolean
 }
 
-export const generateCliText = (tile: Tile): string => {
+export const renderTile = (tile: Tile): string => {
     let dynamicChalk = chalk[tile.color];
 
     if(tile.playedBy != null){

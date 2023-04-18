@@ -23,14 +23,14 @@ const parseBoardFromPath = (filePath:string):Board => {
         return null;
     }
 
-    if(fileContent != null){
-        try{
-            board = JSON.parse(fileContent);
-        }
-        catch(error){
-            console.error(chalk.red(CANNOT_READ_FILE_ERROR))
-            return null;
-        }
+
+    try{
+        board = JSON.parse(fileContent);
     }
+    catch(error){
+        console.error(chalk.red(CANNOT_READ_FILE_ERROR))
+        return null;
+    }
+
     return board;
 }
