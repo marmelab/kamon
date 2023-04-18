@@ -1,4 +1,3 @@
-const fs = require('fs');
 import { Board, renderBoard } from './board/board';
 
 const gameConfig: Board = [
