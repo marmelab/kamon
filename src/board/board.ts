@@ -5,17 +5,15 @@ type boardData = Array<Array<undefined|tileDataInterface>>
 
 const BLANK_CHAR = chalk.black(' ')
 
-const drawLine = (lineArray: Array<tileDataInterface>) => {
-    let line = ''        
-    lineArray.forEach(dataTile => {
-        if (dataTile == undefined) {
-            line += BLANK_CHAR
-            return
+const drawLine = (lineArray: Array<tileDataInterface>): string => {
+    const line = ''        
+    return lineArray.reduce((accumulator, tile) => {
+        if (tile == undefined) {
+            return accumulator + BLANK_CHAR
         }
-        line += drawChalkText(dataTile)
-    })
-    
-    return line
+        
+        return accumulator + drawChalkText(tile)
+    }, line)
 }
 
 export const drawBoard = (data: boardData) => {
