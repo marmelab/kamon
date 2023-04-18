@@ -5,6 +5,7 @@ Play the game of Kamon on the console
 ## Requirements
 
 - Node.js
+- yarn
 
 ## Installation
  
