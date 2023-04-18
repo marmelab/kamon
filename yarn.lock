@@ -2228,7 +2228,7 @@ __metadata:
     nodemon: "npm:^2.0.15"
     prettier: "npm:^2.3.2"
     ts-node: "npm:^10.0.0"
-    typescript: "npm:^4.3.5"
+    typescript: "npm:^5.0.4"
   languageName: unknown
   linkType: soft
 
@@ -7014,23 +7014,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:^4.3.5":
-  version: 4.4.2
-  resolution: "typescript@npm:4.4.2"
+"typescript@npm:^5.0.4":
+  version: 5.0.4
+  resolution: "typescript@npm:5.0.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 06312b74b780013952ca8129cb1de2a34fd050d909757ef7b61d751ec9a773dc2bf8eff30f5a2388091ee3719c51b277aedbbf06560f4056e315f0e336aa5f9e
+  checksum: 56649de784c427e8f3f63d4ebfcada4fcf03bb2a301f3327342111798db7f26f8a86285f979f376cf6cec4774bd96b4650f2693a07fc409f4544ad4c4d9fe4c9
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A^4.3.5#optional!builtin<compat/typescript>":
-  version: 4.4.2
-  resolution: "typescript@patch:typescript@npm%3A4.4.2#optional!builtin<compat/typescript>::version=4.4.2&hash=bbeadb"
+"typescript@patch:typescript@npm%3A^5.0.4#optional!builtin<compat/typescript>":
+  version: 5.0.4
+  resolution: "typescript@patch:typescript@npm%3A5.0.4#optional!builtin<compat/typescript>::version=5.0.4&hash=b5f058"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 26705dcebb24a8427e90771491140c475ecf0db3d9c1c08a72825967c27451dc4853850ee6186e52f743a183d56d1966804f9bc2c22d8dd726475d7872cf98e6
+  checksum: e4296a207d18264eb9b17a912b0929c4e8be5a4e48aefa016e952eaa445e5a4ed363a72d9023f151dc7f100d48d4bfa35480aec199f123a664ef8a622355ae4f
   languageName: node
   linkType: hard
 
