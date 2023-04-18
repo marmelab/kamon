@@ -25,7 +25,7 @@ export const renderTile = (tile: Tile): string => {
         
     }
 
-    if(tile.lastPlayed != null){
+    if(tile.lastPlayed === true){
         dynamicChalk = dynamicChalk.bold.underline
     }
     

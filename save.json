@@ -1,4 +1,4 @@
-[ [null, {"color": "red", "symbol": "X", "playedBy":"white"}, {"color": "blue", "symbol": "A", "playedBy":"white"}],
+[ [null, {"color": "red", "symbol": "X", "playedBy":"black"}, {"color": "blue", "symbol": "A", "playedBy":"white"}],
   [{"color": "red", "symbol": "A"}, {"color": "blue", "symbol": "C"}, {"color": "red", "symbol": "B"}],
   [{"color": "blue", "symbol": "C"}, {"color": "yellow", "symbol": "A"}, null]
 ]
