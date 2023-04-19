@@ -1,5 +1,6 @@
 import chalk from "chalk";
 import { Player } from "../player/player";
+import { Board } from "../board/board";
 
 export const colors = [
   "yellow",
@@ -7,7 +8,7 @@ export const colors = [
   "red",
   "green",
   "cyan",
-  "white",
+  "magenta",
 ] as const;
 export const symbols = ["A", "B", "C", "D", "E", "F"] as const;
 
@@ -23,11 +24,21 @@ export interface PlayableTile {
   lastPlayed?: boolean;
 }
 
+export const NEUTRALE_TILE = {
+  symbol: "O",
+  color: "grey",
+};
+
 interface NeutralTile {
   color: "grey";
   symbol: "O";
   playedBy?: null;
   lastPlayed?: false;
+}
+
+export interface TileCoordinate {
+  lineIndex: number;
+  tileIndex: number;
 }
 
 export const getAllSymbols = (): Tile[] => {
@@ -57,7 +68,7 @@ export const renderTile = (tile: Tile): string => {
 
   if (tile.playedBy != null) {
     if (tile.playedBy === "black") {
-      dynamicChalk = dynamicChalk.bgWhite.dim;
+      dynamicChalk = dynamicChalk.bgGray;
     }
 
     if (tile.playedBy === "white") {
@@ -77,4 +88,38 @@ export const flatternTiles = (tiles: Tile[][]): Tile[] => {
   return tiles.reduce((accumulator, symbol) => {
     return [...accumulator, ...symbol];
   }, initialValue);
+};
+
+export const playTile = (tile: PlayableTile, player: Player): PlayableTile => {
+  return { ...tile, playedBy: player, lastPlayed: true };
+};
+
+export const findTileInBoard = (board: Board, toFind: Tile): TileCoordinate => {
+  let tileIndex: number = null;
+  let lineIndex: number = null;
+
+  board.forEach((line, l) => {
+    line.forEach((tile, t) => {
+      if (
+        tile != undefined &&
+        tile.symbol === toFind.symbol &&
+        tile.color === toFind.color
+      ) {
+        tileIndex = t;
+        lineIndex = l;
+      }
+    });
+  });
+
+  return {
+    lineIndex,
+    tileIndex,
+  };
+};
+
+export const findTileByCoordinate = (
+  board: Board,
+  coords: TileCoordinate
+): PlayableTile => {
+  return board[coords.lineIndex][coords.tileIndex] as PlayableTile;
 };

@@ -1,19 +1,27 @@
-import { Board, findTile, renderBoard } from "./board/board";
+import { Board, renderBoard } from "./board/board";
 import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { askToPlay } from "./prompt/prompt";
 import { generateChoices } from "./prompt/choices";
-import { WHITE_PLAYER, switchPlayer } from "./player/player";
+import { BLACK_PLAYER, WHITE_PLAYER, switchPlayer } from "./player/player";
+import {
+  NEUTRALE_TILE,
+  findTileByCoordinate,
+  findTileInBoard,
+  playTile,
+} from "./tile/tile";
 
 initCLI();
 const gameConfig: Board = loadGameConfigFromFile();
 
-let player = WHITE_PLAYER;
-
-let isTheGameRunning = false;
+const gameState = {
+  player: BLACK_PLAYER,
+  isTheGameRunning: false,
+  message: "Welcome to Kamon 🍱 ! Black player, you turn",
+};
 
 const renderGame = async (gameConfig: Board, message: string) => {
-  isTheGameRunning = true;
+  gameState.isTheGameRunning = true;
   renderBoard(gameConfig);
   const choices = generateChoices(gameConfig);
 
@@ -22,23 +30,43 @@ const renderGame = async (gameConfig: Board, message: string) => {
   const userInput = await askToPlay(choices, message);
 
   if (userInput.value === "q") {
-    isTheGameRunning = false;
+    gameState.isTheGameRunning = false;
     return;
   }
 
   if (userInput.value == undefined) {
-    renderGame(
-      gameConfig,
-      `Oops, this value does not exit in the board 😆 ! Please player ${player} choose an existing tile`
-    );
+    gameState.message = `Oops, this tile does not exit in the board 😆 ! Please player ${gameState.player.toUpperCase()} choose an existing tile`;
     return;
   }
-  player = switchPlayer(player);
-  console.log(findTile(gameConfig, userInput.value));
+
+  const { lineIndex, tileIndex } = findTileInBoard(gameConfig, userInput.value);
+
+  if (findTileByCoordinate(gameConfig, { lineIndex, tileIndex }).playedBy) {
+    gameState.message = `Hey budy, are you trying to play on an played tile ?! 🤔 Please player ${gameState.player.toUpperCase()} choose an non played tile`;
+    return;
+  }
+
+  if (
+    findTileByCoordinate(gameConfig, { lineIndex, tileIndex }).symbol ===
+    NEUTRALE_TILE.symbol
+  ) {
+    gameState.message = `🫠 This tile is note playable. Please player ${gameState.player.toUpperCase()} choose a playable tile`;
+    return;
+  }
+
+  //🫠
+  const tile = playTile(
+    findTileByCoordinate(gameConfig, { lineIndex, tileIndex }),
+    gameState.player
+  );
+
+  gameConfig[lineIndex][tileIndex] = tile;
+  gameState.player = switchPlayer(gameState.player);
+  gameState.message = `${gameState.player.toUpperCase()} player, your move 🙂`;
 };
 
 (async () => {
   do {
-    await renderGame(gameConfig, `Player ${player}, where do you wanna play ?`);
-  } while (isTheGameRunning);
+    await renderGame(gameConfig, gameState.message);
+  } while (gameState.isTheGameRunning);
 })();

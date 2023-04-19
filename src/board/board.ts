@@ -24,19 +24,3 @@ export const renderBoard = (data: Board) => {
   });
   console.log(chalk.white.bold("-------------"));
 };
-
-export const findTile = (board: Board, toFind: Tile) => {
-  let found: Tile = null;
-  board.forEach((line) => {
-    if (found != undefined) {
-      return;
-    }
-
-    found = line.find((tile: any) => {
-      if (tile != undefined)
-        return tile.symbol === toFind.symbol && tile.color === toFind.color;
-    });
-  });
-
-  return found;
-};
