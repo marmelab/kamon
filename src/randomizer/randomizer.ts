@@ -1,7 +1,7 @@
 import { Board } from "../board/board";
 import { getSymbolCollection } from "../tile/tile";
 
-const createUndefinedTiles = (number: number): undefined[] => {
+export const createUndefinedTiles = (number: number): undefined[] => {
   const tiles = [];
   for (let index = 0; index < number; index++) {
     tiles.push(undefined);
