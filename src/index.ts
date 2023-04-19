@@ -1,4 +1,11 @@
 import { Board, renderBoard } from "./board/board";
-import { initNewGame } from "./randomizer/randomizer";
+import { initCLI } from "./cli";
+import { loadGameConfigFromFile } from "./gameLoader";
+import { initRandomGame } from "./randomizer/randomizer";
 
-renderBoard(initNewGame());
+//renderBoard(initNewGame());
+
+initCLI();
+const gameConfig: Board = loadGameConfigFromFile();
+
+renderBoard(gameConfig);

@@ -9,7 +9,7 @@ export const createUndefinedTiles = (number: number): undefined[] => {
   return tiles;
 };
 
-export const initNewGame = (): Board => {
+export const initRandomGame = (): Board => {
   const randomSymbolCollection = getAllSymbols().sort(
     () => Math.random() - 0.5
   );

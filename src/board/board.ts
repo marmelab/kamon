@@ -1,11 +1,12 @@
 import chalk from "chalk";
 import { renderTile, Tile } from "../tile/tile";
 
-export type Board = Tile[][];
+export type NullableTile = Tile | undefined;
+export type Board = NullableTile[][];
 
 const BLANK_CHAR = chalk.black(" ");
 
-const renderLine = (lines: Tile[]): string => {
+export const renderLine = (lines: Tile[]): string => {
   const line = "";
   return lines.reduce((accumulator, tile) => {
     if (tile == undefined) {

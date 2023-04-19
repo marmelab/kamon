@@ -1,5 +1,5 @@
 import expect from "expect";
-import { initNewGame, createUndefinedTiles } from "./randomizer";
+import { initRandomGame, createUndefinedTiles } from "./randomizer";
 
 describe("create undefined tiles", () => {
   it("should give an array of 1 undefined", () => {
@@ -15,7 +15,7 @@ describe("create undefined tiles", () => {
 
 describe("create random board config", () => {
   it("should give an array of 7 lines", () => {
-    const boardConfig = initNewGame();
+    const boardConfig = initRandomGame();
     expect(boardConfig.length).toBe(7);
   });
 });
