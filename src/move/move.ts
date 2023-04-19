@@ -1,5 +1,9 @@
 import { Tile } from "../tile/tile";
-import { getLastPlayedTile, getTileFromCoordinates } from "../board/board";
+import {
+  getLastPlayedTile,
+  getTileFromCoordinates,
+  currentBoard,
+} from "../board/board";
 
 const ALLOWED_FIRST_MOVES = [
   [false, true, true, false],
@@ -38,7 +42,10 @@ export const checkIfMoveIsAllowed = (action: Action): boolean => {
     return ALLOWED_FIRST_MOVES[action.y][action.x];
   }
 
-  const actionTile = getTileFromCoordinates({ x: action.x, y: action.y });
+  const actionTile = getTileFromCoordinates(
+    { x: action.x, y: action.y },
+    currentBoard
+  );
 
   if (actionTile == undefined) {
     return false;

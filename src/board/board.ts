@@ -31,9 +31,10 @@ interface Coordinates {
   y: number;
 }
 export const getTileFromCoordinates = (
-  coordinates: Coordinates
+  coordinates: Coordinates,
+  board: Board
 ): NullableTile => {
-  const line = currentBoard[coordinates.y];
+  const line = board[coordinates.y];
 
   if (line == undefined) {
     return undefined;
