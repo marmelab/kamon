@@ -3,15 +3,12 @@ import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { askToPlay } from "./prompt/prompt";
 import { generateChoices } from "./prompt/choices";
+import { WHITE_PLAYER, switchPlayer } from "./player/player";
 
 initCLI();
 const gameConfig: Board = loadGameConfigFromFile();
 
-let player = 1;
-const switchPlayer = () => {
-  if (player === 1) player = 2;
-  else player = 1;
-};
+let player = WHITE_PLAYER;
 
 let isTheGameRunning = false;
 
@@ -36,7 +33,7 @@ const renderGame = async (gameConfig: Board, message: string) => {
     );
     return;
   }
-  switchPlayer();
+  player = switchPlayer(player);
   console.log(findTile(gameConfig, userInput.value));
 };
 

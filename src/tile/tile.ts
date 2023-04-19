@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { Player } from "../player/player";
 
 export const colors = [
   "yellow",
@@ -14,8 +15,6 @@ export type Color = (typeof colors)[number];
 export type Symbol = (typeof symbols)[number];
 
 export type Tile = PlayableTile | NeutralTile;
-
-type Player = "black" | "white";
 
 export interface PlayableTile {
   color: Color;
