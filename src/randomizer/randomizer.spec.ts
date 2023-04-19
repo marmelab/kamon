@@ -1,7 +1,7 @@
 import expect from "expect";
-import { createRandomConfig, createUndefinedTiles } from "./randomizer";
+import { initRandomGame, createUndefinedTiles } from "./randomizer";
 
-describe("randomize test", () => {
+describe("create undefined tiles", () => {
   it("should give an array of 1 undefined", () => {
     expect(createUndefinedTiles(1)).toContain(undefined);
   });
@@ -11,9 +11,11 @@ describe("randomize test", () => {
     expect(undefinedTiles).toContain(undefined);
     expect(undefinedTiles.length).toBe(3);
   });
+});
 
+describe("create random board config", () => {
   it("should give an array of 7 lines", () => {
-    const boardConfig = createRandomConfig();
+    const boardConfig = initRandomGame();
     expect(boardConfig.length).toBe(7);
   });
 });

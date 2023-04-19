@@ -16,10 +16,10 @@ make install
 ### Playing
 
 ```sh
-## make a game from save.json
+## initialize a new game
 make run
 
-## make a game from a target save file
+## resume a game from a target save file
 yarn start -f my_save_file.json
 ```
 

@@ -1,5 +1,5 @@
 import { Board } from "../board/board";
-import { getSymbolCollection } from "../tile/tile";
+import { getAllSymbols } from "../tile/tile";
 
 export const createUndefinedTiles = (number: number): undefined[] => {
   const tiles = [];
@@ -9,8 +9,8 @@ export const createUndefinedTiles = (number: number): undefined[] => {
   return tiles;
 };
 
-export const createRandomConfig = (): Board => {
-  const randomSymbolCollection = getSymbolCollection().sort(
+export const initRandomGame = (): Board => {
+  const randomSymbolCollection = getAllSymbols().sort(
     () => Math.random() - 0.5
   );
 

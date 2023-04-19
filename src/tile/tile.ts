@@ -15,6 +15,7 @@ export type Color = (typeof colors)[number];
 export type Symbol = (typeof symbols)[number];
 
 export type Tile = PlayableTile | NeutralTile;
+type Player = "black" | "white";
 type Styles = "unallowed" | "allowed";
 
 export interface PlayableTile {
@@ -34,7 +35,7 @@ interface NeutralTile {
   lastPlayed?: boolean;
 }
 
-export const getSymbolCollection = (): Tile[] => {
+export const getAllSymbols = (): Tile[] => {
   const tiles = symbols.map((symbol) =>
     colors.map(
       (color) =>
@@ -46,15 +47,17 @@ export const getSymbolCollection = (): Tile[] => {
   );
 
   const initialValue: Tile[] = [];
-  const flattenTiles = tiles.reduce((accumulator, symbol) => {
+  const flattenedTiles = tiles.reduce((accumulator, symbol) => {
     return [...accumulator, ...symbol];
   }, initialValue);
 
   const neutralTile: NeutralTile = {
     symbol: "O",
     color: "grey",
+    playedBy: null,
+    lastPlayed: false,
   };
-  return [...flattenTiles, neutralTile];
+  return [...flattenedTiles, neutralTile];
 };
 
 export const renderTile = (tile: Tile): string => {
@@ -78,5 +81,5 @@ export const renderTile = (tile: Tile): string => {
     dynamicChalk = dynamicChalk.bold.underline;
   }
 
-  return dynamicChalk(tile.symbol);
+  return `${dynamicChalk(tile.symbol)} `;
 };
