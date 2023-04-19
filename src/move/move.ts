@@ -38,7 +38,11 @@ export const checkIfMoveIsAllowed = (action: Action): boolean => {
     return ALLOWED_FIRST_MOVES[action.y][action.x];
   }
 
-  return checkMoveAccordingToLastPlayedTile(
-    getTileFromCoordinates({ x: action.x, y: action.y })
-  );
+  const actionTile = getTileFromCoordinates({ x: action.x, y: action.y });
+
+  if (actionTile == undefined) {
+    return false;
+  }
+
+  return checkMoveAccordingToLastPlayedTile(actionTile);
 };
