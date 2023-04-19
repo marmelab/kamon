@@ -1,8 +1,7 @@
 import chalk from "chalk";
-import {renderTile, Tile} from "../tile/tile";
+import {renderTile, PlayableTile, Tile} from "../tile/tile";
 
-type NullableTile = Tile|undefined
-export type Board = NullableTile[][]
+export type Board = Tile[][]
 
 const BLANK_CHAR = chalk.black(' ')
 
