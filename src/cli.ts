@@ -18,6 +18,6 @@ export const getFilePath = (): string => {
 
   return (
     filePathParameter ??
-    path.normalize(path.join(`${__dirname}`, "..", "..", "save.json"))
+    path.normalize(path.join(`${__dirname}`, "..", "save.json"))
   );
 };
