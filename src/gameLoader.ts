@@ -6,6 +6,7 @@ import { getFilePath } from "./cli";
 
 const CANNOT_READ_FILE_ERROR =
   "Can't read file; please check your -f argument point to a valid file.";
+const CANNOT_PARSE_JSON = "Bad json file, couldn't import game.";
 
 export const loadGameConfigFromFile = (): Board => {
   const filePath = getFilePath();
@@ -26,7 +27,7 @@ const parseBoardFromPath = (filePath: string): Board => {
   try {
     board = JSON.parse(fileContent);
   } catch (error) {
-    console.error(chalk.red(CANNOT_READ_FILE_ERROR));
+    console.error(chalk.red(CANNOT_PARSE_JSON));
     return null;
   }
 
