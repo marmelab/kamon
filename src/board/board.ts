@@ -1,10 +1,10 @@
 import chalk from "chalk";
-import { gameConfig } from "../index";
 import { renderTile, Tile } from "../tile/tile";
 import { checkIfMoveIsAllowed } from "../move/move";
 
 export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
+export let currentBoard: Board = [[null]];
 
 const BLANK_CHAR = chalk.black(" ");
 let isFirstRender = false;
@@ -12,7 +12,7 @@ let isFirstRender = false;
 export const getLastPlayedTile = (): NullableTile => {
   let lastPlayedTile: NullableTile;
 
-  gameConfig.forEach((line) => {
+  currentBoard.forEach((line) => {
     if (lastPlayedTile != undefined) {
       return;
     }
@@ -30,8 +30,14 @@ interface Coordinates {
   x: number;
   y: number;
 }
-export const getTileFromCoordinates = (coordinates: Coordinates): Tile => {
-  const line = gameConfig[coordinates.y];
+export const getTileFromCoordinates = (
+  coordinates: Coordinates
+): NullableTile => {
+  const line = currentBoard[coordinates.y];
+
+  if (line == undefined) {
+    return undefined;
+  }
 
   return line.filter((tile: NullableTile) => tile ?? tile)[coordinates.x];
 };
@@ -63,6 +69,7 @@ export const renderLine = (
 };
 
 export const renderBoard = (data: Board) => {
+  currentBoard = data;
   if (isFirstRender === false) {
     isFirstRender = true;
   }

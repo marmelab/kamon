@@ -4,6 +4,6 @@ import { loadGameConfigFromFile } from "./gameLoader";
 
 initCLI();
 
-export let gameConfig: Board = loadGameConfigFromFile();
-console.log(gameConfig);
+const gameConfig: Board = loadGameConfigFromFile();
+
 renderBoard(gameConfig);
