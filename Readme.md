@@ -8,14 +8,19 @@ Play the game of Kamon on the console
 - yarn
 
 ## Installation
- 
+
 ```sh
 make install
 ```
 
 ### Playing
+
 ```sh
+## make a game from save.json
 make run
+
+## make a game from a target save file
+yarn start -f my_save_file.json
 ```
 
 ### Developing
