@@ -10,8 +10,8 @@ export const colors = [
 ] as const;
 export const symbols = ["A", "B", "C", "D", "E", "F"] as const;
 
-export type Color = typeof colors[number];
-export type Symbol = typeof symbols[number];
+export type Color = (typeof colors)[number];
+export type Symbol = (typeof symbols)[number];
 
 export type Tile = PlayableTile | NeutralTile;
 
@@ -36,10 +36,7 @@ export const getAllSymbols = (): Tile[] => {
     )
   );
 
-  const initialValue: Tile[] = [];
-  const flattenedTiles = tiles.reduce((accumulator, symbol) => {
-    return [...accumulator, ...symbol];
-  }, initialValue);
+  const flattenedTiles = flatternTiles(tiles);
 
   const neutralTile: NeutralTile = {
     symbol: "O",
@@ -51,4 +48,11 @@ export const getAllSymbols = (): Tile[] => {
 export const renderTile = (tile: Tile): string => {
   const dynamicChalk = chalk[tile.color];
   return dynamicChalk(`${tile.symbol} `);
+};
+
+export const flatternTiles = (tiles: Tile[][]): Tile[] => {
+  const initialValue: Tile[] = [];
+  return tiles.reduce((accumulator, symbol) => {
+    return [...accumulator, ...symbol];
+  }, initialValue);
 };
