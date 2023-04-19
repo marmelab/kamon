@@ -28,6 +28,6 @@ describe("renderBoard", () => {
         undefined,
       ],
     ];
-    expect(renderBoard(board)).not.toThrow();
+    expect(() => renderBoard(board)).not.toThrow();
   });
 });
