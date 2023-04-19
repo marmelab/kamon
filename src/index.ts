@@ -1,9 +1,8 @@
-import { Board, renderBoard } from './board/board';
+import { Board, renderBoard } from "./board/board";
+import { initCLI } from "./cli";
+import { loadGameConfigFromFile } from "./gameLoader";
 
-const gameConfig: Board = [
-    [undefined, {color: 'blue', symbol: 'C'}, {color: 'yellow', symbol: 'A'}],
-    [{color: 'green', symbol: 'A'}, {color: 'green', symbol: 'C'}, {color: 'red', symbol: 'B'}],
-    [{color: 'red', symbol: 'C'}, {color: 'blue', symbol: 'A'}, undefined]
-];
+initCLI();
+const gameConfig: Board = loadGameConfigFromFile();
 
 renderBoard(gameConfig);
