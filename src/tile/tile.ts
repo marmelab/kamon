@@ -15,12 +15,12 @@ export type Symbol = (typeof symbols)[number];
 
 export type Tile = PlayableTile | NeutralTile;
 
-type Players = "black" | "white";
+type Player = "black" | "white";
 
 export interface PlayableTile {
   color: Color;
-  symbol: Symbols;
-  playedBy?: Players;
+  symbol: Symbol;
+  playedBy?: Player;
   lastPlayed?: boolean;
 }
 
