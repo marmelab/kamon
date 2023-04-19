@@ -11,7 +11,7 @@ export const colors = [
 export const symbols = ["A", "B", "C", "D", "E", "F"] as const;
 
 export type Color = (typeof colors)[number];
-export type Symbols = (typeof symbols)[number];
+export type Symbol = (typeof symbols)[number];
 
 export type Tile = PlayableTile | NeutralTile;
 
