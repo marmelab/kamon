@@ -6,6 +6,10 @@ import { GameState } from "../gameState";
 export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
 export let currentBoard: Board = [[null]];
+export interface Coordinates {
+  x: number;
+  y: number;
+}
 
 const BLANK_CHAR = chalk.black(" ");
 
@@ -28,10 +32,7 @@ export const getLastPlayedTile = (board: Board): NullableTile => {
 
   return lastPlayedTile;
 };
-interface Coordinates {
-  x: number;
-  y: number;
-}
+
 export const getTileFromCoordinates = (
   coordinates: Coordinates,
   gameState: GameState
@@ -61,7 +62,6 @@ export const renderLine = (
       {
         x,
         y: lineIndex,
-        isFirstMove: gameState.turnNumber > 1,
       },
       gameState
     );

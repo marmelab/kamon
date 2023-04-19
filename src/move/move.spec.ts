@@ -8,7 +8,7 @@ describe("checkIfMoveIsAllowed", () => {
     const line: NullableTile[] = [undefined, tile, undefined];
     const board: Board = [line];
     expect(
-      checkIfMoveIsAllowed({ x: 1, y: 3, isFirstMove: true }, board)
+      checkIfMoveIsAllowed({ x: 1, y: 3 }, { board, turnNumber: 0 })
     ).toBeFalsy();
   });
 
@@ -17,7 +17,7 @@ describe("checkIfMoveIsAllowed", () => {
     const line: NullableTile[] = [undefined, tile, undefined];
     const board: Board = [line];
     expect(
-      checkIfMoveIsAllowed({ x: 1, y: 0, isFirstMove: true }, board)
+      checkIfMoveIsAllowed({ x: 1, y: 0 }, { board, turnNumber: 0 })
     ).toBeTruthy();
   });
 });

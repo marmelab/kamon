@@ -3,6 +3,7 @@ import {
   getLastPlayedTile,
   getTileFromCoordinates,
   Board,
+  Coordinates,
 } from "../board/board";
 import { GameState } from "../gameState";
 
@@ -15,12 +16,6 @@ const ALLOWED_FIRST_MOVES = [
   [true, false, false, false, true],
   [false, true, true, false],
 ];
-
-export interface Action {
-  x: number;
-  y: number;
-  isFirstMove: boolean;
-}
 
 export const checkMoveAccordingToLastPlayedTile = (
   tile: Tile,
@@ -42,21 +37,21 @@ export const checkMoveAccordingToLastPlayedTile = (
 };
 
 export const checkIfMoveIsAllowed = (
-  action: Action,
+  coordinates: Coordinates,
   gameState: GameState
 ): boolean => {
-  if (action.isFirstMove === true) {
-    return ALLOWED_FIRST_MOVES[action.y][action.x];
+  if (gameState.turnNumber > 1) {
+    return ALLOWED_FIRST_MOVES[coordinates.y][coordinates.x];
   }
 
-  const actionTile = getTileFromCoordinates(
-    { x: action.x, y: action.y },
+  const coordinatesTile = getTileFromCoordinates(
+    { x: coordinates.x, y: coordinates.y },
     gameState
   );
 
-  if (actionTile == undefined) {
+  if (coordinatesTile == undefined) {
     return false;
   }
 
-  return checkMoveAccordingToLastPlayedTile(actionTile, gameState);
+  return checkMoveAccordingToLastPlayedTile(coordinatesTile, gameState);
 };
