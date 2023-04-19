@@ -26,6 +26,7 @@ const renderGame = async (gameConfig: Board, message: string) => {
 
   if (userInput.value === "q") {
     isTheGameRunning = false;
+    return;
   }
 
   if (userInput.value == undefined) {
