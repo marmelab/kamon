@@ -1,6 +1,6 @@
 import { Tile, flatternTiles } from "../tile/tile";
 
-export const generateChoices = (gameConfig): Tile[] =>
+export const generateChoices = (gameConfig) =>
   flatternTiles(gameConfig).reduce((acc, tile: Tile) => {
     if (tile != undefined && tile.symbol !== "O") {
       acc.push({

@@ -13,10 +13,21 @@ const switchPlayer = () => {
   else player = 1;
 };
 
+let isTheGameRunning = false;
+
 const renderGame = async (gameConfig: Board, message: string) => {
+  isTheGameRunning = true;
   renderBoard(gameConfig);
   const choices = generateChoices(gameConfig);
+
+  choices.push({ title: "Quit", value: "q" });
+
   const userInput = await askToPlay(choices, message);
+
+  if (userInput.value === "q") {
+    isTheGameRunning = false;
+  }
+
   if (userInput.value == undefined) {
     renderGame(
       gameConfig,
@@ -28,4 +39,8 @@ const renderGame = async (gameConfig: Board, message: string) => {
   console.log(findTile(gameConfig, userInput.value));
 };
 
-renderGame(gameConfig, `Player ${player}, where do you wanna play ?`);
+(async () => {
+  do {
+    await renderGame(gameConfig, `Player ${player}, where do you wanna play ?`);
+  } while (isTheGameRunning);
+})();
