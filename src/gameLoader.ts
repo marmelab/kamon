@@ -1,12 +1,14 @@
 import * as fs from "fs";
 import * as path from "path";
 import { Board } from "./board/board";
+import { createRandomConfig } from "./randomizer/randomizer";
 import chalk from "chalk";
 import { getFilePath } from "./cli";
 
 const CANNOT_READ_FILE_ERROR =
-  "Can't read file; please check your -f argument point to a valid file.";
-const CANNOT_PARSE_JSON = "Bad json file, couldn't import game.";
+  "Can't read file; please check your -f argument point to a valid file. Loading random board.";
+const CANNOT_PARSE_JSON =
+  "Bad json file, couldn't import game. Loading random board.";
 
 export const loadGameConfigFromFile = (): Board => {
   const filePath = getFilePath();
@@ -21,14 +23,14 @@ const parseBoardFromPath = (filePath: string): Board => {
     fileContent = fs.readFileSync(filePath, "utf8");
   } catch (error) {
     console.error(chalk.red(CANNOT_READ_FILE_ERROR));
-    return null;
+    return createRandomConfig();
   }
 
   try {
     board = JSON.parse(fileContent);
   } catch (error) {
     console.error(chalk.red(CANNOT_PARSE_JSON));
-    return null;
+    return createRandomConfig();
   }
 
   return board;

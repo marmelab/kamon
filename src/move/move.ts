@@ -5,7 +5,7 @@ const ALLOWED_FIRST_MOVES = [
   [false, false, false, false, false, false, false],
   [true, false, false, false, false, true],
   [true, false, false, false, true],
-  [true, false, false, false],
+  [false, true, true, false],
 ];
 
 export interface Action {

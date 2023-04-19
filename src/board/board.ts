@@ -2,7 +2,7 @@ import chalk from "chalk";
 import { renderTile, Tile } from "../tile/tile";
 import { checkIfMoveIsAllowed } from "../move/move";
 
-export type NullableTile = Tile | undefined;
+type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
 
 const BLANK_CHAR = chalk.black(" ");

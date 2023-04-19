@@ -1,14 +1,55 @@
 import chalk from "chalk";
 
-type Color = "yellow" | "blue" | "red" | "green" | "cyan" | "white";
-type Symbol = "A" | "B" | "C" | "D" | "E" | "F";
+export const colors = [
+  "yellow",
+  "blue",
+  "red",
+  "green",
+  "cyan",
+  "white",
+] as const;
+export const symbols = ["A", "B", "C", "D", "E", "F"] as const;
+
+export type Color = (typeof colors)[number];
+export type Symbol = (typeof symbols)[number];
+
+export type Tile = PlayableTile | NeutralTile;
 type Styles = "unallowed" | "allowed";
 
-export interface Tile {
+export interface PlayableTile {
   color: Color;
   symbol: Symbol;
   style?: Styles;
 }
+
+interface NeutralTile {
+  color: "grey";
+  symbol: "O";
+  style?: Styles;
+}
+
+export const getSymbolCollection = (): Tile[] => {
+  const tiles = symbols.map((symbol) =>
+    colors.map(
+      (color) =>
+        ({
+          symbol,
+          color,
+        } as Tile)
+    )
+  );
+
+  const initialValue: Tile[] = [];
+  const flattenTiles = tiles.reduce((accumulator, symbol) => {
+    return [...accumulator, ...symbol];
+  }, initialValue);
+
+  const neutralTile: NeutralTile = {
+    symbol: "O",
+    color: "grey",
+  };
+  return [...flattenTiles, neutralTile];
+};
 
 export const renderTile = (tile: Tile): string => {
   let dynamicChalk = chalk[tile.color];
