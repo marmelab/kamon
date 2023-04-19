@@ -2,7 +2,7 @@ import { Tile, renderTile } from "../tile/tile";
 import {
   renderLine,
   Board,
-  renderBoard,
+  renderGame,
   NullableTile,
   getTileFromCoordinates,
 } from "./board";
@@ -11,7 +11,8 @@ describe("renderLine", () => {
   it("should render a line with blank characters", () => {
     const tile: Tile = { color: "blue", symbol: "A" };
     const line: NullableTile[] = [undefined, tile, undefined];
-    expect(renderLine(line, 0)).toMatch(/\s.*A.*\s/);
+    const board: Board = [line];
+    expect(renderLine(line, 0, { board, turnNumber: 0 })).toMatch(/\s.*A.*\s/);
   });
 });
 
@@ -22,11 +23,13 @@ describe("getTileFromCoordinates", () => {
     const line: NullableTile[] = [undefined, undefined, tileA, tileB];
     const board: Board = [line];
 
-    expect(getTileFromCoordinates({ x: 0, y: 0 }, board)).toBe(tileA);
+    expect(
+      getTileFromCoordinates({ x: 0, y: 0 }, { board, turnNumber: 0 })
+    ).toBe(tileA);
   });
 });
 
-describe("renderBoard", () => {
+describe("renderGame", () => {
   it("should render a board", () => {
     const board: Board = [
       [
@@ -45,6 +48,6 @@ describe("renderBoard", () => {
         undefined,
       ],
     ];
-    expect(() => renderBoard(board)).not.toThrow();
+    expect(() => renderGame({ board, turnNumber: 0 })).not.toThrow();
   });
 });
