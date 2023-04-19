@@ -3,8 +3,6 @@ import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { initRandomGame } from "./randomizer/randomizer";
 
-//renderBoard(initNewGame());
-
 initCLI();
 const gameConfig: Board = loadGameConfigFromFile();
 
