@@ -3,6 +3,7 @@ import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 
 initCLI();
-const gameConfig: Board = loadGameConfigFromFile();
 
+export let gameConfig: Board = loadGameConfigFromFile();
+console.log(gameConfig);
 renderBoard(gameConfig);

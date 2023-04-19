@@ -7,11 +7,12 @@ export const colors = [
   "green",
   "cyan",
   "white",
+  "grey",
 ] as const;
-export const symbols = ["A", "B", "C", "D", "E", "F"] as const;
+export const symbols = ["A", "B", "C", "D", "E", "F", "O"] as const;
 
 export type Color = (typeof colors)[number];
-export type Symbol = (typeof symbols)[number];
+export type Symbols = (typeof symbols)[number];
 
 export type Tile = PlayableTile | NeutralTile;
 type Styles = "unallowed" | "allowed";
@@ -20,12 +21,17 @@ export interface PlayableTile {
   color: Color;
   symbol: Symbol;
   style?: Styles;
+  playedBy?: Players;
+  lastPlayed?: boolean;
 }
+type Players = "black" | "white";
 
 interface NeutralTile {
   color: "grey";
   symbol: "O";
   style?: Styles;
+  playedBy?: Players;
+  lastPlayed?: boolean;
 }
 
 export const getSymbolCollection = (): Tile[] => {
@@ -56,6 +62,20 @@ export const renderTile = (tile: Tile): string => {
 
   if (tile.style === "allowed") {
     dynamicChalk = dynamicChalk.bgWhite.dim;
+  }
+
+  if (tile.playedBy != null) {
+    if (tile.playedBy === "black") {
+      dynamicChalk = dynamicChalk.bgWhite.dim;
+    }
+
+    if (tile.playedBy === "white") {
+      dynamicChalk = dynamicChalk.bgWhite;
+    }
+  }
+
+  if (tile.lastPlayed === true) {
+    dynamicChalk = dynamicChalk.bold.underline;
   }
 
   return dynamicChalk(tile.symbol);

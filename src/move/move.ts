@@ -1,3 +1,6 @@
+import { Tile } from "../tile/tile";
+import { getLastPlayedTile, getTileFromCoordinates } from "../board/board";
+
 const ALLOWED_FIRST_MOVES = [
   [false, true, true, false],
   [true, false, false, false, true],
@@ -14,10 +17,28 @@ export interface Action {
   isFirstMove: boolean;
 }
 
+export const checkMoveAccordingToLastPlayedTile = (tile: Tile): boolean => {
+  if (tile.lastPlayed === true) {
+    return false;
+  }
+
+  const lastPlayedTile: Tile = getLastPlayedTile();
+
+  if (lastPlayedTile == undefined) {
+    return true;
+  }
+
+  return (
+    lastPlayedTile.color === tile.color && lastPlayedTile.symbol === tile.symbol
+  );
+};
+
 export const checkIfMoveIsAllowed = (action: Action): boolean => {
   if (action.isFirstMove === true) {
     return ALLOWED_FIRST_MOVES[action.y][action.x];
   }
 
-  return true;
+  return checkMoveAccordingToLastPlayedTile(
+    getTileFromCoordinates({ x: action.x, y: action.y })
+  );
 };
