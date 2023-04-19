@@ -1,25 +1,27 @@
 import chalk from "chalk";
 import { renderTile, Tile } from "../tile/tile";
 import { checkIfMoveIsAllowed } from "../move/move";
+import { GameState } from "../gameState";
 
 export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
 export let currentBoard: Board = [[null]];
 
 const BLANK_CHAR = chalk.black(" ");
-let isFirstRender = false;
 
-export const getLastPlayedTile = (): NullableTile => {
+export const getLastPlayedTile = (board: Board): NullableTile => {
   let lastPlayedTile: NullableTile;
 
-  currentBoard.forEach((line) => {
+  board.forEach((line) => {
     if (lastPlayedTile != undefined) {
       return;
     }
     line.forEach((tile: Tile) => {
+      if (lastPlayedTile != undefined || tile == undefined) {
+        return;
+      }
       if (tile.lastPlayed) {
         lastPlayedTile = tile;
-        return;
       }
     });
   });
@@ -32,9 +34,9 @@ interface Coordinates {
 }
 export const getTileFromCoordinates = (
   coordinates: Coordinates,
-  board: Board
+  gameState: GameState
 ): NullableTile => {
-  const line = board[coordinates.y];
+  const line = gameState.board[coordinates.y];
 
   if (line == undefined) {
     return undefined;
@@ -45,7 +47,8 @@ export const getTileFromCoordinates = (
 
 export const renderLine = (
   lines: NullableTile[],
-  lineIndex: number
+  lineIndex: number,
+  gameState: GameState
 ): string => {
   const line = "";
   let x = 0;
@@ -54,11 +57,14 @@ export const renderLine = (
       return accumulator + BLANK_CHAR;
     }
 
-    const isMoveAllowed = checkIfMoveIsAllowed({
-      x,
-      y: lineIndex,
-      isFirstMove: isFirstRender,
-    });
+    const isMoveAllowed = checkIfMoveIsAllowed(
+      {
+        x,
+        y: lineIndex,
+        isFirstMove: gameState.turnNumber > 1,
+      },
+      gameState
+    );
 
     if (isMoveAllowed) {
       tile.style = "allowed";
@@ -69,13 +75,8 @@ export const renderLine = (
   }, line);
 };
 
-export const renderBoard = (data: Board) => {
-  currentBoard = data;
-  if (isFirstRender === false) {
-    isFirstRender = true;
-  }
-
-  data.forEach((lines, y) => {
-    console.log(renderLine(lines, y));
+export const renderGame = (gameState: GameState) => {
+  gameState.board.forEach((lines, y) => {
+    console.log(renderLine(lines, y, gameState));
   });
 };

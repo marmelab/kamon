@@ -2,8 +2,9 @@ import { Tile } from "../tile/tile";
 import {
   getLastPlayedTile,
   getTileFromCoordinates,
-  currentBoard,
+  Board,
 } from "../board/board";
+import { GameState } from "../gameState";
 
 const ALLOWED_FIRST_MOVES = [
   [false, true, true, false],
@@ -21,12 +22,15 @@ export interface Action {
   isFirstMove: boolean;
 }
 
-export const checkMoveAccordingToLastPlayedTile = (tile: Tile): boolean => {
+export const checkMoveAccordingToLastPlayedTile = (
+  tile: Tile,
+  gameState: GameState
+): boolean => {
   if (tile.lastPlayed === true) {
     return false;
   }
 
-  const lastPlayedTile: Tile = getLastPlayedTile();
+  const lastPlayedTile: Tile = getLastPlayedTile(gameState.board);
 
   if (lastPlayedTile == undefined) {
     return true;
@@ -37,19 +41,22 @@ export const checkMoveAccordingToLastPlayedTile = (tile: Tile): boolean => {
   );
 };
 
-export const checkIfMoveIsAllowed = (action: Action): boolean => {
+export const checkIfMoveIsAllowed = (
+  action: Action,
+  gameState: GameState
+): boolean => {
   if (action.isFirstMove === true) {
     return ALLOWED_FIRST_MOVES[action.y][action.x];
   }
 
   const actionTile = getTileFromCoordinates(
     { x: action.x, y: action.y },
-    currentBoard
+    gameState
   );
 
   if (actionTile == undefined) {
     return false;
   }
 
-  return checkMoveAccordingToLastPlayedTile(actionTile);
+  return checkMoveAccordingToLastPlayedTile(actionTile, gameState);
 };
