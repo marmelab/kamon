@@ -73,5 +73,5 @@ export const renderTile = (tile: Tile): string => {
     dynamicChalk = dynamicChalk.bold.underline;
   }
 
-  return dynamicChalk(tile.symbol);
+  return dynamicChalk(`${tile.symbol} `);
 };
