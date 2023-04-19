@@ -37,7 +37,7 @@ export const getAllSymbols = (): Tile[] => {
   );
 
   const initialValue: Tile[] = [];
-  const flattenTiles = tiles.reduce((accumulator, symbol) => {
+  const flattenedTiles = tiles.reduce((accumulator, symbol) => {
     return [...accumulator, ...symbol];
   }, initialValue);
 
@@ -45,7 +45,7 @@ export const getAllSymbols = (): Tile[] => {
     symbol: "O",
     color: "grey",
   };
-  return [...flattenTiles, neutralTile];
+  return [...flattenedTiles, neutralTile];
 };
 
 export const renderTile = (tile: Tile): string => {
