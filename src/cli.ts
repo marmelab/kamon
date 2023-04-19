@@ -8,7 +8,7 @@ export const initCLI = () => {
   program
     .option(
       "-f, --filepath <string>",
-      "A path to load a kamon game from a file"
+      "A path to load a kamon game from a file, otherwise a new random game is initialize"
     )
     .parse(process.argv);
 };
@@ -16,8 +16,5 @@ export const initCLI = () => {
 export const getFilePath = (): string => {
   const filePathParameter = program.opts()["filepath"];
 
-  return (
-    filePathParameter ??
-    path.normalize(path.join(`${__dirname}`, "..", "save.json"))
-  );
+  return filePathParameter;
 };
