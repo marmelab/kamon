@@ -26,17 +26,17 @@ export const renderBoard = (data: Board) => {
 };
 
 export const findTile = (board: Board, toFind: Tile) => {
-  let tile: Tile = null;
+  let found: Tile = null;
   board.forEach((line) => {
-    if (tile != undefined) {
+    if (found != undefined) {
       return;
     }
 
-    tile = line.find((tile: any) => {
+    found = line.find((tile: any) => {
       if (tile != undefined)
         return tile.symbol === toFind.symbol && tile.color === toFind.color;
     });
   });
 
-  return tile;
+  return found;
 };
