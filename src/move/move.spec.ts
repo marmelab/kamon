@@ -12,73 +12,73 @@ const mockBoard: Board = [
     undefined,
     undefined,
     undefined,
-    { symbol: "E", color: "blue" },
-    { symbol: "A", color: "yellow" },
-    { symbol: "A", color: "blue" },
-    { symbol: "O", color: "blue" },
+    { symbol: "A", color: "green" },
+    { symbol: "B", color: "blue" },
+    { symbol: "A", color: "cyan" },
+    { symbol: "B", color: "magenta" },
     undefined,
     undefined,
     undefined,
   ],
   [
+    undefined,
+    undefined,
+    { symbol: "C", color: "cyan" },
+    { symbol: "C", color: "magenta" },
+    { symbol: "C", color: "blue" },
+    { symbol: "F", color: "magenta" },
+    { symbol: "C", color: "green" },
+    undefined,
+    undefined,
+  ],
+  [
+    undefined,
+    { symbol: "E", color: "cyan" },
+    { symbol: "B", color: "yellow" },
+    { symbol: "E", color: "blue" },
+    { symbol: "D", color: "green" },
+    { symbol: "F", color: "blue" },
+    { symbol: "F", color: "yellow" },
+    undefined,
+  ],
+  [
+    { symbol: "F", color: "green" },
+    { symbol: "C", color: "red" },
+    { symbol: "B", color: "red" },
+    { symbol: "F", color: "cyan" },
+    { symbol: "E", color: "magenta" },
+    { symbol: "F", color: "red" },
+    { symbol: "D", color: "red" },
+  ],
+  [
+    undefined,
+    { symbol: "B", color: "green" },
+    { symbol: "D", color: "magenta" },
+    { symbol: "A", color: "yellow" },
+    { symbol: "A", color: "blue" },
+    { symbol: "D", color: "yellow" },
+    { symbol: "C", color: "yellow" },
+    undefined,
+  ],
+  [
+    undefined,
+    undefined,
+    { symbol: "E", color: "red" },
+    { symbol: "A", color: "red" },
+    { symbol: "B", color: "cyan", playedBy: "white", lastPlayed: true },
+    { symbol: "O", color: "grey", playedBy: null, lastPlayed: false },
+    { symbol: "E", color: "green" },
+    undefined,
+    undefined,
+  ],
+  [
+    undefined,
     undefined,
     undefined,
     { symbol: "A", color: "magenta" },
-    { symbol: "A", color: "cyan" },
-    { symbol: "A", color: "green" },
-    { symbol: "D", color: "red" },
-    { symbol: "O", color: "green" },
-    undefined,
-    undefined,
-  ],
-  [
-    undefined,
-    { symbol: "B", color: "yellow" },
-    { symbol: "F", color: "yellow" },
-    { symbol: "C", color: "red" },
     { symbol: "D", color: "blue" },
-    { symbol: "D", color: "green" },
-    { symbol: "B", color: "magenta" },
-    undefined,
-  ],
-  [
-    { symbol: "D", color: "cyan", playedBy: "black", lastPlayed: true },
-    { symbol: "O", color: "grey", playedBy: null, lastPlayed: false },
-    { symbol: "C", color: "green" },
-    { symbol: "O", color: "cyan" },
+    { symbol: "D", color: "cyan" },
     { symbol: "E", color: "yellow" },
-    { symbol: "F", color: "blue" },
-    { symbol: "B", color: "cyan" },
-  ],
-  [
-    undefined,
-    { symbol: "C", color: "magenta" },
-    { symbol: "F", color: "cyan" },
-    { symbol: "F", color: "magenta" },
-    { symbol: "D", color: "magenta" },
-    { symbol: "F", color: "red" },
-    { symbol: "E", color: "magenta" },
-    undefined,
-  ],
-  [
-    undefined,
-    undefined,
-    { symbol: "O", color: "yellow" },
-    { symbol: "E", color: "green" },
-    { symbol: "C", color: "cyan" },
-    { symbol: "D", color: "yellow" },
-    { symbol: "E", color: "red" },
-    undefined,
-    undefined,
-  ],
-  [
-    undefined,
-    undefined,
-    undefined,
-    { symbol: "B", color: "green" },
-    { symbol: "A", color: "red" },
-    { symbol: "F", color: "green" },
-    { symbol: "O", color: "red" },
     undefined,
     undefined,
     undefined,
@@ -88,7 +88,7 @@ const mockBoard: Board = [
 describe("checkUserMove", () => {
   it("should, on first move, unallow to play first tile", () => {
     const initialGameState: GameState = initGameState();
-    const tile: Tile = { symbol: "E", color: "blue" };
+    const tile: Tile = { symbol: "A", color: "green" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -99,7 +99,7 @@ describe("checkUserMove", () => {
 
   it("should, on first move, allow to play second tile", () => {
     const initialGameState: GameState = initGameState();
-    const tile: Tile = { symbol: "A", color: "yellow" };
+    const tile: Tile = { symbol: "B", color: "blue" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -116,7 +116,7 @@ describe("checkUserMove", () => {
       turnNumber: 1,
       message: "",
     };
-    const tile: Tile = { symbol: "D", color: "magenta" };
+    const tile: Tile = { symbol: "B", color: "magenta" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
