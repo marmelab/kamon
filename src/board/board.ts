@@ -58,5 +58,5 @@ export const updateBoardState = (
 
   board[lineIndex][tileIndex] = tile;
 
-  return [...board];
+  return board;
 };
