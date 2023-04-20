@@ -18,10 +18,7 @@ export type Board = NullableTile[][];
 const BLANK_CHAR = chalk.black(" ");
 let isFirstRender = false;
 
-export const renderLine = (
-  lines: NullableTile[],
-  lineIndex: number
-): string => {
+export const renderLine = (lines: NullableTile[]): string => {
   const line = "";
   let x = 0;
   return lines.reduce((accumulator, tile) => {
@@ -35,8 +32,8 @@ export const renderLine = (
 };
 
 export const renderBoard = (data: Board) => {
-  data.forEach((lines, y) => {
-    console.log(renderLine(lines, y));
+  data.forEach((lines) => {
+    console.log(renderLine(lines));
   });
   console.log(chalk.white.bold("-------------"));
 };
