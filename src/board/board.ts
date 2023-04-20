@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { renderTile, Tile } from "../tile/tile";
+import { renderTile, Tile, TileCoordinate } from "../tile/tile";
 
 export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
@@ -24,3 +24,5 @@ export const renderBoard = (data: Board) => {
   });
   console.log(chalk.white.bold("-------------"));
 };
+
+export const playTile = (board: Board, tileCoordinate: TileCoordinate) => {};

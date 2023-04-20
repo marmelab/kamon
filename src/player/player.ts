@@ -3,5 +3,6 @@ export const WHITE_PLAYER: Player = "white";
 export const BLACK_PLAYER: Player = "black";
 
 export const switchPlayer = (player: Player) => {
-  return player === WHITE_PLAYER ? BLACK_PLAYER : WHITE_PLAYER;
+  if (player === BLACK_PLAYER) return WHITE_PLAYER;
+  if (player === WHITE_PLAYER) return BLACK_PLAYER;
 };
