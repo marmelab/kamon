@@ -10,7 +10,7 @@ export const colors = [
   "cyan",
   "magenta",
 ] as const;
-export const symbols = ["A", "B", "C", "D", "E", "F", "O"] as const;
+export const symbols = ["A", "B", "C", "D", "E", "F"] as const;
 
 export type Color = (typeof colors)[number];
 export type Symbol = (typeof symbols)[number];
