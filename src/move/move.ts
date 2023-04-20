@@ -32,6 +32,40 @@ interface CheckedUserMove {
   allowedMove: boolean;
 }
 
+export const getPlayableTilesForNextMove = (
+  board: Board,
+  lastPlayedTile: Tile
+): Tile[] => {
+  let tiles: Tile[] = [];
+
+  board.forEach((line) => {
+    line.forEach((tile) => {
+      if (
+        tile == null ||
+        tile.symbol === NEUTRALE_TILE.symbol ||
+        tile.playedBy != null
+      ) {
+        return;
+      }
+
+      const isSymbolConstraintUnrespected =
+        lastPlayedTile.symbol != tile.symbol;
+      const isColorConstraintUnrespected = lastPlayedTile.color != tile.color;
+
+      if (
+        tile.lastPlayed ||
+        (isSymbolConstraintUnrespected && isColorConstraintUnrespected)
+      ) {
+        return;
+      }
+
+      tiles.push(tile);
+    });
+  });
+
+  return tiles;
+};
+
 export const checkUserMove = (
   board: Board,
   action: Action,

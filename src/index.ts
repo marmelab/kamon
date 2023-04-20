@@ -1,5 +1,6 @@
 import {
   Board,
+  getLastPlayedTile,
   highlightAllowedTiles,
   renderBoard,
   updateBoardState,
@@ -8,8 +9,8 @@ import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { prompt } from "./prompt/prompt";
 import { switchPlayer } from "./player/player";
-import { checkUserMove } from "./move/move";
-import { initGameState } from "./game/state";
+import { getPlayableTilesForNextMove, checkUserMove } from "./move/move";
+import { initGameState, winGame } from "./game/state";
 import { renderTurnDisplay } from "./turn";
 
 initCLI();
@@ -39,6 +40,7 @@ renderBoard(highlightedInitialBoard);
     currentGameState.turnNumber += 1;
 
     const updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    const previousPlayer = currentGameState.currentPlayer;
     renderTurnDisplay(currentGameState.turnNumber);
     renderBoard(updatedBoard);
     currentGameState = {
@@ -48,5 +50,14 @@ renderBoard(highlightedInitialBoard);
         currentGameState.currentPlayer
       ).toUpperCase()}, your turn`,
     };
+
+    const possibleMoves = getPlayableTilesForNextMove(
+      updatedBoard,
+      getLastPlayedTile(updatedBoard)
+    );
+
+    if (possibleMoves.length === 0) {
+      currentGameState = winGame(previousPlayer, currentGameState);
+    }
   }
 })();
