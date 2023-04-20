@@ -56,7 +56,6 @@ export const checkUserMove = (
 
   const { x, y } = findTile(board, action.value);
   const playedTile = findTileByCoordinate(board, { x, y });
-
   if (gameState.turnNumber === 0) {
     return {
       gameState: {
