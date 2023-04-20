@@ -74,7 +74,7 @@ const checkUserMove = (action: Action) => {
   if (playedTile.playedBy) {
     gameState = {
       ...gameState,
-      message: `Hey budy, are you trying to play on an played tile ?! 🤔 Please player ${gameState.player.toUpperCase()} choose an non played tile`,
+      message: `Hey budy, are you trying to play on a played tile ?! 🤔 Please player ${gameState.player.toUpperCase()} choose an non played tile`,
     };
     return false;
   }
@@ -104,7 +104,7 @@ gameState = { ...gameState, isRunning: true };
     gameState = {
       ...gameState,
       player: switchPlayer(gameState.player),
-      message: `${switchPlayer(gameState.player).toUpperCase()}, you turn`,
+      message: `${switchPlayer(gameState.player).toUpperCase()}, your turn`,
     };
   }
 })();
