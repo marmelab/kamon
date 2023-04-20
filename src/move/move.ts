@@ -1,57 +1,68 @@
-import { Tile } from "../tile/tile";
+import { Board } from "../board/board";
+import { GameState } from "../game/state";
 import {
-  getLastPlayedTile,
-  getTileFromCoordinates,
-  Board,
-  Coordinates,
-} from "../board/board";
-import { GameState } from "../gameState";
+  NEUTRALE_TILE,
+  Tile,
+  findTile,
+  findTileByCoordinate,
+} from "../tile/tile";
 
-const ALLOWED_FIRST_MOVES = [
-  [false, true, true, false],
-  [true, false, false, false, true],
-  [true, false, false, false, false, true],
-  [false, false, false, false, false, false, false],
-  [true, false, false, false, false, true],
-  [true, false, false, false, true],
-  [false, true, true, false],
-];
+export interface Action {
+  value: "q" | undefined | Tile;
+}
 
-export const checkMoveAccordingToLastPlayedTile = (
-  tile: Tile,
+interface CheckedUserMove {
+  gameState: GameState;
+  allowedMove: boolean;
+}
+
+export const checkUserMove = (
+  board: Board,
+  action: Action,
   gameState: GameState
-): boolean => {
-  if (tile.lastPlayed === true) {
-    return false;
+): CheckedUserMove => {
+  if (action.value === "q") {
+    return {
+      gameState: { ...gameState, isRunning: false },
+      allowedMove: false,
+    };
   }
 
-  const lastPlayedTile: Tile = getLastPlayedTile(gameState.board);
-
-  if (lastPlayedTile == undefined) {
-    return true;
+  if (action.value == undefined) {
+    return {
+      gameState: {
+        ...gameState,
+        message: `Oops, this tile does not exit in the board 😆 ! Please player ${gameState.currentPlayer.toUpperCase()} choose an existing tile`,
+      },
+      allowedMove: false,
+    };
   }
 
-  return (
-    lastPlayedTile.color === tile.color && lastPlayedTile.symbol === tile.symbol
-  );
-};
+  const { x, y } = findTile(board, action.value);
+  const playedTile = findTileByCoordinate(board, { x, y });
 
-export const checkIfMoveIsAllowed = (
-  coordinates: Coordinates,
-  gameState: GameState
-): boolean => {
-  if (gameState.turnNumber > 1) {
-    return ALLOWED_FIRST_MOVES[coordinates.y][coordinates.x];
+  if (playedTile.playedBy) {
+    return {
+      gameState: {
+        ...gameState,
+        message: `Hey budy, are you trying to play on a played tile ?! 🤔 Please player ${gameState.currentPlayer.toUpperCase()} choose an non played tile`,
+      },
+      allowedMove: false,
+    };
   }
 
-  const coordinatesTile = getTileFromCoordinates(
-    { x: coordinates.x, y: coordinates.y },
-    gameState
-  );
-
-  if (coordinatesTile == undefined) {
-    return false;
+  if (playedTile.symbol === NEUTRALE_TILE.symbol) {
+    return {
+      gameState: {
+        ...gameState,
+        message: `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`,
+      },
+      allowedMove: false,
+    };
   }
 
-  return checkMoveAccordingToLastPlayedTile(coordinatesTile, gameState);
+  return {
+    gameState,
+    allowedMove: true,
+  };
 };
