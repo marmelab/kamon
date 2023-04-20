@@ -82,7 +82,7 @@ const checkUserMove = (action: Action) => {
   if (playedTile.symbol === NEUTRALE_TILE.symbol) {
     gameState = {
       ...gameState,
-      message: `🫠 TameState.isRunninghis tile is not playable. Please player ${gameState.player.toUpperCase()} choose a playable tile`,
+      message: `🫠 Tile is not playable. Please player ${gameState.player.toUpperCase()} choose a playable tile`,
     };
     return false;
   }
