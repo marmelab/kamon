@@ -100,11 +100,7 @@ export const findTile = (board: Board, toFind: Tile): TileCoordinate => {
 
   board.forEach((line, l) => {
     line.forEach((tile, t) => {
-      if (
-        tile != undefined &&
-        tile.symbol === toFind.symbol &&
-        tile.color === toFind.color
-      ) {
+      if (tile?.symbol == toFind.symbol && tile?.color === toFind.color) {
         y = t;
         x = l;
       }
@@ -124,7 +120,7 @@ export const findLastPLayed = (board: Board): TileCoordinate => {
 
   board.forEach((line, l) => {
     line.forEach((tile, t) => {
-      if (tile != undefined && tile.lastPlayed === true) {
+      if (tile?.lastPlayed) {
         y = t;
         x = l;
       }
