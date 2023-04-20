@@ -1,9 +1,14 @@
 import { Board } from "../board/board";
 import { GameState } from "../game/state";
-import { NEUTRALE_TILE, findTile, findTileByCoordinate } from "../tile/tile";
+import {
+  NEUTRALE_TILE,
+  Tile,
+  findTile,
+  findTileByCoordinate,
+} from "../tile/tile";
 
-interface Action {
-  value: any;
+export interface Action {
+  value: "q" | undefined | Tile;
 }
 
 interface CheckedUserMove {

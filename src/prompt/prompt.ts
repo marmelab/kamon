@@ -4,10 +4,6 @@ import { generateChoices } from "./choices";
 import { Board } from "../board/board";
 import { GameState } from "../game/state";
 
-export interface UserInput {
-  value: any;
-}
-
 export const prompt = async (gameState: GameState, board: Board) => {
   const choices = generateChoices(board);
   choices.push({ title: "Quit", value: "q" });

@@ -9,8 +9,8 @@ import {
   renderTile,
   Tile,
 } from "../tile/tile";
-import { UserInput } from "../prompt/prompt";
 import { GameState } from "../game/state";
+import { Action } from "../move/move";
 
 export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
@@ -38,7 +38,7 @@ export const renderBoard = (data: Board) => {
 
 export const updateBoardState = (
   board: Board,
-  action: UserInput,
+  action: Action,
   gameState: GameState
 ): Board => {
   const { x: lastPlayedLineIndex, y: lastPlayedTileIndex } =
@@ -50,7 +50,7 @@ export const updateBoardState = (
     );
   }
 
-  const { x: lineIndex, y: tileIndex } = findTile(board, action.value);
+  const { x: lineIndex, y: tileIndex } = findTile(board, action.value as Tile);
   const tile = playTile(
     findTileByCoordinate(board, { x: lineIndex, y: tileIndex }),
     gameState.currentPlayer
