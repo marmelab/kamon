@@ -20,13 +20,10 @@ let isFirstRender = false;
 
 export const renderLine = (lines: NullableTile[]): string => {
   const line = "";
-  let x = 0;
   return lines.reduce((accumulator, tile) => {
     if (tile == undefined) {
       return accumulator + BLANK_CHAR;
     }
-
-    x++;
     return accumulator + renderTile(tile);
   }, line);
 };
