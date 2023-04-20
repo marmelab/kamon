@@ -9,7 +9,6 @@ export const colors = [
   "green",
   "cyan",
   "magenta",
-  "grey",
 ] as const;
 export const symbols = ["A", "B", "C", "D", "E", "F", "O"] as const;
 
@@ -21,9 +20,9 @@ export type Tile = PlayableTile | NeutralTile;
 export interface PlayableTile {
   color: Color;
   symbol: Symbol;
-  moveAllowed?: boolean;
   playedBy?: Player;
   lastPlayed?: boolean;
+  moveAllowed?: boolean;
 }
 
 export const NEUTRALE_TILE = {
@@ -34,14 +33,9 @@ export const NEUTRALE_TILE = {
 interface NeutralTile {
   color: "grey";
   symbol: "O";
+  playedBy?: null;
+  lastPlayed?: false;
   moveAllowed?: boolean;
-  playedBy?: Player;
-  lastPlayed?: boolean;
-}
-
-export interface TileCoordinate {
-  x: number;
-  y: number;
 }
 
 export interface TileCoordinate {

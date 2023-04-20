@@ -10,7 +10,7 @@ import {
   Tile,
 } from "../tile/tile";
 import { GameState } from "../game/state";
-import { Action } from "../move/move";
+import { Action, ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES } from "../move/move";
 
 export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
@@ -52,11 +52,47 @@ export const renderLine = (lines: NullableTile[]): string => {
   }, line);
 };
 
-export const renderBoard = (board: Board) => {
-  board.forEach((lines, y) => {
+export const renderBoard = (data: Board) => {
+  console.log(chalk.white.bold("-------------"));
+  data.forEach((lines) => {
     console.log(renderLine(lines));
   });
   console.log(chalk.white.bold("-------------"));
+};
+
+const clearAllowedTilesHighlight = (board: Board): Board => {
+  const newBoard = JSON.parse(JSON.stringify(board));
+  board.forEach((line, y) => {
+    line.forEach((tile, x) => {
+      if (newBoard[y][x] == null) {
+        return;
+      }
+      newBoard[y][x].moveAllowed = undefined;
+    });
+  });
+  return newBoard;
+};
+
+export const highlightAllowedTiles = (
+  board: Board,
+  gameState: GameState
+): Board => {
+  const newBoard = clearAllowedTilesHighlight(board);
+  if (gameState.turnNumber === 0) {
+    ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES.forEach((line, y) => {
+      line.forEach((tile, x) => {
+        if (newBoard[y][x] == null) {
+          return;
+        }
+
+        newBoard[y][x].moveAllowed =
+          ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES[y][x];
+      });
+    });
+    return newBoard;
+  } else {
+    return board;
+  }
 };
 
 export const updateBoardState = (
@@ -81,5 +117,7 @@ export const updateBoardState = (
 
   board[lineIndex][tileIndex] = tile;
 
-  return board;
+  const highlightedBoard = highlightAllowedTiles(board, gameState);
+
+  return highlightedBoard;
 };

@@ -5,7 +5,6 @@ describe("renderLine", () => {
   it("should render a line with blank characters", () => {
     const tile: Tile = { color: "blue", symbol: "A" };
     const line: NullableTile[] = [undefined, tile, undefined];
-    const board: Board = [line];
     expect(renderLine(line)).toMatch(/\s.*A.*\s/);
   });
 });
