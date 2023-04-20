@@ -15,28 +15,37 @@ import { renderTurnDisplay } from "./turn";
 initCLI();
 const gameConfig: Board = loadGameConfigFromFile();
 
-let gameState = initGameState();
-const highlightedInitialBoard = highlightAllowedTiles(gameConfig, gameState);
-renderTurnDisplay(gameState.turnNumber);
+let currentGameState = initGameState();
+const highlightedInitialBoard = highlightAllowedTiles(
+  gameConfig,
+  currentGameState
+);
+renderTurnDisplay(currentGameState.turnNumber);
 renderBoard(highlightedInitialBoard);
 
 (async () => {
-  while (gameState.isRunning) {
-    const action = await prompt(gameState, highlightedInitialBoard);
-    const userCanMove = checkUserMove(gameConfig, action, gameState);
-    gameState = userCanMove.gameState;
-    if (!userCanMove.allowedMove) continue;
+  while (currentGameState.isRunning) {
+    const action = await prompt(currentGameState, highlightedInitialBoard);
+    const userCanMove = checkUserMove(gameConfig, action, currentGameState);
 
-    gameState.turnNumber += 1;
+    const { gameState, allowedMove } = checkUserMove(
+      gameConfig,
+      action,
+      currentGameState
+    );
+    currentGameState = gameState;
+    if (!allowedMove) continue;
 
-    const updatedBoard = updateBoardState(gameConfig, action, gameState);
-    renderTurnDisplay(gameState.turnNumber);
+    currentGameState.turnNumber += 1;
+
+    const updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    renderTurnDisplay(currentGameState.turnNumber);
     renderBoard(updatedBoard);
-    gameState = {
-      ...gameState,
-      currentPlayer: switchPlayer(gameState.currentPlayer),
+    currentGameState = {
+      ...currentGameState,
+      currentPlayer: switchPlayer(currentGameState.currentPlayer),
       message: `${switchPlayer(
-        gameState.currentPlayer
+        currentGameState.currentPlayer
       ).toUpperCase()}, your turn`,
     };
   }
