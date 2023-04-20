@@ -37,8 +37,8 @@ interface NeutralTile {
 }
 
 export interface TileCoordinate {
-  lineIndex: number;
-  tileIndex: number;
+  x: number;
+  y: number;
 }
 
 export const getAllSymbols = (): Tile[] => {
@@ -95,8 +95,8 @@ export const playTile = (tile: PlayableTile, player: Player): PlayableTile => {
 };
 
 export const findTile = (board: Board, toFind: Tile): TileCoordinate => {
-  let tileIndex: number = null;
-  let lineIndex: number = null;
+  let x: number = null;
+  let y: number = null;
 
   board.forEach((line, l) => {
     line.forEach((tile, t) => {
@@ -105,16 +105,13 @@ export const findTile = (board: Board, toFind: Tile): TileCoordinate => {
         tile.symbol === toFind.symbol &&
         tile.color === toFind.color
       ) {
-        tileIndex = t;
-        lineIndex = l;
+        y = t;
+        x = l;
       }
     });
   });
 
-  return {
-    lineIndex,
-    tileIndex,
-  };
+  return { x, y };
 };
 
 export const removeLastPlayed = (tile: PlayableTile): PlayableTile => {
@@ -122,25 +119,22 @@ export const removeLastPlayed = (tile: PlayableTile): PlayableTile => {
 };
 
 export const findLastPLayed = (board: Board): TileCoordinate => {
-  let tileIndex: number = null;
-  let lineIndex: number = null;
+  let x: number = null;
+  let y: number = null;
 
   board.forEach((line, l) => {
     line.forEach((tile, t) => {
       if (tile != undefined && tile.lastPlayed === true) {
-        tileIndex = t;
-        lineIndex = l;
+        y = t;
+        x = l;
       }
     });
   });
 
-  return {
-    lineIndex,
-    tileIndex,
-  };
+  return { x, y };
 };
 
 export const findTileByCoordinate = (
   board: Board,
   coords: TileCoordinate
-): PlayableTile => board[coords.lineIndex][coords.tileIndex] as PlayableTile;
+): PlayableTile => board[coords.x][coords.y] as PlayableTile;
