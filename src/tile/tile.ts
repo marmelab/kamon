@@ -134,3 +134,18 @@ export const findTileByCoordinate = (
   board: Board,
   coords: TileCoordinate
 ): PlayableTile => board[coords.x][coords.y] as PlayableTile;
+
+export const getTileName = (tile: Tile): string =>
+  `${tile.symbol}-${tile.color}`;
+
+export const findLastPlayableTile = (
+  line: Tile[]
+): PlayableTile | undefined => {
+  const playable = line.findLast((tile) => tile != undefined);
+  return playable as PlayableTile | undefined;
+};
+
+export const findFirstPlayableTile = (line: Tile[]): Tile | undefined => {
+  const playable = line.find((tile) => tile != undefined);
+  return playable as PlayableTile | undefined;
+};
