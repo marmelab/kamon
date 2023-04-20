@@ -97,7 +97,7 @@ export const updateBoardState = (
   );
 
   board[lineIndex][tileIndex] = tile;
-  console.log(gameState.turnNumber);
+
   const highlightedBoard = highlightAllowedTiles(board, gameState);
 
   return highlightedBoard;
