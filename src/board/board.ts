@@ -10,7 +10,7 @@ import {
   Tile,
 } from "../tile/tile";
 import { GameState } from "../game/state";
-import { Action, ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES } from "../move/move";
+import { Action, ALLOWED_FIRST_MOVES } from "../move/move";
 
 export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
@@ -79,14 +79,13 @@ export const highlightAllowedTiles = (
 ): Board => {
   const newBoard = clearAllowedTilesHighlight(board);
   if (gameState.turnNumber === 0) {
-    ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES.forEach((line, y) => {
+    ALLOWED_FIRST_MOVES.forEach((line, y) => {
       line.forEach((tile, x) => {
         if (newBoard[y][x] == null) {
           return;
         }
 
-        newBoard[y][x].moveAllowed =
-          ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES[y][x];
+        newBoard[y][x].moveAllowed = ALLOWED_FIRST_MOVES[y][x];
       });
     });
     return newBoard;
