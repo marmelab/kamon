@@ -18,11 +18,6 @@ export const ALLOWED_FIRST_MOVES = [
   [false, false, false, false, true, true, false, false, false, false],
 ];
 
-export interface Coordinates {
-  x: number;
-  y: number;
-}
-
 export interface Action {
   value: "q" | undefined | Tile;
 }
