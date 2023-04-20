@@ -7,7 +7,7 @@ import {
   findTileByCoordinate,
 } from "../tile/tile";
 
-export const ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES = [
+export const ALLOWED_FIRST_MOVES = [
   [false, false, false, false, true, true, false, false, false, false],
   [false, false, true, false, false, false, true, false, false],
   [false, true, false, false, false, false, true, false],
@@ -15,16 +15,6 @@ export const ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES = [
   [false, true, false, false, false, false, true, false],
   [false, false, true, false, false, false, true, false, false],
   [false, false, false, false, true, true, false, false, false, false],
-];
-
-export const ALLOWED_FIRST_MOVES_ONLY_TILES = [
-  [false, true, true, false],
-  [true, false, false, false, true],
-  [true, false, false, false, false, true],
-  [false, false, false, false, false, false, false],
-  [true, false, false, false, false, true],
-  [true, false, false, false, true],
-  [false, true, true, false],
 ];
 
 export interface Coordinates {
@@ -65,16 +55,15 @@ export const checkUserMove = (
 
   const { x, y } = findTile(board, action.value);
   const playedTile = findTileByCoordinate(board, { x, y });
-
   if (gameState.turnNumber === 0) {
     return {
       gameState: {
         ...gameState,
-        message: !ALLOWED_FIRST_MOVES_ONLY_TILES[y][x]
+        message: !ALLOWED_FIRST_MOVES[x][y]
           ? `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`
           : undefined,
       },
-      allowedMove: ALLOWED_FIRST_MOVES_ONLY_TILES[y][x],
+      allowedMove: ALLOWED_FIRST_MOVES[x][y],
     };
   }
 
