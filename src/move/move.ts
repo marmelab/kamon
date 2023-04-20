@@ -3,7 +3,6 @@ import { GameState } from "../game/state";
 import {
   NEUTRALE_TILE,
   Tile,
-  findLastPLayed,
   findTile,
   findTileByCoordinate,
 } from "../tile/tile";
