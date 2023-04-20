@@ -6,7 +6,7 @@ interface Action {
   value: any;
 }
 
-interface UserMove {
+interface CheckedUserMove {
   gameState: GameState;
   allowedMove: boolean;
 }
@@ -15,7 +15,7 @@ export const checkUserMove = (
   board: Board,
   action: Action,
   gameState: GameState
-): UserMove => {
+): CheckedUserMove => {
   if (action.value === "q") {
     return {
       gameState: { ...gameState, isRunning: false },
