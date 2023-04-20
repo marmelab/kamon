@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { Board, getLastPlayedTile } from "../board/board";
 import { GameState } from "../game/state";
 import {
@@ -91,15 +92,9 @@ export const checkUserMove = (
       isColorConstraintUnrespected &&
       isSymbolConstraintUnrespected)
   ) {
-    let badMoveMessage = `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`;
-
-    if (isColorConstraintUnrespected) {
-      badMoveMessage = `🫠 Tile has a different COLOR. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`;
-    }
-
-    if (isSymbolConstraintUnrespected) {
-      badMoveMessage = `🫠 Tile has a different SYMBOL. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`;
-    }
+    let badMoveMessage = `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile (last played : ${chalk[
+      lastPlayedTile.color
+    ](lastPlayedTile.symbol)})`;
 
     return {
       gameState: {
