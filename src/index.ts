@@ -26,7 +26,6 @@ renderBoard(highlightedInitialBoard);
 (async () => {
   while (currentGameState.isRunning) {
     const action = await prompt(currentGameState, highlightedInitialBoard);
-    const userCanMove = checkUserMove(gameConfig, action, currentGameState);
 
     const { gameState, allowedMove } = checkUserMove(
       gameConfig,
