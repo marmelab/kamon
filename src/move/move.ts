@@ -82,16 +82,31 @@ export const checkUserMove = (
   const lastPlayedTile = getLastPlayedTile(board);
 
   const isNeutraleTile = playedTile.symbol === NEUTRALE_TILE.symbol;
-  const isInvalidTile =
-    lastPlayedTile != null &&
-    playedTile.color !== lastPlayedTile.color &&
+  const isColorConstraintUnrespected =
+    playedTile.color !== lastPlayedTile.color;
+  const isSymbolConstraintUnrespected =
     playedTile.symbol !== lastPlayedTile.symbol;
 
-  if (isNeutraleTile || isInvalidTile) {
+  if (
+    isNeutraleTile ||
+    (lastPlayedTile != null &&
+      isColorConstraintUnrespected &&
+      isSymbolConstraintUnrespected)
+  ) {
+    let badMoveMessage = `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`;
+
+    if (isColorConstraintUnrespected) {
+      badMoveMessage = `🫠 Tile has a different COLOR. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`;
+    }
+
+    if (isSymbolConstraintUnrespected) {
+      badMoveMessage = `🫠 Tile has a different SYMBOL. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`;
+    }
+
     return {
       gameState: {
         ...gameState,
-        message: `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`,
+        message: badMoveMessage,
       },
       allowedMove: false,
     };
