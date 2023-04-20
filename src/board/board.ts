@@ -24,5 +24,3 @@ export const renderBoard = (data: Board) => {
   });
   console.log(chalk.white.bold("-------------"));
 };
-
-export const playTile = (board: Board, tileCoordinate: TileCoordinate) => {};
