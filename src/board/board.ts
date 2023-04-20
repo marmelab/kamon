@@ -42,7 +42,7 @@ export const renderBoard = (data: Board) => {
 };
 
 const clearAllowedTilesHighlight = (board: Board): Board => {
-  let newBoard = JSON.parse(JSON.stringify(board));
+  const newBoard = JSON.parse(JSON.stringify(board));
   board.forEach((line, y) => {
     line.forEach((tile, x) => {
       if (newBoard[y][x] == null) {
@@ -58,7 +58,7 @@ export const highlightAllowedTiles = (
   board: Board,
   gameState: GameState
 ): Board => {
-  let newBoard = clearAllowedTilesHighlight(board);
+  const newBoard = clearAllowedTilesHighlight(board);
   if (gameState.turnNumber === 0) {
     ALLOWED_FIRST_MOVES_WITH_EMPTY_SPACES.forEach((line, y) => {
       line.forEach((tile, x) => {
