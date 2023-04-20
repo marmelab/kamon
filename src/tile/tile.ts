@@ -1,4 +1,5 @@
 import chalk from "chalk";
+import { Player } from "../player";
 
 export const colors = [
   "yellow",
@@ -14,15 +15,13 @@ export type Color = (typeof colors)[number];
 export type Symbol = (typeof symbols)[number];
 
 export type Tile = PlayableTile | NeutralTile;
-type Styles = "unallowed" | "allowed";
-type Player = "black" | "white";
 
 export interface PlayableTile {
   color: Color;
   symbol: Symbol;
   playedBy?: Player;
   lastPlayed?: boolean;
-  style?: Styles;
+  moveAllowed?: boolean;
 }
 
 interface NeutralTile {
@@ -30,7 +29,7 @@ interface NeutralTile {
   symbol: "O";
   playedBy?: null;
   lastPlayed?: false;
-  style?: Styles;
+  moveAllowed?: boolean;
 }
 
 export const getAllSymbols = (): Tile[] => {
@@ -61,7 +60,7 @@ export const getAllSymbols = (): Tile[] => {
 export const renderTile = (tile: Tile): string => {
   let dynamicChalk = chalk[tile.color];
 
-  if (tile.style === "allowed") {
+  if (tile.moveAllowed === true) {
     dynamicChalk = dynamicChalk.bgWhite.dim;
   }
 

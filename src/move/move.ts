@@ -1,22 +1,26 @@
-const ALLOWED_FIRST_MOVES = [
-  [false, true, true, false],
-  [true, false, false, false, true],
-  [true, false, false, false, false, true],
+import { GameState } from "../gameState";
+
+export const ALLOWED_FIRST_MOVES = [
+  [null, null, null, false, true, true, false, null, null, null],
+  [null, null, true, false, false, false, true, null, null],
+  [null, true, false, false, false, false, true, null],
   [false, false, false, false, false, false, false],
-  [true, false, false, false, false, true],
-  [true, false, false, false, true],
-  [false, true, true, false],
+  [null, true, false, false, false, false, true, null],
+  [null, null, true, false, false, false, true, null, null],
+  [null, null, null, false, true, true, false, null, null, null],
 ];
 
-export interface Action {
+export interface Coordinates {
   x: number;
   y: number;
-  isFirstMove: boolean;
 }
 
-export const checkIfMoveIsAllowed = (action: Action): boolean => {
-  if (action.isFirstMove === true) {
-    return ALLOWED_FIRST_MOVES[action.y][action.x];
+export const checkIfMoveIsAllowed = (
+  coordinates: Coordinates,
+  isFirstMove: boolean
+): boolean => {
+  if (isFirstMove) {
+    return ALLOWED_FIRST_MOVES[coordinates.y][coordinates.x];
   }
 
   return true;

@@ -19,26 +19,12 @@ export const renderLine = (
       return accumulator + BLANK_CHAR;
     }
 
-    const isMoveAllowed = checkIfMoveIsAllowed({
-      x,
-      y: lineIndex,
-      isFirstMove: isFirstRender,
-    });
-
-    if (isMoveAllowed) {
-      tile.style = "allowed";
-    }
-
     x++;
     return accumulator + renderTile(tile);
   }, line);
 };
 
 export const renderBoard = (data: Board) => {
-  if (isFirstRender === false) {
-    isFirstRender = true;
-  }
-
   data.forEach((lines, y) => {
     console.log(renderLine(lines, y));
   });
