@@ -16,7 +16,6 @@ export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
 
 const BLANK_CHAR = chalk.black(" ");
-let isFirstRender = false;
 
 export const renderLine = (lines: NullableTile[]): string => {
   const line = "";
