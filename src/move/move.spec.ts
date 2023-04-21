@@ -15,7 +15,7 @@ const mockBoard: Board = [
     { symbol: "E", color: "blue" },
     { symbol: "A", color: "yellow" },
     { symbol: "A", color: "blue" },
-    { symbol: "A", color: "blue" },
+    { symbol: "C", color: "blue" },
     undefined,
     undefined,
     undefined,
@@ -33,12 +33,12 @@ const mockBoard: Board = [
   ],
   [
     undefined,
+    { symbol: "E", color: "cyan" },
     { symbol: "B", color: "yellow" },
-    { symbol: "F", color: "yellow" },
-    { symbol: "C", color: "red" },
-    { symbol: "D", color: "blue" },
+    { symbol: "E", color: "blue" },
     { symbol: "D", color: "green" },
-    { symbol: "B", color: "magenta" },
+    { symbol: "F", color: "blue" },
+    { symbol: "F", color: "yellow" },
     undefined,
   ],
   [
@@ -52,12 +52,12 @@ const mockBoard: Board = [
   ],
   [
     undefined,
-    { symbol: "C", color: "magenta" },
-    { symbol: "F", color: "cyan" },
-    { symbol: "F", color: "magenta" },
+    { symbol: "B", color: "green" },
     { symbol: "D", color: "magenta" },
-    { symbol: "F", color: "red" },
-    { symbol: "E", color: "magenta" },
+    { symbol: "A", color: "green" },
+    { symbol: "A", color: "blue" },
+    { symbol: "D", color: "yellow" },
+    { symbol: "C", color: "yellow" },
     undefined,
   ],
   [
@@ -65,9 +65,6 @@ const mockBoard: Board = [
     undefined,
     { symbol: "B", color: "yellow" },
     { symbol: "E", color: "green" },
-    { symbol: "C", color: "cyan" },
-    { symbol: "D", color: "yellow" },
-    { symbol: "E", color: "red" },
     undefined,
     undefined,
   ],
@@ -116,7 +113,7 @@ describe("checkUserMove", () => {
       turnNumber: 1,
       message: "",
     };
-    const tile: Tile = { symbol: "D", color: "magenta" };
+    const tile: Tile = { symbol: "D", color: "red" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -133,7 +130,7 @@ describe("checkUserMove", () => {
       turnNumber: 1,
       message: "",
     };
-    const tile: Tile = { symbol: "C", color: "cyan" };
+    const tile: Tile = { symbol: "A", color: "cyan" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -150,7 +147,7 @@ describe("checkUserMove", () => {
       turnNumber: 1,
       message: "",
     };
-    const tile: Tile = { symbol: "E", color: "red" };
+    const tile: Tile = { symbol: "E", color: "green" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -170,12 +167,12 @@ describe("getPlayableTilesForNextMove", () => {
     expect(playableTiles.length).toEqual(0);
   });
 
-  it("should have 10 possible moves for red D tile", () => {
+  it("should have 6 possible moves for red D tile", () => {
     const playableTiles = getPlayableTilesForNextMove(mockBoard, {
       symbol: "D",
       color: "red",
     });
 
-    expect(playableTiles.length).toEqual(10);
+    expect(playableTiles.length).toEqual(6);
   });
 });

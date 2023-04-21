@@ -3,6 +3,7 @@ import {
   findLastPLayed,
   findTile,
   findTileByCoordinate,
+  NEUTRALE_TILE,
   PlayableTile,
   playTile,
   removeLastPlayed,
@@ -14,11 +15,6 @@ import { Action, ALLOWED_FIRST_MOVES } from "../move/move";
 
 export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
-export let currentBoard: Board = [[null]];
-export interface Coordinates {
-  x: number;
-  y: number;
-}
 
 const BLANK_CHAR = chalk.black(" ");
 
@@ -81,7 +77,10 @@ export const highlightAllowedTiles = (
   if (gameState.turnNumber === 0) {
     ALLOWED_FIRST_MOVES.forEach((line, y) => {
       line.forEach((tile, x) => {
-        if (newBoard[y][x] == null) {
+        if (
+          newBoard[y][x] == null ||
+          newBoard[y][x].symbol === NEUTRALE_TILE.symbol
+        ) {
           return;
         }
 

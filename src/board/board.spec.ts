@@ -1,4 +1,4 @@
-import { Tile, renderTile } from "../tile/tile";
+import { Tile } from "../tile/tile";
 import { renderLine, Board, renderBoard, NullableTile } from "./board";
 
 describe("renderLine", () => {
