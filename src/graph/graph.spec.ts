@@ -195,7 +195,7 @@ describe("find a path", () => {
         "E-cyan",
         "D-corner",
       ].join(",")
-    ).toContain(checkOppositePath(graph).join(","));
+    ).toEqual(checkOppositePath(graph).join(","));
   });
   it("should not find a path between greens corners", () => {
     const graph = updateGraphState(BLACK_PLAYER, boardWithoutPath);
