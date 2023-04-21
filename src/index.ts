@@ -7,11 +7,11 @@ import {
 import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { prompt } from "./prompt/prompt";
-import { switchPlayer } from "./player/player";
 import { checkUserMove } from "./move/move";
 import { initGameState } from "./game/state";
 import { renderTurnDisplay } from "./turn";
 import { checkOppositePath, updateGraphState } from "./graph/graph";
+import { switchPlayer } from "./player/player";
 
 initCLI();
 const gameConfig: Board = loadGameConfigFromFile();
@@ -47,7 +47,7 @@ renderBoard(highlightedInitialBoard);
     renderTurnDisplay(currentGameState.turnNumber);
     renderBoard(updatedBoard);
 
-    if (checkOppositePath(graph) !== false) {
+    if (checkOppositePath(graph).length > 0) {
       currentGameState = {
         ...currentGameState,
         message: `!!!!!! ${currentGameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
