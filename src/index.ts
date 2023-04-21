@@ -1,5 +1,6 @@
 import {
   Board,
+  getLastPlayedTile,
   highlightAllowedTiles,
   renderBoard,
   updateBoardState,
@@ -7,9 +8,17 @@ import {
 import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { prompt } from "./prompt/prompt";
-import { checkUserMove } from "./move/move";
-import { initGameState } from "./game/state";
+import { getPlayableTilesForNextMove, checkUserMove } from "./move/move";
+import {
+  checkIfGameWon,
+  checkIfDraw,
+  initGameState,
+  winGame,
+  setGameAsDraw,
+} from "./game/state";
 import { renderTurnDisplay } from "./turn";
+import { drawWinMessage } from "./victory";
+import { renderDrawMessage } from "./draw";
 import { checkOppositePath, updateGraphState } from "./graph/graph";
 import { switchPlayer } from "./player/player";
 
@@ -27,6 +36,14 @@ renderBoard(highlightedInitialBoard);
 
 (async () => {
   while (currentGameState.isRunning) {
+    if (checkIfDraw(currentGameState)) {
+      currentGameState = setGameAsDraw(currentGameState);
+    }
+    if (currentGameState.isDraw === true) {
+      renderDrawMessage();
+      return;
+    }
+
     const action = await prompt(currentGameState, highlightedInitialBoard);
 
     const { gameState, allowedMove } = checkUserMove(
@@ -40,6 +57,7 @@ renderBoard(highlightedInitialBoard);
     currentGameState.turnNumber += 1;
 
     const updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    const previousPlayer = currentGameState.currentPlayer;
     const graph = updateGraphState(
       currentGameState.currentPlayer,
       updatedBoard
@@ -65,5 +83,16 @@ renderBoard(highlightedInitialBoard);
         currentGameState.currentPlayer
       ).toUpperCase()}, your turn`,
     };
+
+    const possibleMoves = getPlayableTilesForNextMove(
+      updatedBoard,
+      getLastPlayedTile(updatedBoard)
+    );
+
+    const isGameWon = checkIfGameWon(gameState, updatedBoard);
+    if (isGameWon) {
+      currentGameState = winGame(previousPlayer, currentGameState);
+      drawWinMessage(currentGameState.winner);
+    }
   }
 })();
