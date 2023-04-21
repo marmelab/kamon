@@ -185,7 +185,7 @@ describe("find a path", () => {
     const graph = updateGraphState(BLACK_PLAYER, boardWithPath);
     expect(
       [
-        "A-corner",
+        "green-start",
         "A-green",
         "C-green",
         "C-yellow",
@@ -193,7 +193,7 @@ describe("find a path", () => {
         "E-blue",
         "A-magenta",
         "E-cyan",
-        "D-corner",
+        "green-end",
       ].join(",")
     ).toEqual(checkOppositePath(graph).join(","));
   });

@@ -11,9 +11,9 @@ import {
 import { Player } from "../player/player";
 
 export const corners = {
-  green: ["A-corner", "D-corner"],
-  blue: ["E-corner", "B-corner"],
-  yellow: ["F-corner", "C-corner"],
+  green: ["green-start", "green-end"],
+  blue: ["blue-start", "blue-end"],
+  yellow: ["yellow-start", "yellow-end"],
 };
 
 export const createGraph = (board: Board) => {
