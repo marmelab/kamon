@@ -1,9 +1,9 @@
 import expect from "expect";
 import { Tile, checkIfCoordsExist, findSiblings, renderTile } from "./tile";
 import { BLACK_PLAYER } from "../player/player";
-import { getMock } from "../mocks/getMock";
+import { getMockFromJson } from "../mocks/getMock";
 
-const board = getMock("boards/greenToGreenPath.json");
+const board = getMockFromJson("boards/greenToGreenPath.json");
 
 describe("renderTile", () => {
   it("should render a tile", () => {

@@ -1,9 +1,9 @@
 import expect from "expect";
 import { updateGraphState, checkOppositePath } from "./graph";
 import { BLACK_PLAYER } from "../player/player";
-import { getMock } from "../mocks/getMock";
+import { getMockFromJson } from "../mocks/getMock";
 
-const boardWithPath = getMock("boards/greenToGreenPath.json");
+const boardWithPath = getMockFromJson("boards/greenToGreenPath.json");
 
 describe("find a path", () => {
   it("should find a path between greens corners", () => {

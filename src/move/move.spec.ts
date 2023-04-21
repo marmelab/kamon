@@ -3,9 +3,9 @@ import { checkUserMove, getPlayableTilesForNextMove } from "./move";
 import { GameState } from "../game/state";
 import { Tile } from "../tile/tile";
 import { WHITE_PLAYER } from "../player/player";
-import { getMock } from "../mocks/getMock";
+import { getMockFromJson } from "../mocks/getMock";
 
-const mockBoard = getMock("boards/gameBegin.json");
+const mockBoard = getMockFromJson("boards/gameBegin.json");
 
 describe("checkUserMove", () => {
   it("should, on first move, unallow to play first tile", () => {
