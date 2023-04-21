@@ -71,6 +71,35 @@ const checkMoveAfterFirstTurn = (
   };
 };
 
+export const getPlayableTilesForNextMove = (
+  board: Board,
+  lastPlayedTile: Tile
+): Tile[] => {
+  const tiles: Tile[] = [];
+
+  board.forEach((line) => {
+    line.forEach((tile) => {
+      if (
+        tile == null ||
+        tile.symbol === NEUTRALE_TILE.symbol ||
+        tile.playedBy != null
+      ) {
+        return;
+      }
+
+      const { allowedMove } = checkMoveAfterFirstTurn(tile, lastPlayedTile);
+
+      if (tile.playedBy || !allowedMove) {
+        return;
+      }
+
+      tiles.push(tile);
+    });
+  });
+
+  return tiles;
+};
+
 export const checkUserMove = (
   board: Board,
   action: Action,

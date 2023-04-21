@@ -1,16 +1,16 @@
 import { initGameState } from "../game/state";
-import { checkUserMove } from "./move";
+import { checkUserMove, getPlayableTilesForNextMove } from "./move";
 import { GameState } from "../game/state";
 import { Tile } from "../tile/tile";
 import { WHITE_PLAYER } from "../player/player";
 import { getMock } from "../mocks/getMock";
 
-const mockBoard = getMock("boards/oneTile.json");
+const mockBoard = getMock("boards/gameBegin.json");
 
 describe("checkUserMove", () => {
   it("should, on first move, unallow to play first tile", () => {
     const initialGameState: GameState = initGameState();
-    const tile: Tile = { symbol: "A", color: "green" };
+    const tile: Tile = { symbol: "E", color: "blue" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -21,7 +21,7 @@ describe("checkUserMove", () => {
 
   it("should, on first move, allow to play second tile", () => {
     const initialGameState: GameState = initGameState();
-    const tile: Tile = { symbol: "B", color: "blue" };
+    const tile: Tile = { symbol: "A", color: "yellow" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -36,9 +36,10 @@ describe("checkUserMove", () => {
       isRunning: true,
       winner: null,
       turnNumber: 1,
+      isDraw: false,
       message: "",
     };
-    const tile: Tile = { symbol: "B", color: "magenta" };
+    const tile: Tile = { symbol: "D", color: "red" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -53,9 +54,10 @@ describe("checkUserMove", () => {
       isRunning: true,
       winner: null,
       turnNumber: 1,
+      isDraw: false,
       message: "",
     };
-    const tile: Tile = { symbol: "C", color: "cyan" };
+    const tile: Tile = { symbol: "A", color: "cyan" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
@@ -70,14 +72,46 @@ describe("checkUserMove", () => {
       isRunning: true,
       winner: null,
       turnNumber: 1,
+      isDraw: false,
       message: "",
     };
-    const tile: Tile = { symbol: "E", color: "red" };
+    const tile: Tile = { symbol: "E", color: "green" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
       initialGameState
     );
     expect(allowedMove).toBeFalsy();
+  });
+});
+
+describe("getPlayableTilesForNextMove", () => {
+  it("shouldn't have any possibility for lone tile", () => {
+    const playableTiles = getPlayableTilesForNextMove(mockBoard, {
+      symbol: "O",
+      color: "grey",
+    });
+
+    expect(playableTiles.length).toEqual(0);
+  });
+
+  it("should have 6 possible moves for red D tile", () => {
+    const playableTiles = getPlayableTilesForNextMove(mockBoard, {
+      symbol: "D",
+      color: "red",
+    });
+
+    const mockPlayableTiles = [
+      { color: "red", symbol: "D" },
+      { color: "green", symbol: "D" },
+      { color: "magenta", symbol: "D" },
+      { color: "yellow", symbol: "D" },
+      { color: "red", symbol: "A" },
+      { color: "red", symbol: "A" },
+    ];
+
+    mockPlayableTiles.forEach((tile) => {
+      expect(playableTiles).toContainEqual(tile);
+    });
   });
 });
