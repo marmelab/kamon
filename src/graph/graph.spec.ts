@@ -199,6 +199,6 @@ describe("find a path", () => {
   });
   it("should not find a path between greens corners", () => {
     const graph = updateGraphState(BLACK_PLAYER, boardWithoutPath);
-    expect(checkOppositePath(graph)).toBeFalsy();
+    expect(checkOppositePath(graph)).toHaveLength(0);
   });
 });

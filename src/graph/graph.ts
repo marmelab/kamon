@@ -81,13 +81,13 @@ export const updateGraphState = (player: Player, board: Board) => {
   return graph;
 };
 
-export const checkOppositePath = (graph): [] | false => {
+export const checkOppositePath = (graph): [] => {
   for (const key in corners) {
     const corner = corners[key];
     try {
       return graph.shortestPath(corner[0], corner[1]);
     } catch (error) {
-      return false;
+      return [];
     }
   }
 };
