@@ -3,6 +3,7 @@ import {
   findLastPLayed,
   findTile,
   findTileByCoordinate,
+  NEUTRALE_TILE,
   PlayableTile,
   playTile,
   removeLastPlayed,
@@ -16,6 +17,26 @@ export type NullableTile = Tile | undefined;
 export type Board = NullableTile[][];
 
 const BLANK_CHAR = chalk.black(" ");
+
+export const getLastPlayedTile = (board: Board): NullableTile => {
+  let lastPlayedTile: NullableTile;
+
+  board.forEach((line) => {
+    if (lastPlayedTile != undefined) {
+      return;
+    }
+    line.forEach((tile: Tile) => {
+      if (lastPlayedTile != undefined || tile == undefined) {
+        return;
+      }
+      if (tile.lastPlayed) {
+        lastPlayedTile = tile;
+      }
+    });
+  });
+
+  return lastPlayedTile;
+};
 
 export const renderLine = (lines: NullableTile[]): string => {
   const line = "";
@@ -56,7 +77,10 @@ export const highlightAllowedTiles = (
   if (gameState.turnNumber === 0) {
     ALLOWED_FIRST_MOVES.forEach((line, y) => {
       line.forEach((tile, x) => {
-        if (newBoard[y][x] == null) {
+        if (
+          newBoard[y][x] == null ||
+          newBoard[y][x].symbol === NEUTRALE_TILE.symbol
+        ) {
           return;
         }
 

@@ -13,6 +13,7 @@ import { initGameState } from "./game/state";
 import { renderTurnDisplay } from "./turn";
 
 initCLI();
+
 const gameConfig: Board = loadGameConfigFromFile();
 
 let currentGameState = initGameState();
