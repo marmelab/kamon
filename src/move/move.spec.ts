@@ -173,6 +173,17 @@ describe("getPlayableTilesForNextMove", () => {
       color: "red",
     });
 
-    expect(playableTiles.length).toEqual(6);
+    const mockPlayableTiles = [
+      { color: "red", symbol: "D" },
+      { color: "green", symbol: "D" },
+      { color: "magenta", symbol: "D" },
+      { color: "yellow", symbol: "D" },
+      { color: "red", symbol: "A" },
+      { color: "red", symbol: "A" },
+    ];
+
+    mockPlayableTiles.forEach((tile) => {
+      expect(playableTiles).toContainEqual(tile);
+    });
   });
 });
