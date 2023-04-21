@@ -8,6 +8,7 @@ import {
   findTile,
   findTileByCoordinate,
 } from "../tile/tile";
+import { save } from "../game/save";
 
 export const ALLOWED_FIRST_MOVES = [
   [false, false, false, false, true, true, false, false, false, false],
@@ -20,7 +21,7 @@ export const ALLOWED_FIRST_MOVES = [
 ];
 
 export interface Action {
-  value: "q" | undefined | Tile;
+  value: "q" | undefined | Tile | "s";
 }
 
 interface CheckedUserMove {
@@ -81,6 +82,14 @@ export const checkUserMove = (
   if (action.value === "q") {
     return {
       gameState: { ...gameState, isRunning: false },
+      allowedMove: false,
+    };
+  }
+
+  if (action.value === "s") {
+    save(board);
+    return {
+      gameState,
       allowedMove: false,
     };
   }

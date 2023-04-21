@@ -6,7 +6,6 @@ import { GameState } from "../game/state";
 
 export const prompt = async (gameState: GameState, board: Board) => {
   const choices = generateChoices(board);
-  choices.push({ title: "Quit", value: "q" });
   return await askToPlay(choices, gameState.message);
 };
 
