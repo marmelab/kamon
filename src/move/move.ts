@@ -28,7 +28,7 @@ interface CheckedUserMove {
   allowedMove: boolean;
 }
 
-const checkMoveOnFirstTire = (
+const checkMoveOnFirstTurn = (
   playedTileCoordinates: TileCoordinate
 ): { allowedMove: boolean; message: string } => {
   const badMoveMessage = `🫠 Tile is not playable. Please choose a highlighted tile`;
