@@ -89,12 +89,12 @@ describe("winGame", () => {
 
 describe("checkIfGameIsWon", () => {
   it("should win game when there is no remaining move", () => {
-    expect(checkIfGameWon(initGameState(), [])).toBeTruthy();
+    expect(checkIfGameWon(initGameState(), mockFilledBoard)).toBeTruthy();
   });
 
   it("shouldn't win game when there is a possible move", () => {
-    expect(
-      checkIfGameWon(initGameState(), [{ symbol: "D", color: "blue" }])
-    ).toBeFalsy();
+    let boardWithPossibleMove = JSON.parse(JSON.stringify(mockFilledBoard));
+    boardWithPossibleMove[0][4] = { symbol: "D", color: "blue" };
+    expect(checkIfGameWon(initGameState(), boardWithPossibleMove)).toBeFalsy();
   });
 });

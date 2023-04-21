@@ -1,3 +1,5 @@
+import { Board, getLastPlayedTile } from "../board/board";
+import { getPlayableTilesForNextMove } from "../move/move";
 import { BLACK_PLAYER, Player } from "../player/player";
 import { Tile } from "../tile/tile";
 import { drawWinMessage } from "../victory";
@@ -18,13 +20,14 @@ export const initGameState = (): GameState => ({
   message: "Welcome to Kamon 🍱 ! Black player, you turn",
 });
 
-export const checkIfGameWon = (
-  gameState: GameState,
-  possibleMoves: Tile[]
-): boolean => {
-  if (possibleMoves.length === 0) {
+export const checkNoMoveLeftVictory = (board: Board): boolean =>
+  getPlayableTilesForNextMove(board, getLastPlayedTile(board)).length === 0;
+
+export const checkIfGameWon = (gameState: GameState, board: Board): boolean => {
+  if (checkNoMoveLeftVictory(board)) {
     return true;
   }
+
   return false;
 };
 
