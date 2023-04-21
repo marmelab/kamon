@@ -111,6 +111,7 @@ describe("checkUserMove", () => {
       isRunning: true,
       winner: null,
       turnNumber: 1,
+      isDraw: false,
       message: "",
     };
     const tile: Tile = { symbol: "D", color: "red" };
@@ -128,6 +129,7 @@ describe("checkUserMove", () => {
       isRunning: true,
       winner: null,
       turnNumber: 1,
+      isDraw: false,
       message: "",
     };
     const tile: Tile = { symbol: "A", color: "cyan" };
@@ -145,6 +147,7 @@ describe("checkUserMove", () => {
       isRunning: true,
       winner: null,
       turnNumber: 1,
+      isDraw: false,
       message: "",
     };
     const tile: Tile = { symbol: "E", color: "green" };

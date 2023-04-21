@@ -9,9 +9,16 @@ import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { prompt } from "./prompt/prompt";
 import { getPlayableTilesForNextMove, checkUserMove } from "./move/move";
-import { checkIfGameWon, initGameState, winGame } from "./game/state";
+import {
+  checkIfGameWon,
+  checkIfDraw,
+  initGameState,
+  winGame,
+  setGameAsDraw,
+} from "./game/state";
 import { renderTurnDisplay } from "./turn";
 import { drawWinMessage } from "./victory";
+import { renderDrawMessage } from "./draw";
 import { checkOppositePath, updateGraphState } from "./graph/graph";
 import { switchPlayer } from "./player/player";
 
@@ -29,6 +36,14 @@ renderBoard(highlightedInitialBoard);
 
 (async () => {
   while (currentGameState.isRunning) {
+    if (checkIfDraw(currentGameState)) {
+      currentGameState = setGameAsDraw(currentGameState);
+    }
+    if (currentGameState.isDraw === true) {
+      renderDrawMessage();
+      return;
+    }
+
     const action = await prompt(currentGameState, highlightedInitialBoard);
 
     const { gameState, allowedMove } = checkUserMove(
