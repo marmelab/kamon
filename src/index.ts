@@ -8,8 +8,9 @@ import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { prompt } from "./prompt/prompt";
 import { checkUserMove } from "./move/move";
-import { initGameState } from "./game/state";
+import { checkIfDraw, initGameState, setGameAsDraw } from "./game/state";
 import { renderTurnDisplay } from "./turn";
+import { renderDrawMessage } from "./draw";
 import { checkOppositePath, updateGraphState } from "./graph/graph";
 import { switchPlayer } from "./player/player";
 
@@ -27,6 +28,14 @@ renderBoard(highlightedInitialBoard);
 
 (async () => {
   while (currentGameState.isRunning) {
+    if (checkIfDraw(currentGameState)) {
+      currentGameState = setGameAsDraw(currentGameState);
+    }
+    if (currentGameState.isDraw === true) {
+      renderDrawMessage();
+      return;
+    }
+
     const action = await prompt(currentGameState, highlightedInitialBoard);
 
     const { gameState, allowedMove } = checkUserMove(
