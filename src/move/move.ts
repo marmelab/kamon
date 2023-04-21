@@ -74,7 +74,7 @@ export const getPlayableTilesForNextMove = (
   board: Board,
   lastPlayedTile: Tile
 ): Tile[] => {
-  let tiles: Tile[] = [];
+  const tiles: Tile[] = [];
 
   board.forEach((line) => {
     line.forEach((tile) => {
@@ -86,14 +86,9 @@ export const getPlayableTilesForNextMove = (
         return;
       }
 
-      const isSymbolConstraintUnrespected =
-        lastPlayedTile.symbol != tile.symbol;
-      const isColorConstraintUnrespected = lastPlayedTile.color != tile.color;
+      const { allowedMove } = checkMoveAfterFirstTurn(tile, lastPlayedTile);
 
-      if (
-        tile.lastPlayed ||
-        (isSymbolConstraintUnrespected && isColorConstraintUnrespected)
-      ) {
+      if (tile.playedBy || !allowedMove) {
         return;
       }
 
