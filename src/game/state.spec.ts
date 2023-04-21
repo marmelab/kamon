@@ -96,7 +96,7 @@ describe("checkIfGameIsWon", () => {
     expect(checkIfGameWon(initGameState(), possibleMoves)).toBeTruthy();
   });
 
-  it("shouldn't win game when there is a possible", () => {
+  it("shouldn't win game when there is a possible move", () => {
     let boardWithPossibleMove = JSON.parse(JSON.stringify(mockFilledBoard));
     const lastPlayedTile = getLastPlayedTile(mockFilledBoard);
 
