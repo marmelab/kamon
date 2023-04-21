@@ -89,24 +89,12 @@ describe("winGame", () => {
 
 describe("checkIfGameIsWon", () => {
   it("should win game when there is no remaining move", () => {
-    const possibleMoves = getPlayableTilesForNextMove(
-      mockFilledBoard,
-      getLastPlayedTile(mockFilledBoard)
-    );
-    expect(checkIfGameWon(initGameState(), possibleMoves)).toBeTruthy();
+    expect(checkIfGameWon(initGameState(), [])).toBeTruthy();
   });
 
   it("shouldn't win game when there is a possible", () => {
-    let boardWithPossibleMove = JSON.parse(JSON.stringify(mockFilledBoard));
-    const lastPlayedTile = getLastPlayedTile(mockFilledBoard);
-
-    boardWithPossibleMove[0][4] = { symbol: "D", color: "blue" };
-
-    const possibleMoves = getPlayableTilesForNextMove(
-      boardWithPossibleMove,
-      lastPlayedTile
-    );
-
-    expect(checkIfGameWon(initGameState(), possibleMoves)).toBeFalsy();
+    expect(
+      checkIfGameWon(initGameState(), [{ symbol: "D", color: "blue" }])
+    ).toBeFalsy();
   });
 });
