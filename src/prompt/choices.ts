@@ -8,8 +8,9 @@ export const generatePromptChoices = (board: Board) => {
       if (tile.moveAllowed === false) {
         return acc;
       }
+      const inputText = `${tile.color} ${tile.symbol}`;
       acc.push({
-        title: `${chalk[tile.color](tile.color)} ${tile.symbol}`,
+        title: `${chalk[tile.color](inputText)}`,
         value: tile,
       });
     }
