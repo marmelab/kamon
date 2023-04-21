@@ -11,6 +11,7 @@ import { switchPlayer } from "./player/player";
 import { checkUserMove } from "./move/move";
 import { initGameState, setGameAsDraw } from "./game/state";
 import { renderTurnDisplay } from "./turn";
+import { renderDrawMessage } from "./draw";
 
 initCLI();
 const gameConfig: Board = loadGameConfigFromFile();
@@ -27,6 +28,9 @@ renderBoard(highlightedInitialBoard);
   while (currentGameState.isRunning) {
     if (currentGameState.turnNumber > 35) {
       currentGameState = setGameAsDraw(currentGameState);
+    }
+    if (currentGameState.isDraw === true) {
+      renderDrawMessage();
       return;
     }
 
