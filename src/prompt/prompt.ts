@@ -1,11 +1,11 @@
 import prompts from "prompts";
 import { Tile } from "../tile/tile";
-import { generateChoices } from "./choices";
+import { generatePromptChoices } from "./choices";
 import { Board } from "../board/board";
 import { GameState } from "../game/state";
 
 export const prompt = async (gameState: GameState, board: Board) => {
-  const choices = generateChoices(board);
+  const choices = generatePromptChoices(board);
   choices.push({ title: "Quit", value: "q" });
   choices.push({ title: "Log", value: "log" });
   return await askToPlay(choices, gameState.message);
