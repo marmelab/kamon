@@ -8,7 +8,7 @@ import {
 } from "../tile/tile";
 
 export interface Action {
-  value: "q" | undefined | Tile;
+  value: "q" | "log" | undefined | Tile;
 }
 
 interface CheckedUserMove {
@@ -24,6 +24,14 @@ export const checkUserMove = (
   if (action.value === "q") {
     return {
       gameState: { ...gameState, isRunning: false },
+      allowedMove: false,
+    };
+  }
+
+  if (action.value === "log") {
+    console.log(board);
+    return {
+      gameState: { ...gameState },
       allowedMove: false,
     };
   }
