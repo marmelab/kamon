@@ -106,14 +106,6 @@ describe("renderTile", () => {
 });
 
 describe("Find siblings around a tile", () => {
-  it("coords should not exist", () => {
-    const exist = checkIfCoordsExist(board, { x: 1, y: 1 });
-    expect(exist).toBeFalsy();
-  });
-  it("coords should exist", () => {
-    const exist = checkIfCoordsExist(board, { x: 1, y: 4 });
-    expect(exist).toBeTruthy();
-  });
   it("should find 6 sibling matching", () => {
     const siblings = findSiblings(board, { x: 1, y: 4 });
     expect(siblings.next).toBeDefined();
@@ -140,5 +132,16 @@ describe("Find siblings around a tile", () => {
     expect(siblings.bottomLeft).toBeDefined();
     expect(siblings.bottomRight).toBeNull();
     expect(siblings.topRight).toBeNull();
+  });
+});
+
+describe("Check if coords exist in a board", () => {
+  it("coords should not exist", () => {
+    const exist = checkIfCoordsExist(board, { x: 1, y: 1 });
+    expect(exist).toBeFalsy();
+  });
+  it("coords should exist", () => {
+    const exist = checkIfCoordsExist(board, { x: 1, y: 4 });
+    expect(exist).toBeTruthy();
   });
 });
