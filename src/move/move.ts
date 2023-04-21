@@ -99,7 +99,7 @@ export const checkUserMove = (
   const playedTile = findTileByCoordinate(board, { x, y });
 
   if (gameState.turnNumber === 0) {
-    let { message, allowedMove } = checkMoveOnFirstTire({ x, y });
+    let { message, allowedMove } = checkMoveOnFirstTurn({ x, y });
     newMessageValue = message;
     newAllowedMoveValue = allowedMove;
   } else {
