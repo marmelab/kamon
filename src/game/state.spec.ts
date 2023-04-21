@@ -92,7 +92,7 @@ describe("checkIfGameIsWon", () => {
     expect(checkIfGameWon(initGameState(), [])).toBeTruthy();
   });
 
-  it("shouldn't win game when there is a possible", () => {
+  it("shouldn't win game when there is a possible move", () => {
     expect(
       checkIfGameWon(initGameState(), [{ symbol: "D", color: "blue" }])
     ).toBeFalsy();
