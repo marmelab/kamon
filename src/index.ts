@@ -26,7 +26,7 @@ renderBoard(highlightedInitialBoard);
 
 (async () => {
   while (currentGameState.isRunning) {
-    if (checkIfDraw(currentGameState.turnNumber)) {
+    if (checkIfDraw(currentGameState)) {
       currentGameState = setGameAsDraw(currentGameState);
     }
     if (currentGameState.isDraw === true) {
