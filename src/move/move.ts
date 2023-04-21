@@ -7,6 +7,21 @@ import {
   findTileByCoordinate,
 } from "../tile/tile";
 
+export const ALLOWED_FIRST_MOVES = [
+  [false, false, false, false, true, true, false, false, false, false],
+  [false, false, true, false, false, false, true, false, false],
+  [false, true, false, false, false, false, true, false],
+  [false, false, false, false, false, false, false],
+  [false, true, false, false, false, false, true, false],
+  [false, false, true, false, false, false, true, false, false],
+  [false, false, false, false, true, true, false, false, false, false],
+];
+
+export interface Coordinates {
+  x: number;
+  y: number;
+}
+
 export interface Action {
   value: "q" | "log" | undefined | Tile;
 }
@@ -48,6 +63,17 @@ export const checkUserMove = (
 
   const { x, y } = findTile(board, action.value);
   const playedTile = findTileByCoordinate(board, { x, y });
+  if (gameState.turnNumber === 0) {
+    return {
+      gameState: {
+        ...gameState,
+        message: !ALLOWED_FIRST_MOVES[x][y]
+          ? `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`
+          : undefined,
+      },
+      allowedMove: ALLOWED_FIRST_MOVES[x][y],
+    };
+  }
 
   if (playedTile.playedBy) {
     return {

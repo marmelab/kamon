@@ -22,6 +22,7 @@ export interface PlayableTile {
   symbol: Symbol;
   playedBy?: Player;
   lastPlayed?: boolean;
+  moveAllowed?: boolean;
 }
 
 export const NEUTRALE_TILE = {
@@ -34,6 +35,7 @@ interface NeutralTile {
   symbol: "O";
   playedBy?: null;
   lastPlayed?: false;
+  moveAllowed?: boolean;
 }
 
 export interface TileCoordinate {
@@ -65,6 +67,10 @@ export const getAllSymbols = (): Tile[] => {
 
 export const renderTile = (tile: Tile): string => {
   let dynamicChalk = chalk[tile.color];
+
+  if (tile.moveAllowed === true) {
+    dynamicChalk = dynamicChalk.bgWhite.dim;
+  }
 
   if (tile.playedBy != null) {
     if (tile.playedBy === "black") {
