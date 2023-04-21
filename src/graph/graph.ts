@@ -81,7 +81,7 @@ export const updateGraphState = (player: Player, board: Board) => {
   return graph;
 };
 
-export const checkOppositePath = (graph) => {
+export const checkOppositePath = (graph): [] | false => {
   for (const key in corners) {
     const corner = corners[key];
     try {

@@ -11,6 +11,7 @@ import { switchPlayer } from "./player/player";
 import { checkUserMove } from "./move/move";
 import { initGameState } from "./game/state";
 import { renderTurnDisplay } from "./turn";
+import { checkOppositePath, updateGraphState } from "./graph/graph";
 
 initCLI();
 const gameConfig: Board = loadGameConfigFromFile();
@@ -38,8 +39,24 @@ renderBoard(highlightedInitialBoard);
     currentGameState.turnNumber += 1;
 
     const updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    const graph = updateGraphState(
+      currentGameState.currentPlayer,
+      updatedBoard
+    );
+
     renderTurnDisplay(currentGameState.turnNumber);
     renderBoard(updatedBoard);
+
+    if (checkOppositePath(graph) !== false) {
+      currentGameState = {
+        ...currentGameState,
+        message: `!!!!!! ${currentGameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
+        winner: currentGameState.currentPlayer,
+        isRunning: false,
+      };
+      console.log(currentGameState.message);
+    }
+
     currentGameState = {
       ...currentGameState,
       currentPlayer: switchPlayer(currentGameState.currentPlayer),
