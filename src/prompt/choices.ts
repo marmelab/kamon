@@ -1,6 +1,7 @@
 import chalk from "chalk";
-import { Board } from "../board/board";
+import { Board, getLastPlayedTile } from "../board/board";
 import { NEUTRALE_TILE, Tile, flatternTiles } from "../tile/tile";
+import { getPlayableTilesForNextMove } from "../move/move";
 
 export const generatePromptChoices = (board: Board) => {
   const choices = flatternTiles(board).reduce((acc, tile: Tile) => {
@@ -8,6 +9,7 @@ export const generatePromptChoices = (board: Board) => {
       if (tile.moveAllowed === false) {
         return acc;
       }
+
       const inputText = `${tile.color} ${tile.symbol}`;
       acc.push({
         title: `${chalk[tile.color](inputText)}`,

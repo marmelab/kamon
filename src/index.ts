@@ -56,12 +56,14 @@ renderBoard(highlightedInitialBoard);
 
     currentGameState.turnNumber += 1;
 
-    const updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    let updatedBoard = updateBoardState(gameConfig, action, currentGameState);
     const previousPlayer = currentGameState.currentPlayer;
     const graph = updateGraphState(
       currentGameState.currentPlayer,
       updatedBoard
     );
+
+    updatedBoard = highlightAllowedTiles(updatedBoard, currentGameState);
 
     renderTurnDisplay(currentGameState.turnNumber);
     renderBoard(updatedBoard);
@@ -83,11 +85,6 @@ renderBoard(highlightedInitialBoard);
         currentGameState.currentPlayer
       ).toUpperCase()}, your turn`,
     };
-
-    const possibleMoves = getPlayableTilesForNextMove(
-      updatedBoard,
-      getLastPlayedTile(updatedBoard)
-    );
 
     const isGameWon = checkIfGameWon(gameState, updatedBoard);
     if (isGameWon) {
