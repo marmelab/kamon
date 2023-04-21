@@ -18,6 +18,10 @@ export const initGameState = (): GameState => ({
   message: "Welcome to Kamon 🍱 ! Black player, you turn",
 });
 
+export const checkIfDraw = (turnNumber: number): boolean => {
+  return turnNumber > 35;
+};
+
 export const setGameAsDraw = (gameState: GameState): GameState => {
   let newGameState = JSON.parse(JSON.stringify(gameState));
 

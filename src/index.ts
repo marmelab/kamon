@@ -9,7 +9,7 @@ import { loadGameConfigFromFile } from "./gameLoader";
 import { prompt } from "./prompt/prompt";
 import { switchPlayer } from "./player/player";
 import { checkUserMove } from "./move/move";
-import { initGameState, setGameAsDraw } from "./game/state";
+import { checkIfDraw, initGameState, setGameAsDraw } from "./game/state";
 import { renderTurnDisplay } from "./turn";
 import { renderDrawMessage } from "./draw";
 
@@ -26,7 +26,7 @@ renderBoard(highlightedInitialBoard);
 
 (async () => {
   while (currentGameState.isRunning) {
-    if (currentGameState.turnNumber > 35) {
+    if (checkIfDraw(currentGameState.turnNumber)) {
       currentGameState = setGameAsDraw(currentGameState);
     }
     if (currentGameState.isDraw === true) {
