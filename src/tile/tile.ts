@@ -135,7 +135,7 @@ export const findTileByCoordinate = (
   coords: TileCoordinate
 ): PlayableTile => board[coords.x][coords.y] as PlayableTile;
 
-export const getTileName = (tile: Tile): string =>
+export const getTileName = (tile: PlayableTile): string =>
   `${tile.symbol}-${tile.color}`;
 
 export const findLastPlayableTile = (
@@ -148,4 +148,84 @@ export const findLastPlayableTile = (
 export const findFirstPlayableTile = (line: Tile[]): Tile | undefined => {
   const playable = line.find((tile) => tile != undefined);
   return playable as PlayableTile | undefined;
+};
+
+export const checkIfCoordsExist = (board: Board, coords: TileCoordinate) =>
+  board[coords.x] &&
+  board[coords.x][coords.y] &&
+  board[coords.x][coords.y].symbol
+    ? true
+    : false;
+
+interface Siblings {
+  topLeft: TileCoordinate | null;
+  topRight: TileCoordinate | null;
+  next: TileCoordinate | null;
+  bottomRight: TileCoordinate | null;
+  bottomLeft: TileCoordinate | null;
+  previous: TileCoordinate | null;
+}
+
+export const findSiblings = (
+  board: Board,
+  tileCoords: TileCoordinate,
+  player?: Player
+): Siblings => {
+  const siblingsCoords = {
+    topLeft: {
+      x: tileCoords.x - 1,
+      y: tileCoords.y,
+    },
+    topRight: {
+      x: tileCoords.x - 1,
+      y: tileCoords.y + 1,
+    },
+    next: {
+      x: tileCoords.x,
+      y: tileCoords.y + 1,
+    },
+    bottomRight: {
+      x: tileCoords.x + 1,
+      y: tileCoords.y + 1,
+    },
+    bottomLeft: {
+      x: tileCoords.x + 1,
+      y: tileCoords.y,
+    },
+    previous: {
+      x: tileCoords.x,
+      y: tileCoords.y - 1,
+    },
+  };
+
+  let coords: Siblings = {
+    topLeft: null,
+    topRight: null,
+    next: null,
+    bottomRight: null,
+    bottomLeft: null,
+    previous: null,
+  };
+
+  if (player && board[tileCoords.x][tileCoords.y].playedBy !== player) {
+    return coords;
+  }
+
+  for (const key in siblingsCoords) {
+    const coordsToFind = siblingsCoords[key];
+    const tileExist = checkIfCoordsExist(board, coordsToFind);
+
+    if (!tileExist) continue;
+
+    if (
+      tileExist &&
+      player &&
+      player !== board[coordsToFind.x][coordsToFind.y].playedBy
+    )
+      continue;
+
+    coords[key] = board[coordsToFind.x][coordsToFind.y];
+  }
+
+  return coords;
 };
