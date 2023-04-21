@@ -8,6 +8,7 @@ import {
   findTile,
   findTileByCoordinate,
 } from "../tile/tile";
+import { save } from "../game/save";
 
 export const ALLOWED_FIRST_MOVES = [
   [false, false, false, false, true, true, false, false, false, false],
@@ -20,7 +21,7 @@ export const ALLOWED_FIRST_MOVES = [
 ];
 
 export interface Action {
-  value: "q" | undefined | Tile;
+  value: "q" | "log" | undefined | Tile | "s";
 }
 
 interface CheckedUserMove {
@@ -50,9 +51,9 @@ const checkMoveAfterFirstTurn = (
   playedTile: Tile,
   lastPlayedTile: Tile
 ): { allowedMove: boolean; message: string } => {
-  const badMoveMessage = `🫠 Tile is not playable. Please choose a playable tile (last played : ${chalk[
+  const badMoveMessage = `🫠 Tile is not playable. Please choose a playable tile. Selected tile should be of either same symbol or color than ${chalk[
     lastPlayedTile.color
-  ](lastPlayedTile.symbol)})`;
+  ](lastPlayedTile.symbol)}.`;
   const isColorConstraintRespected = playedTile.color === lastPlayedTile.color;
   const isSymbolConstraintRespected =
     playedTile.symbol === lastPlayedTile.symbol;
@@ -110,6 +111,22 @@ export const checkUserMove = (
   if (action.value === "q") {
     return {
       gameState: { ...gameState, isRunning: false },
+      allowedMove: false,
+    };
+  }
+
+  if (action.value === "log") {
+    console.log(board);
+    return {
+      gameState: { ...gameState },
+      allowedMove: false,
+    };
+  }
+
+  if (action.value === "s") {
+    save(board);
+    return {
+      gameState,
       allowedMove: false,
     };
   }
