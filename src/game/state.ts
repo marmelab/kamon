@@ -18,8 +18,8 @@ export const initGameState = (): GameState => ({
   message: "Welcome to Kamon 🍱 ! Black player, you turn",
 });
 
-export const checkIfDraw = (turnNumber: number): boolean => {
-  return turnNumber > 35;
+export const checkIfDraw = (gameState: GameState): boolean => {
+  return gameState.winner == null && gameState.turnNumber > 35;
 };
 
 export const setGameAsDraw = (gameState: GameState): GameState => {
