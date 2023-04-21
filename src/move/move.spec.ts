@@ -1,89 +1,11 @@
-import exp from "constants";
-import { Board } from "../board/board";
 import { initGameState } from "../game/state";
-import { initRandomGame } from "../randomizer/randomizer";
 import { checkUserMove } from "./move";
 import { GameState } from "../game/state";
 import { Tile } from "../tile/tile";
-import { BLACK_PLAYER, WHITE_PLAYER } from "../player/player";
+import { WHITE_PLAYER } from "../player/player";
+import { getMock } from "../mocks/getMock";
 
-const mockBoard: Board = [
-  [
-    undefined,
-    undefined,
-    undefined,
-    { symbol: "A", color: "green" },
-    { symbol: "B", color: "blue" },
-    { symbol: "A", color: "cyan" },
-    { symbol: "B", color: "magenta" },
-    undefined,
-    undefined,
-    undefined,
-  ],
-  [
-    undefined,
-    undefined,
-    { symbol: "C", color: "cyan" },
-    { symbol: "C", color: "magenta" },
-    { symbol: "C", color: "blue" },
-    { symbol: "F", color: "magenta" },
-    { symbol: "C", color: "green" },
-    undefined,
-    undefined,
-  ],
-  [
-    undefined,
-    { symbol: "E", color: "cyan" },
-    { symbol: "B", color: "yellow" },
-    { symbol: "E", color: "blue" },
-    { symbol: "D", color: "green" },
-    { symbol: "F", color: "blue" },
-    { symbol: "F", color: "yellow" },
-    undefined,
-  ],
-  [
-    { symbol: "F", color: "green" },
-    { symbol: "C", color: "red" },
-    { symbol: "B", color: "red" },
-    { symbol: "F", color: "cyan" },
-    { symbol: "E", color: "magenta" },
-    { symbol: "F", color: "red" },
-    { symbol: "D", color: "red" },
-  ],
-  [
-    undefined,
-    { symbol: "B", color: "green" },
-    { symbol: "D", color: "magenta" },
-    { symbol: "A", color: "yellow" },
-    { symbol: "A", color: "blue" },
-    { symbol: "D", color: "yellow" },
-    { symbol: "C", color: "yellow" },
-    undefined,
-  ],
-  [
-    undefined,
-    undefined,
-    { symbol: "E", color: "red" },
-    { symbol: "A", color: "red" },
-    { symbol: "B", color: "cyan", playedBy: "white", lastPlayed: true },
-    { symbol: "O", color: "grey", playedBy: null, lastPlayed: false },
-    { symbol: "E", color: "green" },
-    undefined,
-    undefined,
-  ],
-  [
-    undefined,
-    undefined,
-    undefined,
-    { symbol: "A", color: "magenta" },
-    { symbol: "D", color: "blue" },
-    { symbol: "D", color: "cyan" },
-    { symbol: "E", color: "yellow" },
-    undefined,
-    undefined,
-    undefined,
-  ],
-];
+const mockBoard = getMock("boards/oneTile.json");
 
 describe("checkUserMove", () => {
   it("should, on first move, unallow to play first tile", () => {
