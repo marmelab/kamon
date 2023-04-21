@@ -2,7 +2,7 @@ import exp from "constants";
 import { Board } from "../board/board";
 import { initGameState } from "../game/state";
 import { initRandomGame } from "../randomizer/randomizer";
-import { checkUserMove } from "./move";
+import { checkUserMove, getPlayableTilesForNextMove } from "./move";
 import { GameState } from "../game/state";
 import { Tile } from "../tile/tile";
 import { BLACK_PLAYER, WHITE_PLAYER } from "../player/player";
@@ -157,5 +157,25 @@ describe("checkUserMove", () => {
       initialGameState
     );
     expect(allowedMove).toBeFalsy();
+  });
+});
+
+describe("getPlayableTilesForNextMove", () => {
+  it("shouldn't have any possibility for lone tile", () => {
+    const playableTiles = getPlayableTilesForNextMove(mockBoard, {
+      symbol: "O",
+      color: "grey",
+    });
+
+    expect(playableTiles.length).toEqual(0);
+  });
+
+  it("should have 10 possible moves for red D tile", () => {
+    const playableTiles = getPlayableTilesForNextMove(mockBoard, {
+      symbol: "D",
+      color: "red",
+    });
+
+    expect(playableTiles.length).toEqual(10);
   });
 });
