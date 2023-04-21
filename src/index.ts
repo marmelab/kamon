@@ -7,13 +7,15 @@ import {
 import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./gameLoader";
 import { prompt } from "./prompt/prompt";
-import { switchPlayer } from "./player/player";
 import { checkUserMove } from "./move/move";
 import { checkIfDraw, initGameState, setGameAsDraw } from "./game/state";
 import { renderTurnDisplay } from "./turn";
 import { renderDrawMessage } from "./draw";
+import { checkOppositePath, updateGraphState } from "./graph/graph";
+import { switchPlayer } from "./player/player";
 
 initCLI();
+
 const gameConfig: Board = loadGameConfigFromFile();
 
 let currentGameState = initGameState();
@@ -47,8 +49,24 @@ renderBoard(highlightedInitialBoard);
     currentGameState.turnNumber += 1;
 
     const updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    const graph = updateGraphState(
+      currentGameState.currentPlayer,
+      updatedBoard
+    );
+
     renderTurnDisplay(currentGameState.turnNumber);
     renderBoard(updatedBoard);
+
+    if (checkOppositePath(graph).length > 0) {
+      currentGameState = {
+        ...currentGameState,
+        message: `!!!!!! ${currentGameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
+        winner: currentGameState.currentPlayer,
+        isRunning: false,
+      };
+      console.log(currentGameState.message);
+    }
+
     currentGameState = {
       ...currentGameState,
       currentPlayer: switchPlayer(currentGameState.currentPlayer),

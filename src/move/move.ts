@@ -1,11 +1,14 @@
-import { Board } from "../board/board";
+import chalk from "chalk";
+import { Board, getLastPlayedTile } from "../board/board";
 import { GameState } from "../game/state";
 import {
   NEUTRALE_TILE,
   Tile,
+  TileCoordinate,
   findTile,
   findTileByCoordinate,
 } from "../tile/tile";
+import { save } from "../game/save";
 
 export const ALLOWED_FIRST_MOVES = [
   [false, false, false, false, true, true, false, false, false, false],
@@ -17,13 +20,8 @@ export const ALLOWED_FIRST_MOVES = [
   [false, false, false, false, true, true, false, false, false, false],
 ];
 
-export interface Coordinates {
-  x: number;
-  y: number;
-}
-
 export interface Action {
-  value: "q" | undefined | Tile;
+  value: "q" | "log" | undefined | Tile | "s";
 }
 
 interface CheckedUserMove {
@@ -31,14 +29,75 @@ interface CheckedUserMove {
   allowedMove: boolean;
 }
 
+const checkMoveOnFirstTurn = (
+  playedTileCoordinates: TileCoordinate
+): { allowedMove: boolean; message: string } => {
+  const badMoveMessage = `🫠 Tile is not playable. Please choose a highlighted tile`;
+
+  if (ALLOWED_FIRST_MOVES[playedTileCoordinates.x][playedTileCoordinates.y]) {
+    return {
+      message: "",
+      allowedMove: true,
+    };
+  }
+
+  return {
+    message: badMoveMessage,
+    allowedMove: false,
+  };
+};
+
+const checkMoveAfterFirstTurn = (
+  playedTile: Tile,
+  lastPlayedTile: Tile
+): { allowedMove: boolean; message: string } => {
+  const badMoveMessage = `🫠 Tile is not playable. Please choose a playable tile. Selected tile should be of either same symbol or color than ${chalk[
+    lastPlayedTile.color
+  ](lastPlayedTile.symbol)}.`;
+  const isColorConstraintRespected = playedTile.color === lastPlayedTile.color;
+  const isSymbolConstraintRespected =
+    playedTile.symbol === lastPlayedTile.symbol;
+
+  if (isColorConstraintRespected || isSymbolConstraintRespected) {
+    return {
+      message: "",
+      allowedMove: true,
+    };
+  }
+
+  return {
+    message: badMoveMessage,
+    allowedMove: false,
+  };
+};
+
 export const checkUserMove = (
   board: Board,
   action: Action,
   gameState: GameState
 ): CheckedUserMove => {
+  let newAllowedMoveValue: boolean = true;
+  let newMessageValue = "";
+
   if (action.value === "q") {
     return {
       gameState: { ...gameState, isRunning: false },
+      allowedMove: false,
+    };
+  }
+
+  if (action.value === "log") {
+    console.log(board);
+    return {
+      gameState: { ...gameState },
+      allowedMove: false,
+    };
+  }
+
+  if (action.value === "s") {
+    save(board);
+    return {
+      gameState,
       allowedMove: false,
     };
   }
@@ -55,16 +114,19 @@ export const checkUserMove = (
 
   const { x, y } = findTile(board, action.value);
   const playedTile = findTileByCoordinate(board, { x, y });
+
   if (gameState.turnNumber === 0) {
-    return {
-      gameState: {
-        ...gameState,
-        message: !ALLOWED_FIRST_MOVES[x][y]
-          ? `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`
-          : undefined,
-      },
-      allowedMove: ALLOWED_FIRST_MOVES[x][y],
-    };
+    let { message, allowedMove } = checkMoveOnFirstTurn({ x, y });
+    newMessageValue = message;
+    newAllowedMoveValue = allowedMove;
+  } else {
+    const lastPlayedTile = getLastPlayedTile(board);
+    let { message, allowedMove } = checkMoveAfterFirstTurn(
+      playedTile,
+      lastPlayedTile
+    );
+    newMessageValue = message;
+    newAllowedMoveValue = allowedMove;
   }
 
   if (playedTile.playedBy) {
@@ -77,18 +139,8 @@ export const checkUserMove = (
     };
   }
 
-  if (playedTile.symbol === NEUTRALE_TILE.symbol) {
-    return {
-      gameState: {
-        ...gameState,
-        message: `🫠 Tile is not playable. Please player ${gameState.currentPlayer.toUpperCase()} choose a playable tile`,
-      },
-      allowedMove: false,
-    };
-  }
-
   return {
-    gameState,
-    allowedMove: true,
+    gameState: { ...gameState, message: newMessageValue },
+    allowedMove: newAllowedMoveValue,
   };
 };
