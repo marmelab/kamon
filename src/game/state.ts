@@ -15,3 +15,24 @@ export const initGameState = (): GameState => ({
   turnNumber: 0,
   message: "Welcome to Kamon 🍱 ! Black player, you turn",
 });
+
+export const setGameAsDraw = (gameState: GameState): GameState => {
+  let newGameState = JSON.parse(JSON.stringify(gameState));
+
+  if (newGameState.winner != null) {
+    return;
+  }
+
+  newGameState.winner = null;
+  newGameState.isRunning = false;
+
+  console.log(" ");
+  console.log(" ");
+  console.log("==========================");
+  console.log(" ");
+  console.log("It's a draw !");
+  console.log(" ");
+  console.log("==========================");
+
+  return newGameState;
+};
