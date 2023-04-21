@@ -74,7 +74,7 @@ renderBoard(highlightedInitialBoard);
       getLastPlayedTile(updatedBoard)
     );
 
-    const isGameWon = checkIfGameWon(gameState, possibleMoves);
+    const isGameWon = checkIfGameWon(gameState, updatedBoard);
     if (isGameWon) {
       currentGameState = winGame(previousPlayer, currentGameState);
       drawWinMessage(currentGameState.winner);
