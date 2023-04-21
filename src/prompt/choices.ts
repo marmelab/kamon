@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { Board } from "../board/board";
 import { NEUTRALE_TILE, Tile, flatternTiles } from "../tile/tile";
 
@@ -8,7 +9,7 @@ export const generatePromptChoices = (board: Board) => {
         return acc;
       }
       acc.push({
-        title: `${tile.color} ${tile.symbol}`,
+        title: `${chalk[tile.color](tile.color)} ${tile.symbol}`,
         value: tile,
       });
     }
