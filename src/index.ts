@@ -10,8 +10,9 @@ import { loadGameConfigFromFile } from "./gameLoader";
 import { prompt } from "./prompt/prompt";
 import { switchPlayer } from "./player/player";
 import { getPlayableTilesForNextMove, checkUserMove } from "./move/move";
-import { initGameState, winGame } from "./game/state";
+import { checkIfGameWon, initGameState, winGame } from "./game/state";
 import { renderTurnDisplay } from "./turn";
+import { drawWinMessage } from "./victory";
 
 initCLI();
 
@@ -56,8 +57,10 @@ renderBoard(highlightedInitialBoard);
       getLastPlayedTile(updatedBoard)
     );
 
-    if (possibleMoves.length === 0) {
+    const isGameWon = checkIfGameWon(gameState, possibleMoves);
+    if (isGameWon) {
       currentGameState = winGame(previousPlayer, currentGameState);
+      drawWinMessage(currentGameState.winner);
     }
   }
 })();

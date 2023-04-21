@@ -1,5 +1,6 @@
-import chalk from "chalk";
 import { BLACK_PLAYER, Player } from "../player/player";
+import { Tile } from "../tile/tile";
+import { drawWinMessage } from "../victory";
 
 export interface GameState {
   currentPlayer: Player;
@@ -17,14 +18,16 @@ export const initGameState = (): GameState => ({
   message: "Welcome to Kamon 🍱 ! Black player, you turn",
 });
 
+export const checkIfGameWon = (
+  gameState: GameState,
+  possibleMoves: Tile[]
+): boolean => {
+  if (possibleMoves.length === 0) {
+    return true;
+  }
+  return false;
+};
+
 export const winGame = (winner: Player, gameState: GameState): GameState => {
-  let newGameState = JSON.parse(JSON.stringify(gameState));
-
-  console.log("⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐");
-  console.log();
-  console.log(` Well done ${chalk.bgYellowBright(winner)}, you won !`);
-  console.log();
-  console.log("⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐");
-
-  return { ...newGameState, isRunning: false, winner: winner };
+  return { ...gameState, isRunning: false, winner: winner };
 };
