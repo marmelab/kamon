@@ -13,7 +13,7 @@ import {
 import { GameState } from "../game/state";
 import { Action, ALLOWED_FIRST_MOVES } from "../move/move";
 
-export type NullableTile = Tile | undefined;
+export type NullableTile = Tile | null;
 export type Board = NullableTile[][];
 
 const BLANK_CHAR = chalk.black(" ");

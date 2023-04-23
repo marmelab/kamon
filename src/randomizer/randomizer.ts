@@ -1,10 +1,10 @@
 import { Board } from "../board/board";
 import { getAllSymbols } from "../tile/tile";
 
-export const createUndefinedTiles = (number: number): undefined[] => {
+export const createNullableTiles = (number: number): undefined[] => {
   const tiles = [];
   for (let index = 0; index < number; index++) {
-    tiles.push(undefined);
+    tiles.push(null);
   }
   return tiles;
 };
@@ -16,23 +16,23 @@ export const initRandomGame = (): Board => {
 
   return [
     [
-      ...createUndefinedTiles(3),
+      ...createNullableTiles(3),
       ...randomSymbolCollection.slice(0, 4),
-      ...createUndefinedTiles(3),
+      ...createNullableTiles(3),
     ],
     [
-      ...createUndefinedTiles(2),
+      ...createNullableTiles(2),
       ...randomSymbolCollection.slice(4, 9),
-      ...createUndefinedTiles(2),
+      ...createNullableTiles(2),
     ],
     [
-      ...createUndefinedTiles(1),
+      ...createNullableTiles(1),
       ...randomSymbolCollection.slice(9, 15),
-      ...createUndefinedTiles(1),
+      ...createNullableTiles(1),
     ],
     [...randomSymbolCollection.slice(15, 22)],
-    [...createUndefinedTiles(1), ...randomSymbolCollection.slice(22, 28)],
-    [...createUndefinedTiles(2), ...randomSymbolCollection.slice(28, 33)],
-    [...createUndefinedTiles(3), ...randomSymbolCollection.slice(33, 37)],
+    [...createNullableTiles(1), ...randomSymbolCollection.slice(22, 28)],
+    [...createNullableTiles(2), ...randomSymbolCollection.slice(28, 33)],
+    [...createNullableTiles(3), ...randomSymbolCollection.slice(33, 37)],
   ];
 };

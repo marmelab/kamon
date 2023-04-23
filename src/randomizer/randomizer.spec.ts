@@ -1,14 +1,14 @@
 import expect from "expect";
-import { initRandomGame, createUndefinedTiles } from "./randomizer";
+import { initRandomGame, createNullableTiles } from "./randomizer";
 
 describe("create undefined tiles", () => {
   it("should give an array of 1 undefined", () => {
-    expect(createUndefinedTiles(1)).toContain(undefined);
+    expect(createNullableTiles(1)).toContain(null);
   });
 
   it("should give an array of 3 undefined", () => {
-    const undefinedTiles = createUndefinedTiles(3);
-    expect(undefinedTiles).toContain(undefined);
+    const undefinedTiles = createNullableTiles(3);
+    expect(undefinedTiles).toContain(null);
     expect(undefinedTiles.length).toBe(3);
   });
 });
