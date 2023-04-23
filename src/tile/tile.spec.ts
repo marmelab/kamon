@@ -135,6 +135,46 @@ describe("Find siblings played by black around a tile", () => {
       lastPlayed: false,
     });
   });
+  it("should find 6 siblings on middle bottom matching black player", () => {
+    const board = getMockFromJson("boards/middleBottomSiblings.json");
+    const siblings = findSiblings(board, { x: 5, y: 4 }, BLACK_PLAYER);
+    expect(siblings.next).toEqual({
+      symbol: "B",
+      color: "magenta",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.previous).toEqual({
+      symbol: "D",
+      color: "magenta",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.bottomLeft).toEqual({
+      symbol: "E",
+      color: "cyan",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.bottomRight).toEqual({
+      symbol: "F",
+      color: "red",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topLeft).toEqual({
+      symbol: "E",
+      color: "blue",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topRight).toEqual({
+      symbol: "F",
+      color: "green",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+  });
   it("should find 3 siblings matching black player", () => {
     const board = getMockFromJson("boards/rightSiblings.json");
     const siblings = findSiblings(board, { x: 4, y: 6 }, BLACK_PLAYER);
