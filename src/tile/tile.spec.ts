@@ -12,8 +12,8 @@ describe("renderTile", () => {
 });
 
 describe("Find siblings played by black around a tile", () => {
-  it("should find 6 siblings matching black player", () => {
-    const board = getMockFromJson("boards/game2.json");
+  it("should find 6 siblings on middle matching black player", () => {
+    const board = getMockFromJson("boards/middleSiblings.json");
     const siblings = findSiblings(board, { x: 3, y: 3 }, BLACK_PLAYER);
 
     expect(siblings.next).toEqual({
@@ -53,8 +53,8 @@ describe("Find siblings played by black around a tile", () => {
       lastPlayed: false,
     });
   });
-  it("should find 6 siblings matching black player", () => {
-    const board = getMockFromJson("boards/game3.json");
+  it("should find 6 siblings on middle left matching black player", () => {
+    const board = getMockFromJson("boards/middleLeftSiblings.json");
     const siblings = findSiblings(board, { x: 3, y: 1 }, BLACK_PLAYER);
 
     expect(siblings.next).toEqual({
@@ -94,8 +94,8 @@ describe("Find siblings played by black around a tile", () => {
       lastPlayed: false,
     });
   });
-  it("should find 6 siblings matching black player", () => {
-    const board = getMockFromJson("boards/game4.json");
+  it("should find 6 siblings on middle top matching black player", () => {
+    const board = getMockFromJson("boards/middleTopSiblings.json");
     const siblings = findSiblings(board, { x: 1, y: 4 }, BLACK_PLAYER);
 
     expect(siblings.next).toEqual({
@@ -136,7 +136,7 @@ describe("Find siblings played by black around a tile", () => {
     });
   });
   it("should find 3 siblings matching black player", () => {
-    const board = getMockFromJson("boards/game6.json");
+    const board = getMockFromJson("boards/rightSiblings.json");
     const siblings = findSiblings(board, { x: 4, y: 6 }, BLACK_PLAYER);
 
     expect(siblings.next).toBeNull();
