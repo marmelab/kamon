@@ -180,11 +180,11 @@ export const findSiblings = (
   const siblingsCoords = {
     topLeft: {
       x: tileCoords.x - 1,
-      y: tileCoords.y,
+      y: tileCoords.x <= 3 ? tileCoords.y : tileCoords.y - 1,
     },
     topRight: {
       x: tileCoords.x - 1,
-      y: tileCoords.y + 1,
+      y: tileCoords.x <= 3 ? tileCoords.y + 1 : tileCoords.y,
     },
     next: {
       x: tileCoords.x,
@@ -192,11 +192,11 @@ export const findSiblings = (
     },
     bottomRight: {
       x: tileCoords.x + 1,
-      y: tileCoords.y + 1,
+      y: tileCoords.x >= 3 ? tileCoords.y + 1 : tileCoords.y,
     },
     bottomLeft: {
       x: tileCoords.x + 1,
-      y: tileCoords.y,
+      y: tileCoords.x >= 3 ? tileCoords.y : tileCoords.y - 1,
     },
     previous: {
       x: tileCoords.x,
