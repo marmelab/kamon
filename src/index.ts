@@ -19,7 +19,7 @@ import {
 import { renderTurnDisplay } from "./turn";
 import { drawWinMessage } from "./victory";
 import { renderDrawMessage } from "./draw";
-import { checkOppositePath, updateGraphState } from "./graph/graph";
+import { getOppositePath, updateGraphState } from "./graph/graph";
 import { switchPlayer } from "./player/player";
 
 initCLI();
@@ -66,7 +66,7 @@ renderBoard(highlightedInitialBoard);
     renderTurnDisplay(currentGameState.turnNumber);
     renderBoard(updatedBoard);
 
-    if (checkOppositePath(graph).length > 0) {
+    if (getOppositePath(graph).length > 0) {
       currentGameState = {
         ...currentGameState,
         message: `!!!!!! ${currentGameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
