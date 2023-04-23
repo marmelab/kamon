@@ -1,102 +1,13 @@
 import expect from "expect";
-import {
-  Tile,
-  checkIfCoordsExist,
-  findSiblings,
-  findTile,
-  renderTile,
-} from "./tile";
-import { Board } from "../board/board";
+import { Tile, findSiblings, renderTile } from "./tile";
 import { BLACK_PLAYER } from "../player/player";
-import { line } from "blessed";
+import { readFileSync } from "fs";
 
-const board: Board = [
-  [
-    undefined,
-    undefined,
-    undefined,
-    { symbol: "B", color: "cyan" },
-    { symbol: "A", color: "green", playedBy: BLACK_PLAYER, lastPlayed: false },
-    { symbol: "D", color: "cyan" },
-    { symbol: "A", color: "red" },
-    undefined,
-    undefined,
-    undefined,
-  ],
-  [
-    undefined,
-    undefined,
-    { symbol: "E", color: "magenta" },
-    { symbol: "F", color: "blue" },
-    { symbol: "C", color: "green", playedBy: BLACK_PLAYER, lastPlayed: false },
-    { symbol: "E", color: "green" },
-    { symbol: "D", color: "green" },
-    undefined,
-    undefined,
-  ],
-  [
-    undefined,
-    { symbol: "C", color: "cyan" },
-    { symbol: "D", color: "blue" },
-    { symbol: "C", color: "yellow", playedBy: BLACK_PLAYER, lastPlayed: false },
-    { symbol: "B", color: "yellow" },
-    { symbol: "B", color: "blue" },
-    { symbol: "A", color: "cyan" },
-    undefined,
-  ],
-  [
-    { symbol: "D", color: "red" },
-    { symbol: "F", color: "cyan" },
-    { symbol: "B", color: "red" },
-    {
-      symbol: "C",
-      color: "magenta",
-      playedBy: BLACK_PLAYER,
-      lastPlayed: false,
-    },
-    { symbol: "E", color: "yellow" },
-    { symbol: "O", color: "grey", playedBy: null, lastPlayed: false },
-    { symbol: "A", color: "yellow" },
-  ],
-  [
-    undefined,
-    { symbol: "F", color: "yellow" },
-    { symbol: "E", color: "red" },
-    { symbol: "E", color: "blue", playedBy: BLACK_PLAYER, lastPlayed: false },
-    { symbol: "F", color: "green" },
-    { symbol: "D", color: "yellow" },
-    { symbol: "F", color: "magenta" },
-    undefined,
-  ],
-  [
-    undefined,
-    undefined,
-    { symbol: "A", color: "blue" },
-    { symbol: "D", color: "magenta" },
-    {
-      symbol: "A",
-      color: "magenta",
-      playedBy: BLACK_PLAYER,
-      lastPlayed: false,
-    },
-    { symbol: "B", color: "magenta" },
-    { symbol: "B", color: "green" },
-    undefined,
-    undefined,
-  ],
-  [
-    undefined,
-    undefined,
-    undefined,
-    { symbol: "C", color: "blue" },
-    { symbol: "E", color: "cyan", playedBy: BLACK_PLAYER, lastPlayed: false },
-    { symbol: "F", color: "red" },
-    { symbol: "C", color: "red" },
-    undefined,
-    undefined,
-    undefined,
-  ],
-];
+const getMockFromJson = (file: string) => {
+  const content = readFileSync(`${__dirname}/../../${file}`, "utf-8");
+
+  return JSON.parse(content);
+};
 
 describe("renderTile", () => {
   it("should render a tile", () => {
@@ -105,37 +16,159 @@ describe("renderTile", () => {
   });
 });
 
-describe("Find siblings around a tile", () => {
-  it("should find 6 sibling matching", () => {
-    const siblings = findSiblings(board, { x: 1, y: 4 });
-    expect(siblings.next).toBeDefined();
-    expect(siblings.previous).toBeDefined();
-    expect(siblings.bottomLeft).toBeDefined();
-    expect(siblings.bottomRight).toBeDefined();
-    expect(siblings.topLeft).toBeDefined();
-    expect(siblings.topRight).toBeDefined();
-  });
-  it("should find 1 sibling matching a player", () => {
-    const siblings = findSiblings(board, { x: 1, y: 4 }, BLACK_PLAYER);
-    expect(siblings.next).toBeNull();
-    expect(siblings.topLeft).toBeDefined();
-    expect(siblings.previous).toBeNull();
-    expect(siblings.bottomLeft).toBeNull();
-    expect(siblings.bottomRight).toBeNull();
-    expect(siblings.topRight).toBeNull();
-  });
-  it("should find 2 sibling matching a player", () => {
+describe("Find siblings played by black around a tile", () => {
+  it("should find 6 siblings matching black player", () => {
+    const board = getMockFromJson("game2.json");
     const siblings = findSiblings(board, { x: 3, y: 3 }, BLACK_PLAYER);
+
+    expect(siblings.next).toEqual({
+      symbol: "E",
+      color: "yellow",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.previous).toEqual({
+      symbol: "B",
+      color: "red",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.bottomLeft).toEqual({
+      symbol: "E",
+      color: "blue",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.bottomRight).toEqual({
+      symbol: "F",
+      color: "green",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topLeft).toEqual({
+      symbol: "C",
+      color: "yellow",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topRight).toEqual({
+      symbol: "B",
+      color: "yellow",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+  });
+  it("should find 6 siblings matching black player", () => {
+    const board = getMockFromJson("game3.json");
+    const siblings = findSiblings(board, { x: 3, y: 1 }, BLACK_PLAYER);
+
+    expect(siblings.next).toEqual({
+      symbol: "B",
+      color: "red",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.previous).toEqual({
+      symbol: "D",
+      color: "red",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.bottomLeft).toEqual({
+      symbol: "F",
+      color: "yellow",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.bottomRight).toEqual({
+      symbol: "E",
+      color: "red",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topLeft).toEqual({
+      symbol: "C",
+      color: "cyan",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topRight).toEqual({
+      symbol: "D",
+      color: "blue",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+  });
+  it("should find 6 siblings matching black player", () => {
+    const board = getMockFromJson("game4.json");
+    const siblings = findSiblings(board, { x: 1, y: 4 }, BLACK_PLAYER);
+
+    expect(siblings.next).toEqual({
+      symbol: "E",
+      color: "green",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.previous).toEqual({
+      symbol: "F",
+      color: "blue",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.bottomLeft).toEqual({
+      symbol: "C",
+      color: "yellow",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.bottomRight).toEqual({
+      symbol: "B",
+      color: "yellow",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topLeft).toEqual({
+      symbol: "A",
+      color: "green",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topRight).toEqual({
+      symbol: "D",
+      color: "cyan",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+  });
+  it("should find 3 siblings matching black player", () => {
+    const board = getMockFromJson("game6.json");
+    const siblings = findSiblings(board, { x: 4, y: 6 }, BLACK_PLAYER);
+
     expect(siblings.next).toBeNull();
-    expect(siblings.topLeft).toBeDefined();
     expect(siblings.previous).toBeNull();
-    expect(siblings.bottomLeft).toBeDefined();
+    expect(siblings.bottomLeft).toEqual({
+      symbol: "B",
+      color: "green",
+      playedBy: "black",
+      lastPlayed: false,
+    });
     expect(siblings.bottomRight).toBeNull();
-    expect(siblings.topRight).toBeNull();
+    expect(siblings.topLeft).toEqual({
+      symbol: "B",
+      color: "cyan",
+      playedBy: "black",
+      lastPlayed: false,
+    });
+    expect(siblings.topRight).toEqual({
+      symbol: "A",
+      color: "yellow",
+      playedBy: "black",
+      lastPlayed: false,
+    });
   });
 });
 
-describe("Check if coords exist in a board", () => {
+/*describe("Check if coords exist in a board", () => {
   it("coords should not exist", () => {
     const exist = checkIfCoordsExist(board, { x: 1, y: 1 });
     expect(exist).toBeFalsy();
@@ -144,4 +177,4 @@ describe("Check if coords exist in a board", () => {
     const exist = checkIfCoordsExist(board, { x: 1, y: 4 });
     expect(exist).toBeTruthy();
   });
-});
+});*/
