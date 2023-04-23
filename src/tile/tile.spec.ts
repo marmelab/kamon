@@ -1,13 +1,8 @@
 import expect from "expect";
+
 import { Tile, findSiblings, renderTile } from "./tile";
 import { BLACK_PLAYER } from "../player/player";
-import { readFileSync } from "fs";
-
-const getMockFromJson = (file: string) => {
-  const content = readFileSync(`${__dirname}/../../${file}`, "utf-8");
-
-  return JSON.parse(content);
-};
+import { getMockFromJson } from "../mocks/getMock";
 
 describe("renderTile", () => {
   it("should render a tile", () => {
@@ -18,7 +13,7 @@ describe("renderTile", () => {
 
 describe("Find siblings played by black around a tile", () => {
   it("should find 6 siblings matching black player", () => {
-    const board = getMockFromJson("game2.json");
+    const board = getMockFromJson("boards/game2.json");
     const siblings = findSiblings(board, { x: 3, y: 3 }, BLACK_PLAYER);
 
     expect(siblings.next).toEqual({
@@ -59,7 +54,7 @@ describe("Find siblings played by black around a tile", () => {
     });
   });
   it("should find 6 siblings matching black player", () => {
-    const board = getMockFromJson("game3.json");
+    const board = getMockFromJson("boards/game3.json");
     const siblings = findSiblings(board, { x: 3, y: 1 }, BLACK_PLAYER);
 
     expect(siblings.next).toEqual({
@@ -100,7 +95,7 @@ describe("Find siblings played by black around a tile", () => {
     });
   });
   it("should find 6 siblings matching black player", () => {
-    const board = getMockFromJson("game4.json");
+    const board = getMockFromJson("boards/game4.json");
     const siblings = findSiblings(board, { x: 1, y: 4 }, BLACK_PLAYER);
 
     expect(siblings.next).toEqual({
@@ -141,7 +136,7 @@ describe("Find siblings played by black around a tile", () => {
     });
   });
   it("should find 3 siblings matching black player", () => {
-    const board = getMockFromJson("game6.json");
+    const board = getMockFromJson("boards/game6.json");
     const siblings = findSiblings(board, { x: 4, y: 6 }, BLACK_PLAYER);
 
     expect(siblings.next).toBeNull();
