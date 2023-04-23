@@ -1,6 +1,6 @@
 import expect from "expect";
 
-import { Tile, findSiblings, renderTile } from "./tile";
+import { Tile, checkIfCoordsExist, findSiblings, renderTile } from "./tile";
 import { BLACK_PLAYER } from "../player/player";
 import { getMockFromJson } from "../mocks/getMock";
 
@@ -203,7 +203,8 @@ describe("Find siblings played by black around a tile", () => {
   });
 });
 
-/*describe("Check if coords exist in a board", () => {
+describe("Check if coords exist in a board", () => {
+  const board = getMockFromJson("boards/rightSiblings.json");
   it("coords should not exist", () => {
     const exist = checkIfCoordsExist(board, { x: 1, y: 1 });
     expect(exist).toBeFalsy();
@@ -212,4 +213,4 @@ describe("Find siblings played by black around a tile", () => {
     const exist = checkIfCoordsExist(board, { x: 1, y: 4 });
     expect(exist).toBeTruthy();
   });
-});*/
+});
