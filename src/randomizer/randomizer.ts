@@ -31,20 +31,8 @@ export const initRandomGame = (): Board => {
       ...createUndefinedTiles(1),
     ],
     [...randomSymbolCollection.slice(15, 22)],
-    [
-      ...createUndefinedTiles(1),
-      ...randomSymbolCollection.slice(22, 28),
-      ...createUndefinedTiles(1),
-    ],
-    [
-      ...createUndefinedTiles(2),
-      ...randomSymbolCollection.slice(28, 33),
-      ...createUndefinedTiles(2),
-    ],
-    [
-      ...createUndefinedTiles(3),
-      ...randomSymbolCollection.slice(33, 37),
-      ...createUndefinedTiles(3),
-    ],
+    [...createUndefinedTiles(1), ...randomSymbolCollection.slice(22, 28)],
+    [...createUndefinedTiles(2), ...randomSymbolCollection.slice(28, 33)],
+    [...createUndefinedTiles(3), ...randomSymbolCollection.slice(33, 37)],
   ];
 };
