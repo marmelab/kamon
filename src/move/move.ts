@@ -86,10 +86,16 @@ export const getPlayableTilesForNextMove = (
       ) {
         return;
       }
+      let isCurrentTileAnAllowedMove: boolean;
+      if (lastPlayedTile) {
+        const { allowedMove } = checkMoveAfterFirstTurn(tile, lastPlayedTile);
+        isCurrentTileAnAllowedMove = allowedMove;
+      } else {
+        const { allowedMove } = checkMoveOnFirstTurn(findTile(board, tile));
+        isCurrentTileAnAllowedMove = allowedMove;
+      }
 
-      const { allowedMove } = checkMoveAfterFirstTurn(tile, lastPlayedTile);
-
-      if (tile.playedBy || !allowedMove) {
+      if (tile.playedBy || !isCurrentTileAnAllowedMove) {
         return;
       }
 
