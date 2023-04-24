@@ -79,7 +79,9 @@ export const updateGraphState = (player: Player, board: Board) => {
   return graph;
 };
 
-export const getOppositePath = (graph): string[] | [] => {
+export const getOppositePath = (
+  graph: ReturnType<typeof Graph>
+): string[] | [] => {
   let path: string[] | [];
   for (const key in corners) {
     const corner = corners[key];
