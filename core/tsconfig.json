@@ -8,11 +8,5 @@
     "resolveJsonModule": true,  
     "lib": ["es2023", "dom"],  
     "esModuleInterop": true  
-  },  
-  "include": [  
-    "src/**/*.ts"  
-  ],  
-  "exclude": [  
-    "node_modules"  
-  ]  
+  }
 } 
