@@ -15,3 +15,6 @@ build-cli: ## Build all workspaces
 	
 test-cli:
 	yarn workspace @kamon/cli test 
+
+test-webapp:
+	volta run yarn workspace @kamon/webapp test
