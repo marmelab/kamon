@@ -11,7 +11,7 @@ describe("renderTile", () => {
   });
 });
 
-describe("Find siblings played by black around a tile", () => {
+describe("findSiblings", () => {
   it("should find 6 siblings on middle matching black player", () => {
     const board = getMockFromJson("boards/middleSiblings.json");
     const siblings = findSiblings(board, { x: 3, y: 3 }, BLACK_PLAYER);
@@ -203,7 +203,7 @@ describe("Find siblings played by black around a tile", () => {
   });
 });
 
-describe("Check if coords exist in a board", () => {
+describe("checkIfCoordsExist", () => {
   const board = getMockFromJson("boards/rightSiblings.json");
   it("coords should not exist", () => {
     const exist = checkIfCoordsExist(board, { x: 1, y: 1 });
