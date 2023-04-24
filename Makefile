@@ -8,3 +8,9 @@ install: ## Install NodeJS dependencies with Yarn
 
 run: ## Run the game with Yarn
 	yarn start
+
+test: ## Run tests accross all workspaces
+	yarn run test
+
+build: ## Build all workspaces
+	yarn run build
