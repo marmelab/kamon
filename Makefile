@@ -17,4 +17,4 @@ test-cli:
 	yarn workspace @kamon/cli test 
 
 test-webapp:
-	volta run yarn workspace @kamon/webapp test
+	yarn workspace @kamon/webapp test
