@@ -6,11 +6,12 @@ help: ## Outputs this help screen
 install: ## Install NodeJS dependencies with Yarn 
 	yarn install
 
-run: ## Run the game with Yarn
-	yarn start
+# CLI
+run_cli: ## Run the CLI game with Yarn
+	cd cli && yarn start
 
-test: ## Run tests accross all workspaces
-	yarn run test
-
-build: ## Build all workspaces
-	yarn run build
+build_cli: ## Build all workspaces
+	cd cli && yarn run build
+	
+test_cli:
+	cd cli && yarn test 
