@@ -6,11 +6,15 @@ help: ## Outputs this help screen
 install: ## Install NodeJS dependencies with Yarn 
 	yarn install
 
-run: ## Run the game with Yarn
-	yarn start
+# CLI
+run-cli: ## Run the CLI game with Yarn
+	yarn workspace @kamon/cli start
 
-test: ## Run tests accross all workspaces
-	yarn run test
+build-cli: ## Build all workspaces
+	yarn workspace @kamon/cli build
+	
+test-cli:
+	yarn workspace @kamon/cli test 
 
-build: ## Build all workspaces
-	yarn run build
+test-webapp:
+	yarn workspace @kamon/webapp test

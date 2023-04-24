@@ -1,0 +1,41 @@
+{
+  "name": "@kamon/cli",
+  "packageManager": "yarn@3.5.0",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "engines": {
+    "node": "^18"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^10.0.1",
+    "graph-data-structure": "^3.3.0",
+    "nodemon": "^2.0.15",
+    "prompts": "^2.4.2"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "dev": "nodemon --quiet --watch 'src/**/*.ts' --exec 'ts-node' src/index.ts",
+    "build": "tsc",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@kamon/core": "1.0.0",
+    "@types/blessed": "^0.1.17",
+    "@types/jest": "^26.0.23",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "babel-jest": "^27.0.6",
+    "blessed": "^0.1.81",
+    "eslint": "^7.29.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "jest": "^27.0.6",
+    "prettier": "^2.3.2",
+    "ts-jest": "^29.1.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.4"
+  }
+}

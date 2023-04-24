@@ -21,8 +21,8 @@ jobs:
       - name: Install dependencies
         run: make install
 
-      - name: Run tests
-        run: make test
+      - name: Run CLI tests
+        run: make test-cli
 
-      - name: Building all workspaces
-        run: make build
+      - name: Building CLI
+        run: make build-cli

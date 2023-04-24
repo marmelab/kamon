@@ -1,8 +1,6 @@
 import chalk from "chalk";
 import { getMockFromJson } from "../mocks/getMock";
-import { getPlayableTilesForNextMove } from "../move/move";
 import { generatePromptChoices } from "./choices";
-import { getLastPlayedTile } from "../board/board";
 
 const gameStartMockBoard = getMockFromJson("boards/gameBegin.json");
 const gameOneTileMockBoard = getMockFromJson("boards/oneTile.json");
