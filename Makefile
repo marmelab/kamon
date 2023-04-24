@@ -8,3 +8,9 @@ install: ## Install NodeJS dependencies with Yarn
 
 run: ## Run the game with Yarn
 	yarn start
+
+test:
+	yarn run test
+
+build:
+	yarn run build
