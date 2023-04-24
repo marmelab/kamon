@@ -1,8 +1,6 @@
 import chalk from "chalk";
 import { getMockFromJson } from "../mocks/getMock";
-import { getPlayableTilesForNextMove } from "../move/move";
 import { generatePromptChoices } from "./choices";
-import { getLastPlayedTile } from "../board/board";
 
 const gameStartMockBoard = getMockFromJson("boards/gameBegin.json");
 const gameOneTileMockBoard = getMockFromJson("boards/oneTile.json");
@@ -52,43 +50,43 @@ describe("generatePromptChoices", () => {
   it("should display correct choices after first turn", () => {
     const EXPECTED_CHOICES = [
       {
-        title: "\x1B[34mblue B\x1B[39m",
+        title: chalk.blue("blue B"),
         value: { symbol: "B", color: "blue" },
       },
       {
-        title: "\x1B[36mcyan A\x1B[39m",
+        title: chalk.cyan("cyan A"),
         value: { symbol: "A", color: "cyan" },
       },
       {
-        title: "\x1B[35mmagenta B\x1B[39m",
+        title: chalk.magenta("magenta B"),
         value: { symbol: "B", color: "magenta" },
       },
       {
-        title: "\x1B[36mcyan C\x1B[39m",
+        title: chalk.cyan("cyan C"),
         value: { symbol: "C", color: "cyan" },
       },
       {
-        title: "\x1B[36mcyan E\x1B[39m",
+        title: chalk.cyan("cyan E"),
         value: { symbol: "E", color: "cyan" },
       },
       {
-        title: "\x1B[33myellow B\x1B[39m",
+        title: chalk.yellow("yellow B"),
         value: { symbol: "B", color: "yellow" },
       },
       {
-        title: "\x1B[31mred B\x1B[39m",
+        title: chalk.red("red B"),
         value: { symbol: "B", color: "red" },
       },
       {
-        title: "\x1B[36mcyan F\x1B[39m",
+        title: chalk.cyan("cyan F"),
         value: { symbol: "F", color: "cyan" },
       },
       {
-        title: "\x1B[32mgreen B\x1B[39m",
+        title: chalk.green("green B"),
         value: { symbol: "B", color: "green" },
       },
       {
-        title: "\x1B[36mcyan D\x1B[39m",
+        title: chalk.cyan("cyan D"),
         value: { symbol: "D", color: "cyan" },
       },
       { title: "Quit", value: "q" },
