@@ -7,11 +7,11 @@ install: ## Install NodeJS dependencies with Yarn
 	yarn install
 
 # CLI
-run_cli: ## Run the CLI game with Yarn
+run-cli: ## Run the CLI game with Yarn
 	yarn workspace @kamon/cli start
 
-build_cli: ## Build all workspaces
+build-cli: ## Build all workspaces
 	yarn workspace @kamon/cli build
 	
-test_cli:
+test-cli:
 	yarn workspace @kamon/clitest 
