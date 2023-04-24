@@ -92,25 +92,24 @@ export const highlightAllowedTiles = (
       });
     });
     return newBoard;
-  } else {
-    const lastPlayedTile = getLastPlayedTile(board);
-    const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
-    playableTiles.forEach((tile) => {
-      const { x, y } = findTile(board, tile);
-      newBoard[x][y].moveAllowed = true;
-    });
-
-    return newBoard.map((line) =>
-      line.map((tile) => {
-        if (tile == null) {
-          return null;
-        }
-        let newTile = { ...tile };
-        newTile.moveAllowed = tile.moveAllowed === true;
-        return newTile;
-      })
-    );
   }
+  const lastPlayedTile = getLastPlayedTile(board);
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+  playableTiles.forEach((tile) => {
+    const { x, y } = findTile(board, tile);
+    newBoard[x][y].moveAllowed = true;
+  });
+
+  return newBoard.map((line) =>
+    line.map((tile) => {
+      if (tile == null) {
+        return null;
+      }
+      let newTile = { ...tile };
+      newTile.moveAllowed = tile.moveAllowed === true;
+      return newTile;
+    })
+  );
 };
 
 export const updateBoardState = (

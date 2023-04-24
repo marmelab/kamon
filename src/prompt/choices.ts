@@ -5,9 +5,8 @@ import { getPlayableTilesForNextMove } from "../move/move";
 
 export const generatePromptChoices = (board: Board) => {
   const lastPlayedTile = getLastPlayedTile(board);
-  let playableTiles = [];
 
-  playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
 
   const choices = flatternTiles(board).reduce((acc, tile: Tile) => {
     if (tile != undefined && tile.symbol !== NEUTRALE_TILE.symbol) {

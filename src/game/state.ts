@@ -33,15 +33,6 @@ export const checkIfGameWon = (gameState: GameState, board: Board): boolean => {
   return false;
 };
 
-export const updateAllowedTiles = (board: Board): Board => {
-  const newBoard = JSON.parse(JSON.stringify(board));
-
-  const lastPlayedTile = getLastPlayedTile(board);
-  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
-
-  return newBoard;
-};
-
 export const winGame = (winner: Player, gameState: GameState): GameState => {
   return { ...gameState, isRunning: false, winner: winner };
 };
