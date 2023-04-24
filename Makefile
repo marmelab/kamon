@@ -14,4 +14,4 @@ build-cli: ## Build all workspaces
 	yarn workspace @kamon/cli build
 	
 test-cli:
-	yarn workspace @kamon/clitest 
+	yarn workspace @kamon/cli test 
