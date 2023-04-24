@@ -2,7 +2,7 @@
   "compilerOptions": {  
   "target": "es6",  
     "module": "commonjs",  
-    "rootDir": "core/src",  
+    "rootDir": "src",  
     "outDir": "dist",  
     "sourceMap": true,  
     "resolveJsonModule": true,  
@@ -10,7 +10,7 @@
     "esModuleInterop": true  
   },  
   "include": [  
-    "core/src/**/*.ts"  
+    "src/**/*.ts"  
   ],  
   "exclude": [  
     "node_modules"  
