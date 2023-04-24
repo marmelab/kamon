@@ -7,11 +7,11 @@
     "node": "^18"
   },
   "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^10.0.1",
     "graph-data-structure": "^3.3.0",
     "nodemon": "^2.0.15",
-    "prompts": "^2.4.2",
-    "chalk": "^4.1.2",
-    "commander": "^10.0.1"
+    "prompts": "^2.4.2"
   },
   "scripts": {
     "start": "ts-node src/index.ts",
@@ -20,9 +20,6 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@babel/core": "^7.14.6",
-    "@babel/preset-env": "^7.14.7",
-    "@babel/preset-typescript": "^7.14.5",
     "@kamon/core": "1.0.0",
     "@types/blessed": "^0.1.17",
     "@types/jest": "^26.0.23",
