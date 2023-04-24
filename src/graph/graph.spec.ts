@@ -112,7 +112,7 @@ describe("find a path", () => {
     ).toEqual(getOppositePath(graph).join(","));
   });
 
-  it("should not find a path between corners", () => {
+  it("should not validate a path between two corners if it's incomplete", () => {
     const board = getMockFromJson("boards/incompletePath.json");
     const graph = updateGraphState(BLACK_PLAYER, board);
     expect(getOppositePath(graph)).toHaveLength(0);
