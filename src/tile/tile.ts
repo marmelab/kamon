@@ -172,6 +172,8 @@ interface Siblings {
   previous: TileCoordinate | null;
 }
 
+const MIDDLE_LINE_X_VALUE = 3;
+
 export const findSiblings = (
   board: Board,
   tileCoords: TileCoordinate,
@@ -180,11 +182,11 @@ export const findSiblings = (
   const siblingsCoords = {
     topLeft: {
       x: tileCoords.x - 1,
-      y: tileCoords.y,
+      y: tileCoords.x <= MIDDLE_LINE_X_VALUE ? tileCoords.y : tileCoords.y - 1,
     },
     topRight: {
       x: tileCoords.x - 1,
-      y: tileCoords.y + 1,
+      y: tileCoords.x <= MIDDLE_LINE_X_VALUE ? tileCoords.y + 1 : tileCoords.y,
     },
     next: {
       x: tileCoords.x,
@@ -192,11 +194,11 @@ export const findSiblings = (
     },
     bottomRight: {
       x: tileCoords.x + 1,
-      y: tileCoords.y + 1,
+      y: tileCoords.x >= MIDDLE_LINE_X_VALUE ? tileCoords.y + 1 : tileCoords.y,
     },
     bottomLeft: {
       x: tileCoords.x + 1,
-      y: tileCoords.y,
+      y: tileCoords.x >= MIDDLE_LINE_X_VALUE ? tileCoords.y : tileCoords.y - 1,
     },
     previous: {
       x: tileCoords.x,

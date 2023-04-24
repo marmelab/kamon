@@ -71,9 +71,7 @@ export const updateGraphState = (player: Player, board: Board) => {
         const sibling = siblings[key];
 
         if (sibling !== null) {
-          graph
-            .addEdge(getTileName(tile), getTileName(sibling))
-            .addEdge(getTileName(sibling), getTileName(tile));
+          graph.addEdge(getTileName(tile), getTileName(sibling));
         }
       }
     });
@@ -81,13 +79,18 @@ export const updateGraphState = (player: Player, board: Board) => {
   return graph;
 };
 
-export const checkOppositePath = (graph): [] => {
+export const getOppositePath = (
+  graph: ReturnType<typeof Graph>
+): string[] | [] => {
+  let path: string[] | [];
   for (const key in corners) {
     const corner = corners[key];
     try {
-      return graph.shortestPath(corner[0], corner[1]);
+      path = graph.shortestPath(corner[0], corner[1]) as string[];
+      if (path.length > 0) return path;
     } catch (error) {
-      return [];
+      path = [];
     }
   }
+  return path;
 };
