@@ -1,0 +1,9 @@
+{
+  "name": "@kamon/core",
+  "packageManager": "yarn@3.5.0",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "engines": {
+    "node": "^18"
+  }
+}

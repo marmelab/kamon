@@ -1,4 +1,5 @@
 node_modules
 dist
 .vscode
-.yarn
+.yarn/*
+!.yarn/releases

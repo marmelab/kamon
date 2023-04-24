@@ -1,4 +1,4 @@
-# Kamon Console
+# Kamon CLI
 
 Play the game of Kamon on the console
 
