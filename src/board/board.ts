@@ -11,7 +11,11 @@ import {
   Tile,
 } from "../tile/tile";
 import { GameState } from "../game/state";
-import { Action, ALLOWED_FIRST_MOVES } from "../move/move";
+import {
+  Action,
+  ALLOWED_FIRST_MOVES,
+  getPlayableTilesForNextMove,
+} from "../move/move";
 
 export type NullableTile = Tile | null;
 export type Board = NullableTile[][];
@@ -88,9 +92,24 @@ export const highlightAllowedTiles = (
       });
     });
     return newBoard;
-  } else {
-    return board;
   }
+  const lastPlayedTile = getLastPlayedTile(board);
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+  playableTiles.forEach((tile) => {
+    const { x, y } = findTile(board, tile);
+    newBoard[x][y].moveAllowed = true;
+  });
+
+  return newBoard.map((line) =>
+    line.map((tile) => {
+      if (tile == null) {
+        return null;
+      }
+      let newTile = { ...tile };
+      newTile.moveAllowed = tile.moveAllowed === true;
+      return newTile;
+    })
+  );
 };
 
 export const updateBoardState = (

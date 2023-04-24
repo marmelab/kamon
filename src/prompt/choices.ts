@@ -1,10 +1,22 @@
+import chalk from "chalk";
+import { Board, getLastPlayedTile } from "../board/board";
 import { NEUTRALE_TILE, Tile, flatternTiles } from "../tile/tile";
+import { getPlayableTilesForNextMove } from "../move/move";
 
-export const generateChoices = (gameConfig) => {
-  const choices = flatternTiles(gameConfig).reduce((acc, tile: Tile) => {
+export const generatePromptChoices = (board: Board) => {
+  const lastPlayedTile = getLastPlayedTile(board);
+
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+
+  const choices = flatternTiles(board).reduce((acc, tile: Tile) => {
     if (tile != undefined && tile.symbol !== NEUTRALE_TILE.symbol) {
+      if (playableTiles.length > 0 && !playableTiles.includes(tile)) {
+        return acc;
+      }
+
+      const inputText = `${tile.color} ${tile.symbol}`;
       acc.push({
-        title: `${tile.color} ${tile.symbol}`,
+        title: `${chalk[tile.color](inputText)}`,
         value: tile,
       });
     }

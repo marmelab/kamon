@@ -69,7 +69,7 @@ export const renderTile = (tile: Tile): string => {
   let dynamicChalk = chalk[tile.color];
 
   if (tile.moveAllowed === true) {
-    dynamicChalk = dynamicChalk.bgWhite.dim;
+    dynamicChalk = dynamicChalk.bold;
   }
 
   if (tile.playedBy != null) {
