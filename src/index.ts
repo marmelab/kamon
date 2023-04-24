@@ -33,6 +33,7 @@ const highlightedInitialBoard = highlightAllowedTiles(
 );
 renderTurnDisplay(currentGameState.turnNumber);
 renderBoard(highlightedInitialBoard);
+let updatedBoard = highlightedInitialBoard;
 
 (async () => {
   while (currentGameState.isRunning) {
@@ -44,7 +45,7 @@ renderBoard(highlightedInitialBoard);
       return;
     }
 
-    const action = await prompt(currentGameState, highlightedInitialBoard);
+    const action = await prompt(currentGameState, updatedBoard);
 
     const { gameState, allowedMove } = checkUserMove(
       gameConfig,
@@ -56,7 +57,7 @@ renderBoard(highlightedInitialBoard);
 
     currentGameState.turnNumber += 1;
 
-    let updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    updatedBoard = updateBoardState(gameConfig, action, currentGameState);
     const previousPlayer = currentGameState.currentPlayer;
     const graph = updateGraphState(
       currentGameState.currentPlayer,
@@ -66,7 +67,6 @@ renderBoard(highlightedInitialBoard);
     updatedBoard = highlightAllowedTiles(updatedBoard, currentGameState);
 
     renderTurnDisplay(currentGameState.turnNumber);
-    renderBoard(updatedBoard);
 
     if (checkOppositePath(graph).length > 0) {
       currentGameState = {
@@ -91,5 +91,6 @@ renderBoard(highlightedInitialBoard);
       currentGameState = winGame(previousPlayer, currentGameState);
       drawWinMessage(currentGameState.winner);
     }
+    renderBoard(updatedBoard);
   }
 })();

@@ -4,9 +4,16 @@ import { NEUTRALE_TILE, Tile, flatternTiles } from "../tile/tile";
 import { getPlayableTilesForNextMove } from "../move/move";
 
 export const generatePromptChoices = (board: Board) => {
+  const lastPlayedTile = getLastPlayedTile(board);
+  let playableTiles = [];
+
+  if (lastPlayedTile) {
+    playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+  }
+
   const choices = flatternTiles(board).reduce((acc, tile: Tile) => {
     if (tile != undefined && tile.symbol !== NEUTRALE_TILE.symbol) {
-      if (tile.moveAllowed === false) {
+      if (playableTiles.length > 0 && !playableTiles.includes(tile)) {
         return acc;
       }
 
