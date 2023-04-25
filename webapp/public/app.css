@@ -71,6 +71,10 @@ body {
   position: relative;
 }
 
+.board [type="submit"] {
+  display: none;
+}
+
 @keyframes gelatine {
 
   from,

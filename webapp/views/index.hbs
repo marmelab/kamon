@@ -8,22 +8,27 @@
   </head>
   <body>
     <main>
-      <div class="board">
+      <form class="board" method="get">
+        <input type="hidden" name="board" value="{{JSONstringify game}}">
+
         {{#each game}}
           <ul>
           {{#each this}}
             {{#if this}}
               <li class="tile-wrap">
-                <div class="tile tile--{{this.color}} tile--{{this.symbol}}">
+                <label class="tile tile--{{this.color}} tile--{{this.symbol}}">
                   {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
                   {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
-                </div>
+                  {{#if (isundefined this.playedBy)}}
+                    <input type="submit" name="{{this.color}}-{{this.symbol}}" value="black">
+                  {{/if}}
+                </label>
               </li>
             {{/if}}
           {{/each}}
           </ul>
         {{/each}}
-      </div>
+      </form>
     </main>
   </body>
 </html>
