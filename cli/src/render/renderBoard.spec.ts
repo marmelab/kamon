@@ -1,13 +1,5 @@
-import { Tile } from "../tile/tile";
-import { renderLine, Board, renderBoard, NullableTile } from "./board";
-
-describe("renderLine", () => {
-  it("should render a line with blank characters", () => {
-    const tile: Tile = { color: "blue", symbol: "A" };
-    const line: NullableTile[] = [undefined, tile, undefined];
-    expect(renderLine(line)).toMatch(/\s.*A.*\s/);
-  });
-});
+import { Board } from "@kamon/core/src/board/board";
+import { renderBoard } from "./renderBoard";
 
 describe("renderBoard", () => {
   it("should render a board", () => {
