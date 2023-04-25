@@ -18,9 +18,11 @@
           {{#each this}}
             {{#if this}}
               <li class="tile-wrap">
+                
                 <div class="tile tile--{{this.color}} tile--{{this.symbol}}">
                   {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
                   {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
+                  {{#if this.highlighted}}<div class="tile-highlighter"></div>{{/if}}
                 </div>
               </li>
             {{/if}}

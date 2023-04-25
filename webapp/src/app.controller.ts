@@ -33,10 +33,12 @@ export class AppController {
           {
             symbol: "D",
             color: "cyan",
+            highlighted: true,
           },
           {
             symbol: "A",
             color: "red",
+            highlighted: true,
           },
           null,
           null,
@@ -65,12 +67,14 @@ export class AppController {
             color: "green",
             playedBy: "black",
             lastPlayed: false,
+            highlighted: true,
           },
           {
             symbol: "D",
             color: "green",
             playedBy: "black",
             lastPlayed: true,
+            highlighted: true,
           },
           null,
           null,
@@ -88,6 +92,7 @@ export class AppController {
           {
             symbol: "C",
             color: "yellow",
+            highlighted: true,
           },
           {
             symbol: "B",
