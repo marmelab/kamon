@@ -1,11 +1,11 @@
-<aside class="playersHUD">
+<aside class="players-hud">
     <div class="turn-counter">
         <h6>Turn</h6>
         <em>{{game.gameState.turnNumber}}</em>
     </div>
     <div class="players">
         <div class="black">
-            <i class="material-icons">person</i>
+            <i class="fa fa-user-alt"></i>
             <div class="hexagon-container">
                 <em>{{game.gameState.remainingTiles.black}}</em>
                 {{#contains game.gameState.currentPlayer "black" }}
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="white">
-            <i class="material-icons">person_outline</i>
+            <i class="fa fa-user-alt"></i>
             <div class="hexagon-container">
                 <em>{{game.gameState.remainingTiles.white}}</em>
                 {{#contains game.gameState.currentPlayer "white" }}

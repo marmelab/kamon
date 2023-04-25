@@ -9,6 +9,8 @@
   --tile-width: 100px;
   --tile-margin: 4px;
   --tile-height: calc(var(--tile-width) * 1.1547);
+  --tile-width-xs: 1.5rem;
+  --tile-icon-height: calc(var(--tile-width-xs) * 1.1547);
   --tile-margin-bottom: calc(var(--tile-margin) - var(--tile-width)*0.2885)
 }
 

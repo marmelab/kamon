@@ -1,13 +1,11 @@
 :root{
-    --light: white;
+    --light: lightsteelblue;
     --dark: black;
-    --gray: grey;
+    --grey: grey;
     --gold: rgba(209, 209, 0, 0.767);
-    --xs: 1.5rem;
-    --hexagon-icon-height: calc(var(--xs) * 1.1547);
 }
 
-.playersHUD{
+.players-hud{
     display:flex;
     flex-direction: column;
     justify-content: space-around;
@@ -22,7 +20,7 @@ aside {
     height: 10rem;
     background: var(--light);
     border-radius: 0.4rem;
-    padding: 0.2rem;
+    padding: 0.2rem 0.4rem 0.2rem 0.4rem;
     opacity: 0.95;
     z-index: 1;
 }
@@ -41,7 +39,15 @@ aside h6 {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    margin-top: '1rem';
+    margin-top: 1rem;
+}
+
+.players .black .fa-user-alt{
+    color: black;
+}
+
+.players .black .fa-user-alt{
+    color: white;
 }
 
 .players > * {
@@ -52,12 +58,12 @@ aside h6 {
 
 .hexagon-icon{
   position: absolute;
-  width: var(--xs);
-  height: var(--hexagon-icon-height);
+  width: var(--tile-width-xs);
+  height: var(--tile-icon-height);
   font-size: 0.6rem;
   clip-path: polygon(var(--polygon-path));
   color: var(--dark);
-  background-color: var(--gray);
+  background-color: var(--grey);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -66,7 +72,7 @@ aside h6 {
   z-index: -1;
 }
 
-.turn-counter {
+.turn-counter , .hexagon-container{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -76,9 +82,6 @@ aside h6 {
 
 
 .hexagon-container {
-    display:flex;
-    justify-content: center;
-    align-items: center;
     margin-top: 0.5rem;
 }
 
