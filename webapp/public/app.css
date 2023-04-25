@@ -43,7 +43,7 @@ body {
   font-size: 0;
 }
 
-ul {
+.board>ul {
   list-style: none;
   display: flex;
   gap: 2px;
