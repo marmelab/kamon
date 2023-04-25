@@ -4,6 +4,7 @@
     --gray: grey;
     --gold: rgba(209, 209, 0, 0.767);
     --xs: 1.5rem;
+    --hexagon-icon-height: calc(var(--xs) * 1.1547);
 }
 
 .playersHUD{
@@ -52,7 +53,7 @@ aside h6 {
 .hexagon-icon{
   position: absolute;
   width: var(--xs);
-  height: calc(var(--xs) * 1.1547);
+  height: var(--hexagon-icon-height);
   font-size: 0.6rem;
   clip-path: polygon(var(--polygon-path));
   color: var(--dark);
