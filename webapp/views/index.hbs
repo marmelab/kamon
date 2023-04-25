@@ -3,9 +3,27 @@
   <head>
     <meta charset="utf-8" />
     <title>App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="app.css">
   </head>
   <body>
-    {{ message }}
+    <main>
+      <div class="board">
+        {{#each game}}
+          <ul>
+          {{#each this}}
+            {{#if this}}
+              <li class="tile-wrap">
+                <div class="tile tile--{{this.color}} tile--{{this.symbol}}">
+                  {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
+                  {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
+                </div>
+              </li>
+            {{/if}}
+          {{/each}}
+          </ul>
+        {{/each}}
+      </div>
+    </main>
   </body>
 </html>

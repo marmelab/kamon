@@ -3,9 +3,11 @@
   "license": "MIT",
   "private": true,
   "packageManager": "yarn@3.5.0",
-  "workspaces": [
-    "cli",
-    "core",
-    "webapp"
-  ]
+  "workspaces": {
+    "packages": [
+      "cli",
+      "core",
+      "webapp"
+    ]
+  }
 }
