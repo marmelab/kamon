@@ -6,6 +6,10 @@
   --blue: #6929F2;
   --yellow: #F2B807;
   --magenta: #9B72F2;
+  --tile-width: 100px;
+  --tile-margin: 4px;
+  --tile-height: calc(var(--tile-width) * 1.1547);
+  --tile-margin-bottom: calc(var(--tile-margin) - var(--tile-width)*0.2885)
 }
 
 * {
@@ -20,8 +24,6 @@ body {
   align-items: center;
   min-height: 100vh;
   background: #112b3c;
-  --s: 100px;
-  --m: 4px;
   font-family: monospace;
   background-repeat: no-repeat;
   background-image:
@@ -50,12 +52,12 @@ ul {
 }
 
 .tile {
-  width: var(--s);
-  margin: var(--m);
-  height: calc(var(--s) * 1.1547);
+  width: var(--tile-width);
+  margin: var(--tile-margin);
+  height: var(--tile-height);
   font-size: 2.5rem;
   color: white;
-  margin-bottom: calc(var(--m) - var(--s)*0.2885);
+  margin-bottom: var(--tile-margin-bottom);
   clip-path: polygon(var(--polygon-path));
   display: flex;
   justify-content: center;
@@ -175,23 +177,4 @@ ul {
   box-shadow: rgba(240, 46, 170, 0.4) -2px 2px;
   z-index: 3;
   background: rgb(34, 128, 156);
-}
-
-.corner {
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 50px;
-}
-
-.corner--green {
-  background: var(--green);
-}
-
-.corner--green:first-child {
-  top: 0;
-}
-
-.corner--green:last-child {
-  bottom: 0;
 }
