@@ -1,0 +1,180 @@
+:root {
+  --polygon-path: 50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%;
+  --cyan: #96D2D9;
+  --green: #14D990;
+  --red: #F24968;
+  --blue: #6929F2;
+  --yellow: #F2B807;
+  --magenta: #9B72F2;
+  --tile-width: 100px;
+  --tile-margin: 4px;
+  --tile-height: calc(var(--tile-width) * 1.1547);
+  --tile-margin-bottom: calc(var(--tile-margin) - var(--tile-width)*0.2885)
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #112b3c;
+  font-family: monospace;
+  background-repeat: no-repeat;
+  background-image:
+    linear-gradient(45deg, var(--blue) 20%, var(--blue) 20%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, var(--blue) 80%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(315deg, var(--yellow) 20%, var(--yellow) 20%, rgba(255, 255, 255, 0) 20%, rgba(255, 255, 255, 0) 80%, var(--yellow) 80%, rgba(255, 255, 255, 0) 100%),
+    linear-gradient(180deg, var(--green) 5%, var(--green) 5%, rgba(255, 255, 255, 0) 5%, rgba(255, 255, 255, 0) 95%, var(--green) 95%, var(--green) 100%);
+}
+
+.board {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 900px;
+  height: 900px;
+  font-size: 0;
+}
+
+.board>ul {
+  list-style: none;
+  display: flex;
+  gap: 2px;
+  position: relative;
+  top: -20px;
+}
+
+.tile {
+  width: var(--tile-width);
+  margin: var(--tile-margin);
+  height: var(--tile-height);
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: var(--tile-margin-bottom);
+  clip-path: polygon(var(--polygon-path));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 900;
+  font-family: "Font Awesome 6 Free";
+  position: relative;
+}
+
+.board li {
+  position: relative;
+}
+
+@keyframes gelatine {
+
+  from,
+  to {
+    transform: scale(1.1);
+  }
+
+  25% {
+    transform: scale(0.9, 1.1);
+  }
+
+  50% {
+    transform: scale(1.1, 0.9);
+  }
+
+  75% {
+    transform: scale(0.95, 1.05);
+  }
+}
+
+.tile:hover {
+  z-index: 2;
+  transform: scale(1.1);
+  cursor: pointer;
+  animation: gelatine 0.5s linear;
+}
+
+.tile--A::before {
+  content: "\f6e2";
+}
+
+.tile--B::before {
+  content: "\f6d5";
+}
+
+.tile--C::before {
+  content: "\f522";
+}
+
+.tile--D::before {
+  content: "\f6b7";
+}
+
+.tile--E::before {
+  content: "\f6e8";
+}
+
+.tile--F::before {
+  content: "\f11b";
+}
+
+.tile--cyan {
+  background-color: var(--cyan);
+}
+
+.tile--green {
+  background-color: var(--green);
+}
+
+.tile--red {
+  background-color: var(--red);
+}
+
+.tile--blue {
+  background-color: var(--blue);
+}
+
+.tile--yellow {
+  background-color: var(--yellow);
+}
+
+.tile--magenta {
+  background-color: var(--magenta);
+}
+
+.tile--grey,
+[class*="tile--played-by"] {
+  cursor: not-allowed;
+}
+
+[class*="tile--played-by"] {
+  border-left: solid 10px;
+  border-right: solid 10px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+
+.tile--played-by-black {
+  border-color: #000000;
+}
+
+.tile--played-by-white {
+  border-color: #ffffff;
+}
+
+.tile--last-played {
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 27px;
+  left: 7px;
+  box-shadow: rgba(240, 46, 170, 0.4) -2px 2px;
+  z-index: 3;
+  background: rgb(34, 128, 156);
+}

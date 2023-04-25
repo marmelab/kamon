@@ -16,5 +16,14 @@ build-cli: ## Build all workspaces
 test-cli:
 	yarn workspace @kamon/cli test 
 
-test-webapp:
+run-webapp:
+	yarn workspace @kamon/webapp start
+
+build-webapp:
+	yarn workspace @kamon/webapp build
+
+unit-test-webapp:
 	yarn workspace @kamon/webapp test
+
+e2e-test-webapp:
+	yarn workspace @kamon/webapp test:e2e
