@@ -1,9 +1,9 @@
-import { Controller, Get, Render, Req } from "@nestjs/common";
+import { Controller, Get, Render } from "@nestjs/common";
 @Controller()
 export class AppController {
   @Get()
   @Render("index")
-  root(@Req() req: Request) {
+  root() {
     const game = [
       [
         null,
