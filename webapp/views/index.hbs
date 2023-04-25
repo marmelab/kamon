@@ -8,8 +8,9 @@
   </head>
   <body>
     <main>
+      {{> header}}
       <div class="board">
-        {{#each game}}
+        {{#each game.board}}
           <ul>
           {{#each this}}
             {{#if this}}
