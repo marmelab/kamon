@@ -6,11 +6,15 @@ export class AppController {
   root() {
     const game = {
       gameState: {
-        currentPlayer: "black",
+        currentPlayer: "white",
         isRunning: true,
         winner: "white",
         isDraw: false,
         turnNumber: 2,
+        remainingTiles: {
+          black: 17,
+          white: 18,
+        },
         message: "Welcome to Kamon 🍱 ! Black player, you turn",
       },
       board: [
