@@ -5,9 +5,11 @@ RUN yarn install
 RUN yarn build 
 
 FROM node:18-buster-slim
-COPY --from=builder /app /app
+COPY ./ /app
+COPY --from=builder /app/dist /app/dist
 WORKDIR /app
 ENV NODE_ENV=production
+RUN yarn install
 
 EXPOSE 3000
 
