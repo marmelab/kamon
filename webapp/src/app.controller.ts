@@ -34,9 +34,10 @@ export class AppController {
   root(@Query("game-state") gameState) {
     let game;
     if (gameState) {
+      gameState = JSON.parse(gameState);
       game = {
-        state: JSON.parse(gameState).state,
-        board: JSON.parse(gameState).board,
+        state: gameState.state,
+        board: gameState.board,
       };
     } else {
       game = {
