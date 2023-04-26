@@ -7,10 +7,11 @@
         <div class="black">
             <i class="fa fa-user-alt"></i>
             <div class="hexagon-container">
-                <em>{{game.gameState.remainingTiles.black}}</em>
                 {{#contains game.gameState.currentPlayer "black" }}
+                    <em class="hexagon-text--dark">{{game.gameState.remainingTiles.black}}</em>
                     <div class="hexagon-icon hexagon-icon--gold"></div>
                 {{else}}
+                    <em class="hexagon-text">{{game.gameState.remainingTiles.black}}</em>
                     <div class="hexagon-icon"></div>
                 {{/contains}}
             </div>
@@ -18,8 +19,8 @@
         <div class="white">
             <i class="fa fa-user-alt"></i>
             <div class="hexagon-container">
-                <em>{{game.gameState.remainingTiles.white}}</em>
                 {{#contains game.gameState.currentPlayer "white" }}
+                    <em class="hexagon-text--dark">{{game.gameState.remainingTiles.white}}</em>
                     <div class="hexagon-icon hexagon-icon--gold"></div>
                 {{else}}
                     <div class="hexagon-icon"></div>
