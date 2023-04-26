@@ -8,7 +8,7 @@ RUN make build-webapp
 
 FROM node:18-buster-slim
 COPY ./ /app
-COPY --from=builder /app/webapp/dist /app/dist
+COPY --from=builder /app/webapp/dist /app/webapp/dist
 WORKDIR /app/webapp
 ENV NODE_ENV=production
 RUN yarn install && rm -rf ./.yarn/cache && rm -rf ./.yarn/install-state.gz
