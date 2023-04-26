@@ -11,7 +11,7 @@ export const createNullableTiles = (number: number): undefined[] => {
 
 export const initRandomGame = (): Board => {
   const randomSymbolCollection = getAllSymbols().sort(
-    () => Math.random() - 0.5
+    () => Math.random() - 0.5,
   );
 
   return [

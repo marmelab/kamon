@@ -1,8 +1,6 @@
 import { Board, getLastPlayedTile } from "../board/board";
 import { getPlayableTilesForNextMove } from "../move/move";
 import { BLACK_PLAYER, Player } from "../player/player";
-import { Tile } from "../tile/tile";
-import { drawWinMessage } from "../victory";
 
 export interface GameState {
   currentPlayer: Player;

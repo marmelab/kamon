@@ -1,7 +1,7 @@
 import { getMockFromJson } from "../mocks/getMock";
 import { initGameState, winGame, checkIfGameWon, checkIfDraw } from "./state";
 
-const mockFilledBoard = getMockFromJson("boards/filled.json");
+const mockFilledBoard = getMockFromJson("games/filled.json");
 
 describe("winGame", () => {
   it("should set player as winner", () => {

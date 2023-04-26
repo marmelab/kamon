@@ -36,7 +36,7 @@ export const createGraph = (board: Board) => {
     if (i >= 0 && i <= 3) {
       graph.addEdge(
         corners.yellow[0],
-        getTileName(findFirstPlayableTile(line) as PlayableTile)
+        getTileName(findFirstPlayableTile(line) as PlayableTile),
       );
       graph.addEdge(getTileName(findLastPlayableTile(line)), corners.blue[1]);
     }
@@ -44,7 +44,7 @@ export const createGraph = (board: Board) => {
     if (i >= 3 && i <= 6) {
       graph.addEdge(
         corners.blue[0],
-        getTileName(findFirstPlayableTile(line) as PlayableTile)
+        getTileName(findFirstPlayableTile(line) as PlayableTile),
       );
       graph.addEdge(getTileName(findLastPlayableTile(line)), corners.yellow[1]);
     }
@@ -80,7 +80,7 @@ export const updateGraphState = (player: Player, board: Board) => {
 };
 
 export const getOppositePath = (
-  graph: ReturnType<typeof Graph>
+  graph: ReturnType<typeof Graph>,
 ): string[] | [] => {
   let path: string[] | [];
   for (const key in corners) {
