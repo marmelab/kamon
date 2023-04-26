@@ -8,7 +8,12 @@ import {
   Render,
   Req,
 } from "@nestjs/common";
-import { initRandomGame } from "@kamon/core";
+import {
+  initRandomGame,
+  findTile,
+  initGameState,
+  updateBoardState,
+} from "@kamon/core";
 
 @Controller()
 export class AppController {
@@ -16,37 +21,15 @@ export class AppController {
   @Render("index")
   root(@Query("game-state") gameState) {
     let game;
+
     if (gameState) {
-      gameState = JSON.parse(gameState);
       game = {
-        gameState: {
-          currentPlayer: "white",
-          isRunning: true,
-          winner: "white",
-          isDraw: false,
-          turnNumber: 2,
-          remainingTiles: {
-            black: 17,
-            white: 18,
-          },
-          message: "Welcome to Kamon 🍱 ! Black player, you turn",
-        },
-        board: JSON.parse(gameState.board),
+        state: JSON.parse(gameState).state,
+        board: JSON.parse(gameState).board,
       };
     } else {
       game = {
-        gameState: {
-          currentPlayer: "white",
-          isRunning: true,
-          winner: "white",
-          isDraw: false,
-          turnNumber: 2,
-          remainingTiles: {
-            black: 17,
-            white: 18,
-          },
-          message: "Welcome to Kamon 🍱 ! Black player, you turn",
-        },
+        state: initGameState(),
         board: initRandomGame(),
       };
     }
@@ -58,10 +41,15 @@ export class AppController {
 
   @Post("/")
   @Redirect("/")
-  postGame(@Req() req: Request, @Body() gameState) {
-    // TODO: update the game state
-    gameState = JSON.parse(JSON.stringify(gameState));
-    const played = gameState.played;
+  postGame(@Req() req: Request, @Body() body) {
+    const board = JSON.parse(body["board"]);
+    const state = JSON.parse(body["state"]);
+    const [color, symbol] = body["played"].split("-");
+
+    const gameState = {
+      state,
+      board: updateBoardState(board, { symbol, color }, state),
+    };
     return { url: `/?game-state=${JSON.stringify(gameState)}` };
   }
 }

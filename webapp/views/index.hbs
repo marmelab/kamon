@@ -11,7 +11,8 @@
     <main>
       {{> HUD}}
       <form class="board" method="post">
-        <input type="hidden" name="board" value="{{JSONstringify board}}">
+        <input type="hidden" name="board" value="{{JSONstringify game.board}}">
+        <input type="hidden" name="state" value="{{JSONstringify game.state}}">
         {{#each game.board}}
           <ul>
           {{#each this}}
