@@ -16,7 +16,7 @@ describe("AppController", () => {
 
   describe("root", () => {
     it("should return 37 tiles", () => {
-      expect(appController.root()).toStrictEqual({
+      expect(appController.root("")).toStrictEqual({
         game: {
           gameState: {
             currentPlayer: "white",

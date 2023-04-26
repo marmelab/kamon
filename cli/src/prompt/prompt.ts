@@ -1,8 +1,6 @@
 import prompts from "prompts";
-import { Tile } from "@kamon/core/src/tile/tile";
+import { Tile, Board, GameState } from "@kamon/core";
 import { generatePromptChoices } from "./choices";
-import { Board } from "@kamon/core/src/board/board";
-import { GameState } from "@kamon/core/src/game/state";
 
 export const prompt = async (gameState: GameState, board: Board) => {
   const choices = generatePromptChoices(board);
