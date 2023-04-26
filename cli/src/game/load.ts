@@ -1,8 +1,7 @@
 import * as fs from "fs";
-import { Board } from "@kamon/core/src/board/board";
+import { Board, initRandomGame } from "@kamon/core";
 import chalk from "chalk";
 import { getFilePath } from "../cli";
-import { initRandomGame } from "@kamon/core/src/randomizer/randomizer";
 
 const CANNOT_READ_FILE_ERROR =
   "Can't read file; please check your -f argument point to a valid file.";
