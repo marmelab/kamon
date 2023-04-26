@@ -18,7 +18,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
         database: configService.get("POSTGRES_DATABASE"),
         autoLoadEntities: true,
         entities: ["*/*.entity.*.js"],
-        migrations: ["*/migrations/*.js"],
+        migrations: ["./**/migrations/*.js"],
         synchronize: false,
       }),
       inject: [ConfigService],

@@ -7,9 +7,9 @@ export class Game {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("json")
+  @Column("jsonb")
   board: Board;
 
-  @Column("json")
+  @Column("jsonb")
   gameState: GameState;
 }

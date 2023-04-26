@@ -12,4 +12,13 @@ export const PostgresDataSource = new DataSource({
   password: process.env["POSTGRES_PASSWORD"],
   database: process.env["POSTGRES_DATABASE"],
   entities: [Game, User],
+  migrations: ["./**/migrations/*.js"],
 });
+
+PostgresDataSource.initialize()
+  .then(() => {
+    console.log("Data Source has been initialized!");
+  })
+  .catch((err) => {
+    console.error("Error during Data Source initialization", err);
+  });
