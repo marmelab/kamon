@@ -2,11 +2,11 @@ import { handlebars } from "hbs";
 import * as helpers from "handlebars-helpers";
 
 export const registerCustomHelpers = () => {
-  handlebars.registerHelper("isdefined", function (value) {
+  handlebars.registerHelper("isDefined", function (value) {
     return value !== undefined;
   });
 
-  handlebars.registerHelper("isundefined", function (value) {
+  handlebars.registerHelper("isUndefined", function (value) {
     return value == undefined;
   });
 

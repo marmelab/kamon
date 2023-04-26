@@ -61,7 +61,7 @@
                 <label class="tile tile--{{this.color}} tile--{{this.symbol}} tile--allowed-move-{{this.moveAllowed}}">
                   {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
                   {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
-                  {{#if (isundefined this.playedBy)}}
+                  {{#if (isUndefined this.playedBy)}}
                     <input type="submit" name="played" value="{{this.color}}-{{this.symbol}}">
                   {{/if}}
                 </label>
