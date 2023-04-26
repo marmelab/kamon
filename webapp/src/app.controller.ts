@@ -25,6 +25,10 @@ import {
 
 @Controller()
 export class AppController {
+  getStateUrl(state, board) {
+    return { url: `/?game-state=${JSON.stringify({ state, board })}` };
+  }
+
   @Get("/")
   @Render("index")
   root(@Query("game-state") gameState) {
@@ -62,7 +66,7 @@ export class AppController {
     state = gameState;
 
     if (!allowedMove) {
-      return { url: `/?game-state=${JSON.stringify({ state, board })}` };
+      return this.getStateUrl(state, board);
     }
 
     state.turnNumber += 1;
@@ -71,7 +75,7 @@ export class AppController {
 
     if (checkIfDraw(state)) {
       state = setGameAsDraw(state);
-      return { url: `/?game-state=${JSON.stringify({ state, board })}` };
+      return this.getStateUrl(state, board);
     }
 
     const previousPlayer = state.currentPlayer;
@@ -86,6 +90,7 @@ export class AppController {
         winner: state.currentPlayer,
         isRunning: false,
       };
+      return this.getStateUrl(state, board);
     }
 
     state = {
@@ -99,6 +104,6 @@ export class AppController {
       state = winGame(previousPlayer, state);
     }
 
-    return { url: `/?game-state=${JSON.stringify({ state, board })}` };
+    return this.getStateUrl(state, board);
   }
 }
