@@ -1,7 +1,7 @@
 <aside class="players-hud">
     <div class="turn-counter">
-        <h6>Turn</h6>
-        <em>{{game.gameState.turnNumber}}</em>
+        <h6>Turn n°</h6>
+        <em>{{add game.gameState.turnNumber 1}}</em>
     </div>
     <div class="players">
         <div class="black">
@@ -23,6 +23,7 @@
                     <em class="hexagon-text--dark">{{game.gameState.remainingTiles.white}}</em>
                     <div class="hexagon-icon hexagon-icon--gold"></div>
                 {{else}}
+                    <em class="hexagon-text">{{game.gameState.remainingTiles.white}}</em>
                     <div class="hexagon-icon"></div>
                 {{/contains}}
             </div>

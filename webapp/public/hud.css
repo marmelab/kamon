@@ -88,7 +88,7 @@ aside h6 {
     color: var(--dark);
 }
 
-.players .black .fa-user-alt{
+.players .white .fa-user-alt{
     color: var(--light);
 }
 

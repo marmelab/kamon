@@ -9,7 +9,6 @@ import {
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { GameService } from "./game.service";
-import { Game } from "./game.entity";
 import { GameResponseTemplate } from "./game.template";
 
 @Controller()
@@ -41,6 +40,7 @@ export class GameController {
     @Req() request: Request,
   ): Promise<GameResponseTemplate> {
     const foundGame = await this.gameService.findOne(gameId);
+    console.log(foundGame.gameState);
     return { game: foundGame };
   }
 }
