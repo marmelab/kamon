@@ -2,24 +2,13 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { join } from "path";
-import * as helpers from "handlebars-helpers";
-import { handlebars } from "hbs";
 import { registerPartials } from "./partials";
-
-handlebars.registerHelper("isdefined", function (value) {
-  return value !== undefined;
-});
-
-handlebars.registerHelper("isundefined", function (value) {
-  return value == undefined;
-});
-
-helpers({
-  handlebars,
-});
+import { registerCustomHelpers } from "./hbsHelpers";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  registerCustomHelpers();
 
   app.useStaticAssets(join(__dirname, "..", "public"));
   app.setBaseViewsDir(join(__dirname, "..", "views"));
