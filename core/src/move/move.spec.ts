@@ -5,7 +5,7 @@ import { Tile } from "../tile/tile";
 import { WHITE_PLAYER } from "../player/player";
 import { getMockFromJson } from "../mocks/getMock";
 
-const mockBoard = getMockFromJson("boards/gameBegin.json");
+const mockBoard = getMockFromJson("games/gameBegin.json");
 
 describe("checkUserMove", () => {
   it("should, on first move, unallow to play first tile", () => {
@@ -14,7 +14,7 @@ describe("checkUserMove", () => {
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
-      initialGameState
+      initialGameState,
     );
     expect(allowedMove).toBeFalsy();
   });
@@ -25,7 +25,7 @@ describe("checkUserMove", () => {
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
-      initialGameState
+      initialGameState,
     );
     expect(allowedMove).toBeTruthy();
   });
@@ -43,7 +43,7 @@ describe("checkUserMove", () => {
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
-      initialGameState
+      initialGameState,
     );
     expect(allowedMove).toBeTruthy();
   });
@@ -61,7 +61,7 @@ describe("checkUserMove", () => {
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
-      initialGameState
+      initialGameState,
     );
     expect(allowedMove).toBeTruthy();
   });
@@ -79,7 +79,7 @@ describe("checkUserMove", () => {
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
       { value: tile },
-      initialGameState
+      initialGameState,
     );
     expect(allowedMove).toBeFalsy();
   });

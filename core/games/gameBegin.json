@@ -1,0 +1,180 @@
+[
+  [
+    null,
+    null,
+    null,
+    {
+      "symbol": "E",
+      "color": "blue"
+    },
+    {
+      "symbol": "A",
+      "color": "yellow"
+    },
+    {
+      "symbol": "A",
+      "color": "blue"
+    },
+    {
+      "symbol": "C",
+      "color": "blue"
+    },
+    null,
+    null,
+    null
+  ],
+  [
+    null,
+    null,
+    {
+      "symbol": "A",
+      "color": "magenta"
+    },
+    {
+      "symbol": "A",
+      "color": "cyan"
+    },
+    {
+      "symbol": "A",
+      "color": "green"
+    },
+    {
+      "symbol": "D",
+      "color": "red"
+    },
+    {
+      "symbol": "A",
+      "color": "green"
+    },
+    null,
+    null
+  ],
+  [
+    null,
+    {
+      "symbol": "E",
+      "color": "cyan"
+    },
+    {
+      "symbol": "B",
+      "color": "yellow"
+    },
+    {
+      "symbol": "E",
+      "color": "blue"
+    },
+    {
+      "symbol": "D",
+      "color": "green"
+    },
+    {
+      "symbol": "F",
+      "color": "blue"
+    },
+    {
+      "symbol": "F",
+      "color": "yellow"
+    },
+    null
+  ],
+  [
+    {
+      "symbol": "D",
+      "color": "cyan",
+      "playedBy": "black",
+      "lastPlayed": true
+    },
+    {
+      "symbol": "O",
+      "color": "grey",
+      "playedBy": null,
+      "lastPlayed": false
+    },
+    {
+      "symbol": "C",
+      "color": "green"
+    },
+    {
+      "symbol": "C",
+      "color": "cyan"
+    },
+    {
+      "symbol": "E",
+      "color": "yellow"
+    },
+    {
+      "symbol": "F",
+      "color": "blue"
+    },
+    {
+      "symbol": "B",
+      "color": "cyan"
+    }
+  ],
+  [
+    null,
+    {
+      "symbol": "B",
+      "color": "green"
+    },
+    {
+      "symbol": "D",
+      "color": "magenta"
+    },
+    {
+      "symbol": "A",
+      "color": "green"
+    },
+    {
+      "symbol": "A",
+      "color": "blue"
+    },
+    {
+      "symbol": "D",
+      "color": "yellow"
+    },
+    {
+      "symbol": "C",
+      "color": "yellow"
+    },
+    null
+  ],
+  [
+    null,
+    null,
+    {
+      "symbol": "B",
+      "color": "yellow"
+    },
+    {
+      "symbol": "E",
+      "color": "green"
+    },
+    null,
+    null
+  ],
+  [
+    null,
+    null,
+    null,
+    {
+      "symbol": "B",
+      "color": "green"
+    },
+    {
+      "symbol": "A",
+      "color": "red"
+    },
+    {
+      "symbol": "F",
+      "color": "green"
+    },
+    {
+      "symbol": "A",
+      "color": "red"
+    },
+    null,
+    null,
+    null
+  ]
+]

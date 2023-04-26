@@ -2,7 +2,7 @@ import { getMockFromJson } from "./getMock";
 
 describe("file is loaded", () => {
   it("should deserialize a json file", () => {
-    expect(getMockFromJson("boards/oneTile.json")).toEqual([
+    expect(getMockFromJson("games/oneTile.json")).toEqual([
       [
         null,
         null,

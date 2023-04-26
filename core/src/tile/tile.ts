@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { Player } from "../player/player";
 import { Board } from "../board/board";
 
@@ -50,8 +49,8 @@ export const getAllSymbols = (): Tile[] => {
         ({
           symbol,
           color,
-        } as Tile)
-    )
+        } as Tile),
+    ),
   );
 
   const flattenedTiles = flatternTiles(tiles);
@@ -63,30 +62,6 @@ export const getAllSymbols = (): Tile[] => {
     lastPlayed: false,
   };
   return [...flattenedTiles, neutralTile];
-};
-
-export const renderTile = (tile: Tile): string => {
-  let dynamicChalk = chalk[tile.color];
-
-  if (tile.moveAllowed === true) {
-    dynamicChalk = dynamicChalk.bold;
-  }
-
-  if (tile.playedBy != null) {
-    if (tile.playedBy === "black") {
-      dynamicChalk = dynamicChalk.bgGray;
-    }
-
-    if (tile.playedBy === "white") {
-      dynamicChalk = dynamicChalk.bgWhite;
-    }
-  }
-
-  if (tile.lastPlayed === true) {
-    dynamicChalk = dynamicChalk.bold.underline;
-  }
-
-  return `${dynamicChalk(tile.symbol)} `;
 };
 
 export const flatternTiles = (tiles: Tile[][]): Tile[] => {
@@ -138,17 +113,16 @@ export const findLastPLayed = (board: Board): TileCoordinate => {
 
 export const findTileByCoordinate = (
   board: Board,
-  coords: TileCoordinate
+  coords: TileCoordinate,
 ): PlayableTile => board[coords.x][coords.y] as PlayableTile;
 
 export const getTileName = (tile: PlayableTile): string =>
   `${tile.symbol}-${tile.color}`;
 
 export const findLastPlayableTile = (
-  line: Tile[]
+  line: Tile[],
 ): PlayableTile | undefined => {
-  const playable = line.findLast((tile) => tile != undefined);
-  return playable as PlayableTile | undefined;
+  return line[6] as PlayableTile;
 };
 
 export const findFirstPlayableTile = (line: Tile[]): Tile | undefined => {
@@ -177,7 +151,7 @@ const MIDDLE_LINE_X_VALUE = 3;
 export const findSiblings = (
   board: Board,
   tileCoords: TileCoordinate,
-  player?: Player
+  player?: Player,
 ): Siblings => {
   const siblingsCoords = {
     topLeft: {
