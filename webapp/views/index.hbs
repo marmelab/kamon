@@ -18,24 +18,17 @@
             <div class="black">
                 <i class="fa fa-user-alt"></i>
                 <div class="hexagon-container">
-                    {{#contains game.state.currentPlayer "black" }}
-                        <em class="hexagon-text--dark">{{game.state.remainingTiles.black}}</em>
-                        <div class="hexagon-icon hexagon-icon--gold"></div>
-                    {{else}}
-                        <em class="hexagon-text">{{game.state.remainingTiles.black}}</em>
-                        <div class="hexagon-icon"></div>
-                    {{/contains}}
+                  <em class="hexagon-text {{#if (eq game.state.currentPlayer "black") }}hexagon-text--dark{{/if}}">
+                    {{game.state.remainingTiles.black}}</em>
+                  <div class="hexagon-icon {{#if (eq game.state.currentPlayer "black") }}hexagon-icon--gold{{/if}}"></div>
                 </div>
             </div>
             <div class="white">
                 <i class="fa fa-user-alt"></i>
                 <div class="hexagon-container">
-                    {{#contains game.state.currentPlayer "white" }}
-                        <em class="hexagon-text hexagon-text--dark">{{game.state.remainingTiles.white}}</em>
-                        <div class="hexagon-icon hexagon-icon--gold"></div>
-                    {{else}}
-                        <div class="hexagon-icon"></div>
-                    {{/contains}}
+                  <em class="hexagon-text {{#if (eq game.state.currentPlayer "white") }}hexagon-text--dark{{/if}}">
+                    {{game.state.remainingTiles.white}}</em>
+                  <div class="hexagon-icon {{#if (eq game.state.currentPlayer "white") }}hexagon-icon--gold{{/if}}"></div>
                 </div>
             </div>
         </div>
@@ -61,9 +54,9 @@
                 <label class="tile tile--{{this.color}} tile--{{this.symbol}} tile--allowed-move-{{this.moveAllowed}}">
                   {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
                   {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
-                  {{#if (isUndefined this.playedBy)}}
+                  {{#unless this.playedBy}}
                     <input type="submit" name="played" value="{{this.color}}-{{this.symbol}}">
-                  {{/if}}
+                  {{/unless}}
                 </label>
               </li>
             {{/if}}
