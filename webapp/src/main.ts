@@ -2,7 +2,7 @@ import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { join } from "path";
-import helpers from "handlebars-helpers";
+import * as helpers from "handlebars-helpers";
 import { handlebars } from "hbs";
 import { registerPartials } from "./partials";
 
