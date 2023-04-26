@@ -2,23 +2,22 @@ import {
   Board,
   highlightAllowedTiles,
   updateBoardState,
-} from "@kamon/core/src/board/board";
-import { initCLI } from "./cli";
-import { loadGameConfigFromFile } from "./game/load";
-import { prompt } from "./prompt/prompt";
-import { checkUserMove } from "@kamon/core/src/move/move";
-import {
+  checkUserMove,
   checkIfGameWon,
   checkIfDraw,
   initGameState,
   winGame,
   setGameAsDraw,
-} from "@kamon/core/src/game/state";
+  getOppositePath,
+  updateGraphState,
+  switchPlayer,
+} from "@kamon/core";
+import { initCLI } from "./cli";
+import { loadGameConfigFromFile } from "./game/load";
+import { prompt } from "./prompt/prompt";
 import { renderTurnDisplay } from "./render/turn";
 import { renderWinMessage } from "./render/victory";
 import { renderDrawMessage } from "./render/draw";
-import { getOppositePath, updateGraphState } from "@kamon/core/src/graph/graph";
-import { switchPlayer } from "@kamon/core/src/player/player";
 import { renderBoard } from "./render/renderBoard";
 
 initCLI();

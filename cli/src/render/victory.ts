@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { Player } from "@kamon/core/src/player/player";
+import { Player } from "@kamon/core";
 
 export const renderWinMessage = (winner: Player) => {
   console.log("⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐⭐");

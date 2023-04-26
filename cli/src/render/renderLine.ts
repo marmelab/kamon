@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { NullableTile } from "@kamon/core/src/board/board";
+import { NullableTile } from "@kamon/core";
 import { renderTile } from "./renderTile";
 
 const BLANK_CHAR = chalk.black(" ");

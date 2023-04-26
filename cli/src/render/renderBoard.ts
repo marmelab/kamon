@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { Board } from "@kamon/core/src/board/board";
+import { Board } from "@kamon/core";
 import { renderLine } from "./renderLine";
 
 export const renderBoard = (data: Board) => {
