@@ -4,9 +4,17 @@ import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
+import { GameController } from "./game/game.controller";
+import { GameModule } from "./game/game.module";
+import { ServeStaticModule } from "@nestjs/serve-static";
+import * as path from "path";
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, "..", "public"),
+      serveRoot: "/public/",
+    }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
@@ -24,8 +32,9 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
       inject: [ConfigService],
     }),
     ConfigModule.forRoot(),
+    GameModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, GameController],
   providers: [AppService],
 })
 export class AppModule {

@@ -13,7 +13,7 @@ import {
   initGameState,
   winGame,
   setGameAsDraw,
-} from "@kamon/core/src/game/state";
+} from "@kamon/core";
 import { renderTurnDisplay } from "./render/turn";
 import { renderWinMessage } from "./render/victory";
 import { renderDrawMessage } from "./render/draw";

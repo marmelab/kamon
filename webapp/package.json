@@ -24,10 +24,12 @@
     "db:migrate": "yarn run typeorm migration:run -d src/data-source.ts"
   },
   "dependencies": {
+    "@kamon/core": "workspace:^",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.0.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/serve-static": "^3.0.1",
     "@nestjs/typeorm": "^9.0.1",
     "handlebars-helpers": "^0.10.0",
     "hbs": "^4.2.0",
