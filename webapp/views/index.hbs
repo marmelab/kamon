@@ -8,10 +8,10 @@
   </head>
   <body>
     <main>
-      <form class="board" method="get">
-        <input type="hidden" name="board" value="{{JSONstringify game}}">
+      <form class="board" method="post">
+        <input type="hidden" name="board" value="{{JSONstringify board}}">
 
-        {{#each game}}
+        {{#each board}}
           <ul>
           {{#each this}}
             {{#if this}}
@@ -20,7 +20,7 @@
                   {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
                   {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
                   {{#if (isundefined this.playedBy)}}
-                    <input type="submit" name="{{this.color}}-{{this.symbol}}" value="black">
+                    <input type="submit" name="played" value="{{this.color}}-{{this.symbol}}">
                   {{/if}}
                 </label>
               </li>
