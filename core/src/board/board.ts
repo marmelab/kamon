@@ -92,7 +92,7 @@ export const highlightAllowedTiles = (
 
 export const updateBoardState = (
   board: Board,
-  action: Action,
+  tile: PlayableTile,
   gameState: GameState,
 ): Board => {
   const { x: lastPlayedLineIndex, y: lastPlayedTileIndex } =
@@ -104,13 +104,13 @@ export const updateBoardState = (
     );
   }
 
-  const { x: lineIndex, y: tileIndex } = findTile(board, action.value as Tile);
-  const tile = playTile(
+  const { x: lineIndex, y: tileIndex } = findTile(board, tile);
+  const playedTile = playTile(
     findTileByCoordinate(board, { x: lineIndex, y: tileIndex }),
     gameState.currentPlayer,
   );
 
-  board[lineIndex][tileIndex] = tile;
+  board[lineIndex][tileIndex] = playedTile;
 
   const highlightedBoard = highlightAllowedTiles(board, gameState);
 

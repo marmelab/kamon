@@ -73,6 +73,10 @@ body {
   position: relative;
 }
 
+.board [type="submit"] {
+  display: none;
+}
+
 @keyframes gelatine {
 
   from,
@@ -151,6 +155,10 @@ body {
 .tile--grey,
 [class*="tile--played-by"] {
   cursor: not-allowed;
+}
+
+.tile--allowed-move-false {
+  opacity: 0.5;
 }
 
 [class*="tile--played-by"] {
