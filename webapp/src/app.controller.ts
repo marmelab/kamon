@@ -10,9 +10,17 @@ import {
 } from "@nestjs/common";
 import {
   initRandomGame,
-  findTile,
   initGameState,
   updateBoardState,
+  checkIfDraw,
+  setGameAsDraw,
+  checkUserMove,
+  updateGraphState,
+  highlightAllowedTiles,
+  getOppositePath,
+  switchPlayer,
+  checkIfGameWon,
+  winGame,
 } from "@kamon/core";
 
 @Controller()
@@ -21,7 +29,6 @@ export class AppController {
   @Render("index")
   root(@Query("game-state") gameState) {
     let game;
-
     if (gameState) {
       game = {
         state: JSON.parse(gameState).state,
@@ -42,14 +49,56 @@ export class AppController {
   @Post("/")
   @Redirect("/")
   postGame(@Req() req: Request, @Body() body) {
-    const board = JSON.parse(body["board"]);
-    const state = JSON.parse(body["state"]);
+    let board = JSON.parse(body["board"]);
+    let state = JSON.parse(body["state"]);
     const [color, symbol] = body["played"].split("-");
 
-    const gameState = {
+    const { gameState, allowedMove } = checkUserMove(
+      board,
+      { value: { symbol, color } },
       state,
-      board: updateBoardState(board, { symbol, color }, state),
+    );
+
+    state = gameState;
+
+    if (!allowedMove) {
+      return { url: `/?game-state=${JSON.stringify({ state, board })}` };
+    }
+
+    state.turnNumber += 1;
+
+    board = updateBoardState(board, { symbol, color }, state);
+
+    if (checkIfDraw(state)) {
+      state = setGameAsDraw(state);
+      return { url: `/?game-state=${JSON.stringify({ state, board })}` };
+    }
+
+    const previousPlayer = state.currentPlayer;
+    const graph = updateGraphState(state.currentPlayer, board);
+
+    board = highlightAllowedTiles(board, state);
+
+    if (getOppositePath(graph).length > 0) {
+      state = {
+        ...state,
+        message: `!!!!!! ${state.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
+        winner: state.currentPlayer,
+        isRunning: false,
+      };
+    }
+
+    state = {
+      ...state,
+      currentPlayer: switchPlayer(state.currentPlayer),
+      message: `${switchPlayer(state.currentPlayer).toUpperCase()}, your turn`,
     };
-    return { url: `/?game-state=${JSON.stringify(gameState)}` };
+
+    const isGameWon = checkIfGameWon(gameState, board);
+    if (isGameWon) {
+      state = winGame(previousPlayer, state);
+    }
+
+    return { url: `/?game-state=${JSON.stringify({ state, board })}` };
   }
 }

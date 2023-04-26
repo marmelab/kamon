@@ -157,6 +157,10 @@ body {
   cursor: not-allowed;
 }
 
+.tile--allowed-move-false {
+  opacity: 0.5;
+}
+
 [class*="tile--played-by"] {
   border-left: solid 10px;
   border-right: solid 10px;
