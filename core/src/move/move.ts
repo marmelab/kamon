@@ -1,4 +1,3 @@
-import chalk from "chalk";
 import { Board, getLastPlayedTile } from "../board/board";
 import { GameState } from "../game/state";
 import {
@@ -8,7 +7,6 @@ import {
   findTile,
   findTileByCoordinate,
 } from "../tile/tile";
-import { save } from "../game/save";
 
 export const ALLOWED_FIRST_MOVES = [
   [false, false, false, false, true, true, false, false, false, false],
@@ -30,7 +28,7 @@ interface CheckedUserMove {
 }
 
 const checkMoveOnFirstTurn = (
-  playedTileCoordinates: TileCoordinate
+  playedTileCoordinates: TileCoordinate,
 ): { allowedMove: boolean; message: string } => {
   const badMoveMessage = `🫠 Tile is not playable. Please choose a highlighted tile`;
 
@@ -49,11 +47,9 @@ const checkMoveOnFirstTurn = (
 
 const checkMoveAfterFirstTurn = (
   playedTile: Tile,
-  lastPlayedTile: Tile
+  lastPlayedTile: Tile,
 ): { allowedMove: boolean; message: string } => {
-  const badMoveMessage = `🫠 Tile is not playable. Please choose a playable tile. Selected tile should be of either same symbol or color than ${chalk[
-    lastPlayedTile.color
-  ](lastPlayedTile.symbol)}.`;
+  const badMoveMessage = `🫠 Tile is not playable. Please choose a playable tile. Selected tile should be of either same symbol or color than ${lastPlayedTile.color} ${lastPlayedTile.symbol}.`;
   const isColorConstraintRespected = playedTile.color === lastPlayedTile.color;
   const isSymbolConstraintRespected =
     playedTile.symbol === lastPlayedTile.symbol;
@@ -73,7 +69,7 @@ const checkMoveAfterFirstTurn = (
 
 export const getPlayableTilesForNextMove = (
   board: Board,
-  lastPlayedTile: Tile
+  lastPlayedTile: Tile,
 ): Tile[] => {
   const tiles: Tile[] = [];
 
@@ -109,7 +105,7 @@ export const getPlayableTilesForNextMove = (
 export const checkUserMove = (
   board: Board,
   action: Action,
-  gameState: GameState
+  gameState: GameState,
 ): CheckedUserMove => {
   let newAllowedMoveValue: boolean = true;
   let newMessageValue = "";
@@ -130,7 +126,6 @@ export const checkUserMove = (
   }
 
   if (action.value === "s") {
-    save(board);
     return {
       gameState,
       allowedMove: false,
@@ -158,7 +153,7 @@ export const checkUserMove = (
     const lastPlayedTile = getLastPlayedTile(board);
     let { message, allowedMove } = checkMoveAfterFirstTurn(
       playedTile,
-      lastPlayedTile
+      lastPlayedTile,
     );
     newMessageValue = message;
     newAllowedMoveValue = allowedMove;

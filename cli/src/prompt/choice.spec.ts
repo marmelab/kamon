@@ -1,11 +1,14 @@
 import chalk from "chalk";
-import { getMockFromJson } from "../mocks/getMock";
 import { generatePromptChoices } from "./choices";
+import { readFileSync } from "fs";
 
-const gameStartMockBoard = getMockFromJson("boards/gameBegin.json");
-const gameOneTileMockBoard = getMockFromJson("boards/oneTile.json");
 describe("generatePromptChoices", () => {
   it("should display correct choices for first turn", () => {
+    const gameStartMockBoard = readFileSync(
+      `${__dirname}/../../games/gameBegin.json`,
+      "utf-8",
+    );
+
     const EXPECTED_CHOICES = [
       {
         title: chalk.cyan("cyan A"),
@@ -43,11 +46,16 @@ describe("generatePromptChoices", () => {
       { title: "Save", value: "s" },
     ];
 
-    const choices = generatePromptChoices(gameStartMockBoard);
+    const choices = generatePromptChoices(JSON.parse(gameStartMockBoard));
     expect(choices).toEqual(EXPECTED_CHOICES);
   });
 
   it("should display correct choices after first turn", () => {
+    const gameOneTileMockBoard = readFileSync(
+      `${__dirname}/../../games/oneTile.json`,
+      "utf-8",
+    );
+
     const EXPECTED_CHOICES = [
       {
         title: chalk.blue("blue B"),
@@ -93,7 +101,7 @@ describe("generatePromptChoices", () => {
       { title: "Save", value: "s" },
     ];
 
-    const choices = generatePromptChoices(gameOneTileMockBoard);
+    const choices = generatePromptChoices(JSON.parse(gameOneTileMockBoard));
     expect(choices).toEqual(EXPECTED_CHOICES);
   });
 });
