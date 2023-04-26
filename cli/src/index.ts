@@ -55,7 +55,7 @@ let updatedBoard = highlightedInitialBoard;
 
     currentGameState.turnNumber += 1;
 
-    updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    updatedBoard = updateBoardState(gameConfig, action.value, currentGameState);
     const previousPlayer = currentGameState.currentPlayer;
     const graph = updateGraphState(
       currentGameState.currentPlayer,

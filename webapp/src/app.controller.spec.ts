@@ -16,41 +16,28 @@ describe("AppController", () => {
 
   describe("root", () => {
     it("should return 37 tiles", () => {
-      expect(appController.root("")).toStrictEqual({
+      const result = appController.root(
+        '{"state":{"currentPlayer":"white","isRunning":true,"winner":null,"isDraw":false,"turnNumber":3,"message":"WHITE, your turn"},"board":[[null,null,null,{"symbol":"A","color":"yellow","moveAllowed":false},{"symbol":"C","color":"blue","moveAllowed":false},{"symbol":"F","color":"red","moveAllowed":false},{"symbol":"D","color":"magenta","moveAllowed":false},null,null,null],[null,null,{"symbol":"A","color":"green","playedBy":"black","lastPlayed":false,"moveAllowed":false},{"symbol":"C","color":"green","moveAllowed":true},{"symbol":"A","color":"blue","moveAllowed":false},{"symbol":"E","color":"magenta","moveAllowed":false},{"symbol":"E","color":"green","moveAllowed":true},null,null],[null,{"symbol":"A","color":"red","moveAllowed":false},{"symbol":"E","color":"cyan","moveAllowed":false},{"symbol":"C","color":"yellow","moveAllowed":false},{"symbol":"D","color":"green","moveAllowed":true},{"symbol":"D","color":"yellow","moveAllowed":false},{"symbol":"E","color":"blue","moveAllowed":false},null],[{"symbol":"B","color":"red","moveAllowed":true},{"symbol":"C","color":"magenta","moveAllowed":false},{"symbol":"F","color":"magenta","moveAllowed":false},{"symbol":"C","color":"cyan","moveAllowed":false},{"symbol":"E","color":"red","moveAllowed":false},{"symbol":"A","color":"cyan","moveAllowed":false},{"symbol":"D","color":"cyan","moveAllowed":false}],[null,{"symbol":"F","color":"green","moveAllowed":false,"playedBy":"white","lastPlayed":false},{"symbol":"B","color":"yellow","moveAllowed":true},{"symbol":"F","color":"blue","moveAllowed":false},{"symbol":"A","color":"magenta","moveAllowed":false},{"symbol":"B","color":"magenta","moveAllowed":true},{"symbol":"B","color":"green","moveAllowed":false,"playedBy":"black","lastPlayed":true}],[null,null,{"symbol":"O","color":"grey","playedBy":null,"lastPlayed":false,"moveAllowed":false},{"symbol":"C","color":"red","moveAllowed":false},{"symbol":"E","color":"yellow","moveAllowed":false},{"symbol":"B","color":"cyan","moveAllowed":true},{"symbol":"D","color":"red","moveAllowed":false}],[null,null,null,{"symbol":"B","color":"blue","moveAllowed":true},{"symbol":"F","color":"cyan","moveAllowed":false},{"symbol":"F","color":"yellow","moveAllowed":false},{"symbol":"D","color":"blue","moveAllowed":false}]]}',
+      );
+      expect(result).toStrictEqual({
         game: {
-          gameState: {
+          state: {
             currentPlayer: "white",
             isRunning: true,
-            winner: "white",
+            winner: null,
             isDraw: false,
-            turnNumber: 2,
-            remainingTiles: {
-              black: 17,
-              white: 18,
-            },
-            message: "Welcome to Kamon 🍱 ! Black player, you turn",
+            turnNumber: 3,
+            message: "WHITE, your turn",
           },
           board: [
             [
               null,
               null,
               null,
-              {
-                symbol: "B",
-                color: "cyan",
-              },
-              {
-                symbol: "A",
-                color: "green",
-              },
-              {
-                symbol: "D",
-                color: "cyan",
-              },
-              {
-                symbol: "A",
-                color: "red",
-              },
+              { symbol: "A", color: "yellow", moveAllowed: false },
+              { symbol: "C", color: "blue", moveAllowed: false },
+              { symbol: "F", color: "red", moveAllowed: false },
+              { symbol: "D", color: "magenta", moveAllowed: false },
               null,
               null,
               null,
@@ -59,182 +46,82 @@ describe("AppController", () => {
               null,
               null,
               {
-                symbol: "E",
-                color: "magenta",
-                playedBy: "white",
-              },
-              {
-                symbol: "F",
-                color: "blue",
-                playedBy: "white",
-              },
-              {
-                symbol: "C",
-                color: "green",
-                playedBy: "white",
-              },
-              {
-                symbol: "E",
+                symbol: "A",
                 color: "green",
                 playedBy: "black",
                 lastPlayed: false,
+                moveAllowed: false,
               },
+              { symbol: "C", color: "green", moveAllowed: true },
+              { symbol: "A", color: "blue", moveAllowed: false },
+              { symbol: "E", color: "magenta", moveAllowed: false },
+              { symbol: "E", color: "green", moveAllowed: true },
+              null,
+              null,
+            ],
+            [
+              null,
+              { symbol: "A", color: "red", moveAllowed: false },
+              { symbol: "E", color: "cyan", moveAllowed: false },
+              { symbol: "C", color: "yellow", moveAllowed: false },
+              { symbol: "D", color: "green", moveAllowed: true },
+              { symbol: "D", color: "yellow", moveAllowed: false },
+              { symbol: "E", color: "blue", moveAllowed: false },
+              null,
+            ],
+            [
+              { symbol: "B", color: "red", moveAllowed: true },
+              { symbol: "C", color: "magenta", moveAllowed: false },
+              { symbol: "F", color: "magenta", moveAllowed: false },
+              { symbol: "C", color: "cyan", moveAllowed: false },
+              { symbol: "E", color: "red", moveAllowed: false },
+              { symbol: "A", color: "cyan", moveAllowed: false },
+              { symbol: "D", color: "cyan", moveAllowed: false },
+            ],
+            [
+              null,
               {
-                symbol: "D",
+                symbol: "F",
                 color: "green",
+                moveAllowed: false,
+                playedBy: "white",
+                lastPlayed: false,
+              },
+              { symbol: "B", color: "yellow", moveAllowed: true },
+              { symbol: "F", color: "blue", moveAllowed: false },
+              { symbol: "A", color: "magenta", moveAllowed: false },
+              { symbol: "B", color: "magenta", moveAllowed: true },
+              {
+                symbol: "B",
+                color: "green",
+                moveAllowed: false,
                 playedBy: "black",
                 lastPlayed: true,
               },
-              null,
-              null,
             ],
             [
               null,
-              {
-                symbol: "C",
-                color: "cyan",
-              },
-              {
-                symbol: "D",
-                color: "blue",
-              },
-              {
-                symbol: "C",
-                color: "yellow",
-              },
-              {
-                symbol: "B",
-                color: "yellow",
-                playedBy: "black",
-                lastPlayed: false,
-              },
-              {
-                symbol: "B",
-                color: "blue",
-              },
-              {
-                symbol: "A",
-                color: "cyan",
-              },
               null,
-            ],
-            [
-              {
-                symbol: "D",
-                color: "red",
-              },
-              {
-                symbol: "F",
-                color: "cyan",
-              },
-              {
-                symbol: "B",
-                color: "red",
-              },
-              {
-                symbol: "C",
-                color: "magenta",
-                playedBy: "black",
-                lastPlayed: false,
-              },
-              {
-                symbol: "E",
-                color: "yellow",
-              },
               {
                 symbol: "O",
                 color: "grey",
                 playedBy: null,
                 lastPlayed: false,
+                moveAllowed: false,
               },
-              {
-                symbol: "A",
-                color: "yellow",
-              },
-            ],
-            [
-              null,
-              {
-                symbol: "F",
-                color: "yellow",
-              },
-              {
-                symbol: "E",
-                color: "red",
-              },
-              {
-                symbol: "E",
-                color: "blue",
-                playedBy: "black",
-                lastPlayed: false,
-              },
-              {
-                symbol: "F",
-                color: "green",
-              },
-              {
-                symbol: "D",
-                color: "yellow",
-              },
-              {
-                symbol: "F",
-                color: "magenta",
-              },
-              null,
-            ],
-            [
-              null,
-              null,
-              {
-                symbol: "A",
-                color: "blue",
-                playedBy: "black",
-                lastPlayed: false,
-              },
-              {
-                symbol: "D",
-                color: "magenta",
-                playedBy: "black",
-                lastPlayed: false,
-              },
-              {
-                symbol: "A",
-                color: "magenta",
-              },
-              {
-                symbol: "B",
-                color: "magenta",
-              },
-              {
-                symbol: "B",
-                color: "green",
-              },
-              null,
-              null,
+              { symbol: "C", color: "red", moveAllowed: false },
+              { symbol: "E", color: "yellow", moveAllowed: false },
+              { symbol: "B", color: "cyan", moveAllowed: true },
+              { symbol: "D", color: "red", moveAllowed: false },
             ],
             [
               null,
               null,
               null,
-              {
-                symbol: "C",
-                color: "blue",
-              },
-              {
-                symbol: "E",
-                color: "cyan",
-              },
-              {
-                symbol: "F",
-                color: "red",
-              },
-              {
-                symbol: "C",
-                color: "red",
-              },
-              null,
-              null,
-              null,
+              { symbol: "B", color: "blue", moveAllowed: true },
+              { symbol: "F", color: "cyan", moveAllowed: false },
+              { symbol: "F", color: "yellow", moveAllowed: false },
+              { symbol: "D", color: "blue", moveAllowed: false },
             ],
           ],
         },

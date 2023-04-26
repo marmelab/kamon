@@ -8,45 +8,40 @@ import {
   Render,
   Req,
 } from "@nestjs/common";
+import {
+  initRandomGame,
+  initGameState,
+  updateBoardState,
+  checkIfDraw,
+  setGameAsDraw,
+  checkUserMove,
+  updateGraphState,
+  highlightAllowedTiles,
+  getOppositePath,
+  switchPlayer,
+  checkIfGameWon,
+  winGame,
+} from "@kamon/core";
 
-import { initRandomGame } from "@kamon/core";
 @Controller()
 export class AppController {
-  @Get()
+  getStateUrl(state, board) {
+    return { url: `/?game-state=${JSON.stringify({ state, board })}` };
+  }
+
+  @Get("/")
   @Render("index")
   root(@Query("game-state") gameState) {
     let game;
     if (gameState) {
       gameState = JSON.parse(gameState);
       game = {
-        gameState: {
-          currentPlayer: "white",
-          isRunning: true,
-          winner: "white",
-          isDraw: false,
-          turnNumber: 2,
-          remainingTiles: {
-            black: 17,
-            white: 18,
-          },
-          message: "Welcome to Kamon 🍱 ! Black player, you turn",
-        },
-        board: JSON.parse(gameState.board),
+        state: gameState.state,
+        board: gameState.board,
       };
     } else {
       game = {
-        gameState: {
-          currentPlayer: "white",
-          isRunning: true,
-          winner: "white",
-          isDraw: false,
-          turnNumber: 2,
-          remainingTiles: {
-            black: 17,
-            white: 18,
-          },
-          message: "Welcome to Kamon 🍱 ! Black player, you turn",
-        },
+        state: initGameState(),
         board: initRandomGame(),
       };
     }
@@ -58,10 +53,58 @@ export class AppController {
 
   @Post("/")
   @Redirect("/")
-  postGame(@Req() req: Request, @Body() gameState) {
-    // TODO: update the game state
-    gameState = JSON.parse(JSON.stringify(gameState));
-    const played = gameState.played;
-    return { url: `/?game-state=${JSON.stringify(gameState)}` };
+  postGame(@Req() req: Request, @Body() body) {
+    let board = JSON.parse(body["board"]);
+    let state = JSON.parse(body["state"]);
+    const [color, symbol] = body["played"].split("-");
+
+    const { gameState, allowedMove } = checkUserMove(
+      board,
+      { value: { symbol, color } },
+      state,
+    );
+
+    state = gameState;
+
+    if (!allowedMove) {
+      return this.getStateUrl(state, board);
+    }
+
+    state.turnNumber += 1;
+
+    board = updateBoardState(board, { symbol, color }, state);
+
+    if (checkIfDraw(state)) {
+      state = setGameAsDraw(state);
+      return this.getStateUrl(state, board);
+    }
+
+    const previousPlayer = state.currentPlayer;
+    const graph = updateGraphState(state.currentPlayer, board);
+
+    board = highlightAllowedTiles(board, state);
+
+    if (getOppositePath(graph).length > 0) {
+      state = {
+        ...state,
+        message: `!!!!!! ${state.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
+        winner: state.currentPlayer,
+        isRunning: false,
+      };
+      return this.getStateUrl(state, board);
+    }
+
+    state = {
+      ...state,
+      currentPlayer: switchPlayer(state.currentPlayer),
+      message: `${switchPlayer(state.currentPlayer).toUpperCase()}, your turn`,
+    };
+
+    const isGameWon = checkIfGameWon(gameState, board);
+    if (isGameWon) {
+      state = winGame(previousPlayer, state);
+    }
+
+    return this.getStateUrl(state, board);
   }
 }
