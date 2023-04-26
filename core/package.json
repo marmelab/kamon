@@ -2,7 +2,6 @@
   "name": "@kamon/core",
   "packageManager": "yarn@3.5.0",
   "version": "1.0.0",
-  "main": "src/index.js",
   "engines": {
     "node": "^18"
   },
