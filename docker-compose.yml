@@ -1,8 +1,0 @@
-version: '3'
-services:
-  kamon_server:
-    container_name: kamon_server
-    build:
-      context: ./webapp
-    ports:
-      - 80:3000
