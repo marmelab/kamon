@@ -8,6 +8,8 @@ import { GameController } from "./game/game.controller";
 import { GameModule } from "./game/game.module";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import * as path from "path";
+import { AuthModule } from "./auth/auth.module";
+import { AuthController } from "./auth/auth.controller";
 
 @Module({
   imports: [
@@ -33,8 +35,9 @@ import * as path from "path";
     }),
     ConfigModule.forRoot(),
     GameModule,
+    AuthModule,
   ],
-  controllers: [AppController, GameController],
+  controllers: [AppController, GameController, AuthController],
   providers: [AppService],
 })
 export class AppModule {
