@@ -26,7 +26,7 @@ export class GameService {
     if (foundGame == null) return;
 
     foundGame.board = board;
-    this.gameRepository.save(foundGame);
+    await this.gameRepository.save(foundGame);
 
     return foundGame;
   }
@@ -39,7 +39,7 @@ export class GameService {
     if (foundGame == null) return;
 
     foundGame.gameState = gameState;
-    this.gameRepository.save(foundGame);
+    await this.gameRepository.save(foundGame);
 
     return foundGame;
   }

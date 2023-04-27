@@ -6864,8 +6864,6 @@ __metadata:
 "kamon@workspace:.":
   version: 0.0.0-use.local
   resolution: "kamon@workspace:."
-  dependencies:
-    "@kamon/core": "workspace:^"
   languageName: unknown
   linkType: soft
 

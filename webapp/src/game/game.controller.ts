@@ -48,10 +48,12 @@ export class GameController {
     const board = highlightAllowedTiles(newGame.board, newGame.gameState);
     await this.gameService.updateBoard(newGame.id, board);
 
-    return response.redirect(JSON.stringify(newGame.id));
+    return response.redirect(
+      `/game/${JSON.stringify(newGame.id)}/${newGame.gameState.turnNumber}`,
+    );
   }
 
-  @Get("/game/:gameId")
+  @Get("/game/:gameId/:turnNumber")
   @Render("index")
   async renderGame(
     @Param("gameId", ParseIntPipe) gameId: number,
@@ -70,7 +72,7 @@ export class GameController {
     return { game: updatedGame };
   }
 
-  @Post("/game/:gameId")
+  @Post("/game/:gameId/:turnNumber")
   @Render("index")
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
@@ -79,6 +81,9 @@ export class GameController {
     @Body() body,
   ): Promise<void> {
     const foundGame = await this.gameService.findOne(gameId);
+    response.redirect(
+      `/game/${JSON.stringify(foundGame.id)}/${foundGame.gameState.turnNumber}`,
+    );
 
     let board = JSON.parse(body["board"]);
     let state = JSON.parse(body["state"]);
@@ -95,8 +100,7 @@ export class GameController {
     if (!allowedMove) {
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      response.redirect(JSON.stringify(foundGame.id));
-      return;
+      response.send();
     }
 
     state.turnNumber += 1;
@@ -108,8 +112,7 @@ export class GameController {
       state = setGameAsDraw(state);
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      response.redirect(JSON.stringify(foundGame.id));
-      return;
+      response.send();
     }
 
     const previousPlayer = state.currentPlayer;
@@ -124,8 +127,7 @@ export class GameController {
       };
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      response.redirect(JSON.stringify(foundGame.id));
-      return;
+      return response.redirect(JSON.stringify(foundGame.id));
     }
 
     state = {
@@ -141,6 +143,6 @@ export class GameController {
 
     await this.gameService.updateBoard(foundGame.id, board);
     await this.gameService.updateGameState(foundGame.id, state);
-    response.redirect(JSON.stringify(foundGame.id));
+    return response.redirect(JSON.stringify(foundGame.id));
   }
 }
