@@ -3,6 +3,6 @@ services:
   kamon_server:
     container_name: kamon_server
     build:
-      context: ./webapp
+      context: ./
     ports:
       - 80:3000
