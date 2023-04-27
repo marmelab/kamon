@@ -61,7 +61,7 @@ jobs:
           cat .env
 
       - name: Run postgres docker
-        run: docker-compose -f docker-compose.dev.yml up
+        run: docker-compose -f docker-compose.dev.yml up -d
 
       - name: Run Webapp unit tests
         run: make unit-test-webapp
