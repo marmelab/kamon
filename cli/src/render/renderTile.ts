@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { Tile } from "@kamon/core/src/tile/tile";
+import { Tile } from "@kamon/core";
 
 export const renderTile = (tile: Tile): string => {
   let dynamicChalk = chalk[tile.color];

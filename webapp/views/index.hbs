@@ -9,23 +9,61 @@
   </head>
   <body>
     <main>
-      {{> HUD}}
-      <div class="board">
+      <aside class="players-hud">
+        <div class="turn-counter">
+            <h6>Turn</h6>
+            <em>{{game.state.turnNumber}}</em>
+        </div>
+        <div class="players">
+            <div class="black">
+                <i class="fa fa-user-alt"></i>
+                <div class="hexagon-container">
+                  <em class="hexagon-text {{#if (eq game.state.currentPlayer "black") }}hexagon-text--dark{{/if}}">
+                    {{game.state.remainingTiles.black}}</em>
+                  <div class="hexagon-icon {{#if (eq game.state.currentPlayer "black") }}hexagon-icon--gold{{/if}}"></div>
+                </div>
+            </div>
+            <div class="white">
+                <i class="fa fa-user-alt"></i>
+                <div class="hexagon-container">
+                  <em class="hexagon-text {{#if (eq game.state.currentPlayer "white") }}hexagon-text--dark{{/if}}">
+                    {{game.state.remainingTiles.white}}</em>
+                  <div class="hexagon-icon {{#if (eq game.state.currentPlayer "white") }}hexagon-icon--gold{{/if}}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="message">
+            {{#if game.state.winner}}
+                <div>{{game.state.winner}} won !</div>
+            {{else if game.state.draw}}
+                <div>Draw</div>
+            {{else}}
+                <div>Currently playing: {{game.state.currentPlayer}}</div>
+            {{/if}}
+            {{game.state.message}}
+        </div>
+      </aside>
+      <form class="board" method="post">
+        <input type="hidden" name="board" value="{{JSONstringify game.board}}">
+        <input type="hidden" name="state" value="{{JSONstringify game.state}}">
         {{#each game.board}}
           <ul>
           {{#each this}}
             {{#if this}}
               <li class="tile-wrap">
-                <div class="tile tile--{{this.color}} tile--{{this.symbol}}">
+                <label class="tile tile--{{this.color}} tile--{{this.symbol}} tile--allowed-move-{{this.moveAllowed}}">
                   {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
                   {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
-                </div>
+                  {{#unless this.playedBy}}
+                    <input type="submit" name="played" value="{{this.color}}-{{this.symbol}}">
+                  {{/unless}}
+                </label>
               </li>
             {{/if}}
           {{/each}}
           </ul>
         {{/each}}
-      </div>
+      </form>
     </main>
   </body>
 </html>
