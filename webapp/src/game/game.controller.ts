@@ -95,7 +95,8 @@ export class GameController {
     if (!allowedMove) {
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      return response.redirect(JSON.stringify(foundGame.id));
+      response.redirect(JSON.stringify(foundGame.id));
+      return;
     }
 
     state.turnNumber += 1;
@@ -107,7 +108,8 @@ export class GameController {
       state = setGameAsDraw(state);
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      return response.redirect(JSON.stringify(foundGame.id));
+      response.redirect(JSON.stringify(foundGame.id));
+      return;
     }
 
     const previousPlayer = state.currentPlayer;
@@ -122,7 +124,8 @@ export class GameController {
       };
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      return response.redirect(JSON.stringify(foundGame.id));
+      response.redirect(JSON.stringify(foundGame.id));
+      return;
     }
 
     state = {
@@ -138,6 +141,6 @@ export class GameController {
 
     await this.gameService.updateBoard(foundGame.id, board);
     await this.gameService.updateGameState(foundGame.id, state);
-    return response.redirect(JSON.stringify(foundGame.id));
+    response.redirect(JSON.stringify(foundGame.id));
   }
 }

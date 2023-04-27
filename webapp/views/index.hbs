@@ -9,6 +9,9 @@
   </head>
   <body>
     <main>
+      {{#if game.gameState.winner}}
+        {{> winMessage}}
+      {{/if}}
       {{> HUD game=game}}
       <form class="board" method="post">
         <input type="hidden" name="board" value="{{JSONstringify game.board}}">
