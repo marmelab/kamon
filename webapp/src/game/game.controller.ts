@@ -24,7 +24,6 @@ import {
   checkIfGameWon,
   winGame,
   updateRemainingTiles,
-  findTile,
 } from "@kamon/core";
 
 @Controller()
