@@ -53,3 +53,34 @@ jobs:
 
       - name: Run Webapp e2e tests
         run: make e2e-test-webapp
+
+  deploy:
+    name: Deploy
+    if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Create SSH key
+      run: |
+        mkdir -p ~/.ssh/
+        echo "$SSH_KEY" > ~/.ssh/aws.key
+        chmod 400 ~/.ssh/aws.key
+        cat >>~/.ssh/config <<END
+        Host aws
+          HostName $SSH_HOST
+          User $SSH_USER
+          IdentityFile ~/.ssh/aws.key
+          StrictHostKeyChecking no
+        END
+      shell: bash
+      env:
+        SSH_USER: ${{ secrets.AWS_SSH_USER }}
+        SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
+        SSH_HOST: ${{ secrets.AWS_SSH_HOST }}
+
+    - name: Deploy
+      run: ssh aws 'cd ~/kamon && git pull && docker compose stop && docker compose build && docker compose up -d' 
