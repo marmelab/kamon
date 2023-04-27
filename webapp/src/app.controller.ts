@@ -1,7 +1,7 @@
 import { Controller, Get, Render } from "@nestjs/common";
 @Controller()
 export class AppController {
-  @Get()
+  @Get("/game/example")
   @Render("index")
   root() {
     const game = {

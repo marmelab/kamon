@@ -1,8 +1,33 @@
-version: '3'
+version: "3"
 services:
+  postgres_kamon:
+    container_name: postgres_kamon
+    image: postgres:15.2
+    environment:
+      POSTGRES_DB: kamon_db
+      POSTGRES_USER: postgres-kamon
+      POSTGRES_PASSWORD: test
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5555:5432
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   kamon_server:
     container_name: kamon_server
     build:
-      context: ./webapp
+      context: ./
     ports:
-      - 80:3000
+      - 8081:3000
+    depends_on:
+      postgres_kamon:
+        condition: service_healthy
+
+volumes:
+  postgres:

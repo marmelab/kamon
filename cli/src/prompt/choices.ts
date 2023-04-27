@@ -1,7 +1,7 @@
 import chalk from "chalk";
-import { Board, getLastPlayedTile } from "../board/board";
-import { NEUTRALE_TILE, Tile, flatternTiles } from "../tile/tile";
-import { getPlayableTilesForNextMove } from "../move/move";
+import { Board, getLastPlayedTile } from "@kamon/core/src/board/board";
+import { NEUTRALE_TILE, Tile, flatternTiles } from "@kamon/core/src/tile/tile";
+import { getPlayableTilesForNextMove } from "@kamon/core/src/move/move";
 
 export const generatePromptChoices = (board: Board) => {
   const lastPlayedTile = getLastPlayedTile(board);

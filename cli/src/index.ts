@@ -1,26 +1,25 @@
 import {
   Board,
-  getLastPlayedTile,
   highlightAllowedTiles,
-  renderBoard,
   updateBoardState,
-} from "./board/board";
+} from "@kamon/core/src/board/board";
 import { initCLI } from "./cli";
-import { loadGameConfigFromFile } from "./gameLoader";
+import { loadGameConfigFromFile } from "./game/load";
 import { prompt } from "./prompt/prompt";
-import { getPlayableTilesForNextMove, checkUserMove } from "./move/move";
+import { checkUserMove } from "@kamon/core/src/move/move";
 import {
   checkIfGameWon,
   checkIfDraw,
   initGameState,
   winGame,
   setGameAsDraw,
-} from "./game/state";
-import { renderTurnDisplay } from "./turn";
-import { drawWinMessage } from "./victory";
-import { renderDrawMessage } from "./draw";
-import { getOppositePath, updateGraphState } from "./graph/graph";
-import { switchPlayer } from "./player/player";
+} from "@kamon/core";
+import { renderTurnDisplay } from "./render/turn";
+import { renderWinMessage } from "./render/victory";
+import { renderDrawMessage } from "./render/draw";
+import { getOppositePath, updateGraphState } from "@kamon/core/src/graph/graph";
+import { switchPlayer } from "@kamon/core/src/player/player";
+import { renderBoard } from "./render/renderBoard";
 
 initCLI();
 
@@ -29,7 +28,7 @@ const gameConfig: Board = loadGameConfigFromFile();
 let currentGameState = initGameState();
 const highlightedInitialBoard = highlightAllowedTiles(
   gameConfig,
-  currentGameState
+  currentGameState,
 );
 renderTurnDisplay(currentGameState.turnNumber);
 renderBoard(highlightedInitialBoard);
@@ -50,7 +49,7 @@ let updatedBoard = highlightedInitialBoard;
     const { gameState, allowedMove } = checkUserMove(
       gameConfig,
       action,
-      currentGameState
+      currentGameState,
     );
     currentGameState = gameState;
     if (!allowedMove) continue;
@@ -61,7 +60,7 @@ let updatedBoard = highlightedInitialBoard;
     const previousPlayer = currentGameState.currentPlayer;
     const graph = updateGraphState(
       currentGameState.currentPlayer,
-      updatedBoard
+      updatedBoard,
     );
 
     updatedBoard = highlightAllowedTiles(updatedBoard, currentGameState);
@@ -82,14 +81,14 @@ let updatedBoard = highlightedInitialBoard;
       ...currentGameState,
       currentPlayer: switchPlayer(currentGameState.currentPlayer),
       message: `${switchPlayer(
-        currentGameState.currentPlayer
+        currentGameState.currentPlayer,
       ).toUpperCase()}, your turn`,
     };
 
     const isGameWon = checkIfGameWon(gameState, updatedBoard);
     if (isGameWon) {
       currentGameState = winGame(previousPlayer, currentGameState);
-      drawWinMessage(currentGameState.winner);
+      renderWinMessage(currentGameState.winner);
     }
     renderBoard(updatedBoard);
   }
