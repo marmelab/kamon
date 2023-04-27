@@ -9,7 +9,7 @@
   --tile-width: 100px;
   --tile-margin: 4px;
   --tile-height: calc(var(--tile-width) * 1.1547);
-  --tile-width-xs: 1.7rem;
+  --tile-width-xs: 2.7rem;
   --tile-icon-height: calc(var(--tile-width-xs) * 1.1547);
   --tile-margin-bottom: calc(var(--tile-margin) - var(--tile-width)*0.2885);
   --light: rgb(216, 227, 241);
@@ -71,28 +71,10 @@ main {
   overflow: hidden;
 }
 
-.players-hud::before {
-  content: '';
-  background: rgba(255, 255, 255, 0.95);
-  width: 18%;
-  height: 100%;
-  top: 0%;
-  transform: skew(38deg);
-  position: absolute;
-  left: -125%;
-  transition: left var(--transition-hud-shimmer-duration) var(--transition-hud-shimmer-easing);
-  z-index: -3;
-}
-
-.players-hud:hover::before {
-  left: 200%;
-}
-
 .players-hud:hover {
   transform: rotateY(-3deg);
   backdrop-filter: blur(10px);
 }
-
 
 .players-hud em {
   font-size: 1.2rem;
@@ -115,12 +97,19 @@ main {
   width: 100%;
 }
 
+.player-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+  }
+
 .players .black .fa-user-alt {
   color: var(--dark);
 }
 
 .players .black .fa-user-alt {
-  color: var(--light);
+  color: white;
 }
 
 .players-hud .hexagon-icon {
@@ -302,9 +291,10 @@ main {
   cursor: not-allowed;
 }
 
-.tile--allowed-move-false {
+[data-allowed-move=false] {
   opacity: 0.5;
 }
+
 
 [class*="tile--played-by"] {
   border-left: solid 10px;

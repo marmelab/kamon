@@ -48,32 +48,23 @@ export class GameController {
     const board = highlightAllowedTiles(newGame.board, newGame.gameState);
     await this.gameService.updateBoard(newGame.id, board);
 
-    return response.redirect(
-      `/game/${JSON.stringify(newGame.id)}/${newGame.gameState.turnNumber}`,
-    );
+    return response.redirect(`/game/${JSON.stringify(newGame.id)}`);
   }
 
-  @Get("/game/:gameId/:turnNumber")
+  @Get("/game/:gameId")
   @Render("index")
   async renderGame(
     @Param("gameId", ParseIntPipe) gameId: number,
-    @Res() response: Response,
-    @Req() request: Request,
   ): Promise<GameResponseTemplate> {
     const foundGame = await this.gameService.findOne(gameId);
 
-    highlightAllowedTiles(foundGame.board, foundGame.gameState);
+    const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
 
-    await this.gameService.updateBoard(foundGame.id, foundGame.board);
-    const updatedGame = await this.gameService.updateGameState(
-      foundGame.id,
-      foundGame.gameState,
-    );
+    const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
     return { game: updatedGame };
   }
 
-  @Post("/game/:gameId/:turnNumber")
-  @Render("index")
+  @Post("/game/:gameId")
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
@@ -81,9 +72,6 @@ export class GameController {
     @Body() body,
   ): Promise<void> {
     const foundGame = await this.gameService.findOne(gameId);
-    response.redirect(
-      `/game/${JSON.stringify(foundGame.id)}/${foundGame.gameState.turnNumber}`,
-    );
 
     let board = JSON.parse(body["board"]);
     let state = JSON.parse(body["state"]);
@@ -100,7 +88,7 @@ export class GameController {
     if (!allowedMove) {
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      response.send();
+      return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
     state.turnNumber += 1;
@@ -112,7 +100,7 @@ export class GameController {
       state = setGameAsDraw(state);
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      response.send();
+      return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
     const previousPlayer = state.currentPlayer;
@@ -127,7 +115,7 @@ export class GameController {
       };
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      return response.redirect(JSON.stringify(foundGame.id));
+      return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
     state = {
@@ -143,6 +131,6 @@ export class GameController {
 
     await this.gameService.updateBoard(foundGame.id, board);
     await this.gameService.updateGameState(foundGame.id, state);
-    return response.redirect(JSON.stringify(foundGame.id));
+    return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
   }
 }
