@@ -20,7 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: make install
-      
+
       - name: Building CORE
         run: make build-core
 
@@ -38,15 +38,29 @@ jobs:
 
       - name: Install dependencies
         run: make install
-      
+
       - name: Building CORE
         run: make build-core
-      
+
       - name: Run CORE tests
         run: make test-core
 
       - name: Run CLI tests
         run: make test-cli
+
+      - name: Create .env file
+        run: |
+          touch .env
+          echo POSTGRES_HOST=${{POSTGRES_HOST}} > .env
+          echo POSTGRES_PORT=${{POSTGRES_PORT}} > .env
+          echo POSTGRES_USER=${{POSTGRES_USER}} > .env
+          echo POSTGRES_PASSWORD=${{POSTGRES_PASSWORD}} > .env
+          echo POSTGRES_DATABASE=${{POSTGRES_DATABASE}} > .env
+          echo PORT=${{PORT}} > .env
+          echo RUN_MIGRATIONS= ${{RUN_MIGRATIONS}} > .env
+
+      - name: Run postgres docker
+        run: docker-compose -f docker-compose.dev.yml up
 
       - name: Run Webapp unit tests
         run: make unit-test-webapp
