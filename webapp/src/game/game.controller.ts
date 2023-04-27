@@ -38,8 +38,7 @@ export class GameController {
     @Req() request: Request,
   ): Promise<void> {}
 
-  @Get("/game/create")
-  @Render("launchGamePage")
+  @Post("/game/create")
   async createNewGame(
     @Res() response: Response,
     @Req() request: Request,
