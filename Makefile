@@ -6,6 +6,8 @@ help: ## Outputs this help screen
 install: ## Install NodeJS dependencies with Yarn 
 	yarn install && yarn workspace @kamon/cli install && yarn workspace @kamon/webapp install && yarn workspace @kamon/core install
 
+build: build-core build-webapp
+
 build-core:
 	yarn workspace @kamon/core build
 
