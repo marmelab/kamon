@@ -51,17 +51,20 @@ jobs:
       - name: Create .env file
         run: |
           touch .env
-          echo "POSTGRES_HOST=$POSTGRES_HOST" >> .env
-          echo "POSTGRES_PORT=$POSTGRES_PORT" >> .env
-          echo "POSTGRES_USER=$POSTGRES_USER" >> .env
-          echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
-          echo "POSTGRES_DATABASE=$POSTGRES_DATABASE" >> .env
-          echo "PORT=$PORT" >> .env
-          echo "RUN_MIGRATIONS= $RUN_MIGRATIONS" >> .env
+          echo "POSTGRES_HOST=${{POSTGRES_HOST}}" >> .env
+          echo "POSTGRES_PORT=${{POSTGRES_PORT}}" >> .env
+          echo "POSTGRES_USER=${{POSTGRES_USER}}" >> .env
+          echo "POSTGRES_PASSWORD=${{POSTGRES_PASSWORD}}" >> .env
+          echo "POSTGRES_DATABASE=${{POSTGRES_DATABASE}}" >> .env
+          echo "PORT=${{PORT}}" >> .env
+          echo "RUN_MIGRATIONS=${{RUN_MIGRATIONS}}" >> .env
           cat .env
 
       - name: Run postgres docker
-        run: docker-compose -f docker-compose.dev.yml up -d
+        run: docker-compose -f "docker-compose.dev.yml" up -d --build
+
+      - name: Checking container
+        run: docker ps -a
 
       - name: Run Webapp unit tests
         run: make unit-test-webapp
