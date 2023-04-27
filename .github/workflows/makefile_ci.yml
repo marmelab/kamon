@@ -56,6 +56,7 @@ jobs:
 
   deploy:
     name: Deploy
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     needs: test
 
@@ -67,7 +68,7 @@ jobs:
       run: |
         mkdir -p ~/.ssh/
         echo "$SSH_KEY" > ~/.ssh/aws.key
-        chmod 600 ~/.ssh/aws.key
+        chmod 400 ~/.ssh/aws.key
         cat >>~/.ssh/config <<END
         Host aws
           HostName $SSH_HOST
