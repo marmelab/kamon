@@ -69,7 +69,8 @@ export class GameController {
 
   @Sse("sse_game_resfresh")
   events(@Req() req) {
-    return this.eventsService.subscribe();
+    console.log(req);
+    return this.eventsService.subscribe("sse_game_resfresh");
   }
 
   @Post("/game/:gameId")
@@ -95,7 +96,10 @@ export class GameController {
     if (!allowedMove) {
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      this.eventsService.emit({ data: new Date().toISOString() });
+      this.eventsService.emit(
+        { data: new Date().toISOString() },
+        "sse_game_resfresh",
+      );
       return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
@@ -108,7 +112,10 @@ export class GameController {
       state = setGameAsDraw(state);
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      this.eventsService.emit({ data: new Date().toISOString() });
+      this.eventsService.emit(
+        { data: new Date().toISOString() },
+        "sse_game_resfresh",
+      );
       return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
@@ -124,7 +131,10 @@ export class GameController {
       };
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
-      this.eventsService.emit({ data: new Date().toISOString() });
+      this.eventsService.emit(
+        { data: new Date().toISOString() },
+        "sse_game_resfresh",
+      );
       return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
@@ -141,7 +151,10 @@ export class GameController {
 
     await this.gameService.updateBoard(foundGame.id, board);
     await this.gameService.updateGameState(foundGame.id, state);
-    this.eventsService.emit({ data: new Date().toISOString() });
+    this.eventsService.emit(
+      { data: new Date().toISOString() },
+      "sse_game_resfresh",
+    );
     return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
   }
 }

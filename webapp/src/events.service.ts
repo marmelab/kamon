@@ -10,11 +10,11 @@ export class EventsService {
     this.emitter = new EventEmitter();
   }
 
-  subscribe() {
-    return fromEvent(this.emitter, "eventName");
+  subscribe(eventName: string) {
+    return fromEvent(this.emitter, eventName);
   }
 
-  async emit(data) {
-    this.emitter.emit("eventName", { data });
+  async emit(data, eventName: string) {
+    this.emitter.emit(eventName, { data });
   }
 }
