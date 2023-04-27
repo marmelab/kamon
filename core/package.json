@@ -1,9 +1,9 @@
 {
   "name": "@kamon/core",
   "packageManager": "yarn@3.5.0",
-  "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/",
+  "version": "1.0.0",
   "engines": {
     "node": "^18"
   },

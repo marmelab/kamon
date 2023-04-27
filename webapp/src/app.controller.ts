@@ -29,7 +29,7 @@ export class AppController {
     return { url: `/?game-state=${JSON.stringify({ state, board })}` };
   }
 
-  @Get("/")
+  @Get("/game/example")
   @Render("index")
   root(@Query("game-state") gameState) {
     let game;
@@ -51,8 +51,8 @@ export class AppController {
     };
   }
 
-  @Post("/")
-  @Redirect("/")
+  @Post("/game/example")
+  @Redirect("/game/example")
   postGame(@Req() req: Request, @Body() body) {
     let board = JSON.parse(body["board"]);
     let state = JSON.parse(body["state"]);

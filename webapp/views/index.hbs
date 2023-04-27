@@ -1,69 +1,58 @@
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="5" />
     <title>App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="app.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/hub.css" />
   </head>
   <body>
-    <aside class="players-hud">
-      <div class="turn-counter">
-          <h6>Turn</h6>
-          <em>{{game.state.turnNumber}}</em>
-      </div>
-      <div class="players">
-          <div class="black">
-              <i class="fa fa-user-alt"></i>
-              <div class="hexagon-container">
-                <em class="hexagon-text {{#if (eq game.state.currentPlayer "black") }}hexagon-text--dark{{/if}}">
-                  {{game.state.remainingTiles.black}}</em>
-                <div class="hexagon-icon {{#if (eq game.state.currentPlayer "black") }}hexagon-icon--gold{{/if}}"></div>
-              </div>
-          </div>
-          <div class="white">
-              <i class="fa fa-user-alt"></i>
-              <div class="hexagon-container">
-                <em class="hexagon-text {{#if (eq game.state.currentPlayer "white") }}hexagon-text--dark{{/if}}">
-                  {{game.state.remainingTiles.white}}</em>
-                <div class="hexagon-icon {{#if (eq game.state.currentPlayer "white") }}hexagon-icon--gold{{/if}}"></div>
-              </div>
-          </div>
-      </div>
-      <div class="message">
-          {{#if game.state.winner}}
-              <div>{{game.state.winner}} won !</div>
-          {{else if game.state.draw}}
-              <div>Draw</div>
-          {{else}}
-              <div>Currently playing: {{game.state.currentPlayer}}</div>
-          {{/if}}
-          <div>{{game.state.message}}</div>
-      </div>
-
-      <button id="toggleHighlight">See possible move</button>
-
-    </aside>
+    {{> HUD game=game}}
     <main>
-
       <form class="board" method="post">
-        <input type="hidden" name="board" value="{{JSONstringify game.board}}">
-        <input type="hidden" name="state" value="{{JSONstringify game.state}}">
+        <input
+          type="hidden"
+          name="board"
+          value="{{JSONstringify game.board}}"
+        />
+        <input
+          type="hidden"
+          name="state"
+          value="{{JSONstringify game.gameState}}"
+        />
         {{#each game.board}}
           <ul>
-          {{#each this}}
-            {{#if this}}
-              <li class="tile-wrap">
-                <label data-allowed-move="{{this.moveAllowed}}" class="tile tile--{{this.color}} tile--{{this.symbol}}">
-                  {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
-                  {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
-                  {{#unless this.playedBy}}
-                    <input type="submit" name="played" value="{{this.color}}-{{this.symbol}}">
-                  {{/unless}}
-                </label>
-              </li>
-            {{/if}}
-          {{/each}}
+            {{#each this}}
+              {{#if this}}
+                <li class="tile-wrap">
+                  <label
+                    data-allowed-move="{{this.moveAllowed}}"
+                    class="tile tile--{{this.color}} tile--{{this.symbol}}"
+                  >
+                    {{#if this.lastPlayed}}<span
+                        class="tile--last-played"
+                      ></span>{{/if}}
+                    {{#if this.playedBy}}<span
+                        class="tile--played-by-{{this.playedBy}}"
+                      ></span>{{/if}}
+                    {{#unless this.playedBy}}
+                      <input
+                        type="submit"
+                        name="played"
+                        value="{{this.color}}-{{this.symbol}}"
+                      />
+                    {{/unless}}
+                  </label>
+                </li>
+              {{/if}}
+            {{/each}}
           </ul>
         {{/each}}
       </form>
