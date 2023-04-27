@@ -49,7 +49,7 @@ const checkMoveAfterFirstTurn = (
   playedTile: Tile,
   lastPlayedTile: Tile,
 ): { allowedMove: boolean; message: string } => {
-  const badMoveMessage = `🫠 Tile is not playable. Please choose a playable tile. Selected tile should be of either same symbol or color than ${lastPlayedTile.color} ${lastPlayedTile.symbol}.`;
+  const badMoveMessage = `🫠 Tile is not playable. Please choose a playable tile. Selected tile should be of either same symbol or color than last tile played.`;
   const isColorConstraintRespected = playedTile.color === lastPlayedTile.color;
   const isSymbolConstraintRespected =
     playedTile.symbol === lastPlayedTile.symbol;
