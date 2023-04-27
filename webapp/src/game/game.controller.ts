@@ -8,6 +8,7 @@ import {
   Req,
   Res,
   Body,
+  Sse,
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { GameService } from "./game.service";
@@ -24,12 +25,15 @@ import {
   checkIfGameWon,
   winGame,
   updateRemainingTiles,
-  findTile,
 } from "@kamon/core";
+import { EventsService } from "../events.service";
 
 @Controller()
 export class GameController {
-  constructor(private gameService: GameService) {}
+  constructor(
+    private gameService: GameService,
+    private readonly eventsService: EventsService,
+  ) {}
 
   @Get("/")
   @Render("launchGamePage")
@@ -63,6 +67,11 @@ export class GameController {
     return { game: updatedGame };
   }
 
+  @Sse("sse_game_resfresh")
+  events(@Req() req) {
+    return this.eventsService.subscribe();
+  }
+
   @Post("/game/:gameId")
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
@@ -71,7 +80,6 @@ export class GameController {
     @Body() body,
   ): Promise<void> {
     const foundGame = await this.gameService.findOne(gameId);
-
     let board = JSON.parse(body["board"]);
     let state = JSON.parse(body["state"]);
     const [color, symbol] = body["played"].split("-");
@@ -87,6 +95,7 @@ export class GameController {
     if (!allowedMove) {
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
+      this.eventsService.emit({ data: new Date().toISOString() });
       return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
@@ -99,6 +108,7 @@ export class GameController {
       state = setGameAsDraw(state);
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
+      this.eventsService.emit({ data: new Date().toISOString() });
       return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
@@ -114,6 +124,7 @@ export class GameController {
       };
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
+      this.eventsService.emit({ data: new Date().toISOString() });
       return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     }
 
@@ -130,6 +141,7 @@ export class GameController {
 
     await this.gameService.updateBoard(foundGame.id, board);
     await this.gameService.updateGameState(foundGame.id, state);
+    this.eventsService.emit({ data: new Date().toISOString() });
     return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
   }
 }
