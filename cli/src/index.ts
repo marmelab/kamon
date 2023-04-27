@@ -1,6 +1,6 @@
 import {
   Board,
-  highlightAllowedTiles,
+  setAllowedTiles,
   updateBoardState,
 } from "@kamon/core/src/board/board";
 import { initCLI } from "./cli";
@@ -26,10 +26,7 @@ initCLI();
 const gameConfig: Board = loadGameConfigFromFile();
 
 let currentGameState = initGameState();
-const highlightedInitialBoard = highlightAllowedTiles(
-  gameConfig,
-  currentGameState,
-);
+const highlightedInitialBoard = setAllowedTiles(gameConfig, currentGameState);
 renderTurnDisplay(currentGameState.turnNumber);
 renderBoard(highlightedInitialBoard);
 let updatedBoard = highlightedInitialBoard;
@@ -63,7 +60,7 @@ let updatedBoard = highlightedInitialBoard;
       updatedBoard,
     );
 
-    updatedBoard = highlightAllowedTiles(updatedBoard, currentGameState);
+    updatedBoard = setAllowedTiles(updatedBoard, currentGameState);
 
     renderTurnDisplay(currentGameState.turnNumber);
 
@@ -85,7 +82,7 @@ let updatedBoard = highlightedInitialBoard;
       ).toUpperCase()}, your turn`,
     };
 
-    const isGameWon = checkIfGameWon(gameState, updatedBoard);
+    const { isGameWon } = checkIfGameWon(gameState, updatedBoard);
     if (isGameWon) {
       currentGameState = winGame(previousPlayer, currentGameState);
       renderWinMessage(currentGameState.winner);

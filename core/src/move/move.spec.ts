@@ -36,6 +36,10 @@ describe("checkUserMove", () => {
       isRunning: true,
       winner: null,
       turnNumber: 1,
+      remainingTiles: {
+        black: 18,
+        white: 18,
+      },
       isDraw: false,
       message: "",
     };
@@ -55,6 +59,10 @@ describe("checkUserMove", () => {
       winner: null,
       turnNumber: 1,
       isDraw: false,
+      remainingTiles: {
+        black: 18,
+        white: 18,
+      },
       message: "",
     };
     const tile: Tile = { symbol: "A", color: "cyan" };
@@ -72,6 +80,10 @@ describe("checkUserMove", () => {
       isRunning: true,
       winner: null,
       turnNumber: 1,
+      remainingTiles: {
+        black: 18,
+        white: 18,
+      },
       isDraw: false,
       message: "",
     };

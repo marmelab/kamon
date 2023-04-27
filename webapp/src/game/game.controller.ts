@@ -10,6 +10,7 @@ import {
 import { Request, Response } from "express";
 import { GameService } from "./game.service";
 import { GameResponseTemplate } from "./game.template";
+import { setAllowedTiles } from "@kamon/core";
 
 @Controller()
 export class GameController {
@@ -39,7 +40,9 @@ export class GameController {
     @Res() response: Response,
     @Req() request: Request,
   ): Promise<GameResponseTemplate> {
-    const foundGame = await this.gameService.findOne(gameId);
+    let foundGame = await this.gameService.findOne(gameId);
+
+    foundGame.board = setAllowedTiles(foundGame.board, foundGame.gameState);
     return { game: foundGame };
   }
 }

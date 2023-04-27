@@ -22,6 +22,7 @@ export interface PlayableTile {
   playedBy?: Player;
   lastPlayed?: boolean;
   moveAllowed?: boolean;
+  highlighted?: boolean;
 }
 
 export const NEUTRALE_TILE = {
@@ -35,6 +36,7 @@ interface NeutralTile {
   playedBy?: null;
   lastPlayed?: false;
   moveAllowed?: boolean;
+  highlighted?: boolean;
 }
 
 export interface TileCoordinate {

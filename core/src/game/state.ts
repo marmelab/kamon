@@ -1,6 +1,9 @@
+import Graph from "graph-data-structure";
 import { Board, getLastPlayedTile } from "../board/board";
+import { findLoop, getOppositePath } from "../graph/graph";
 import { getPlayableTilesForNextMove } from "../move/move";
 import { BLACK_PLAYER, Player } from "../player/player";
+import { Tile } from "../tile/tile";
 
 export interface GameState {
   currentPlayer: Player;
@@ -31,12 +34,26 @@ export const initGameState = (): GameState => ({
 export const checkNoMoveLeftVictory = (board: Board): boolean =>
   getPlayableTilesForNextMove(board, getLastPlayedTile(board)).length === 0;
 
-export const checkIfGameWon = (gameState: GameState, board: Board): boolean => {
+export const checkIfGameWon = (
+  gameState: GameState,
+  board: Board,
+  graph: ReturnType<typeof Graph> | undefined = undefined,
+): { isGameWon: boolean; highlightedPath?: Tile[] } => {
+  let graphPath;
   if (checkNoMoveLeftVictory(board)) {
-    return true;
+    return { isGameWon: true };
+  }
+  graphPath = getOppositePath(graph);
+  if (graphPath.length > 0) {
+    return { isGameWon: true };
   }
 
-  return false;
+  graphPath = findLoop(graph);
+  if (graphPath.length > 0) {
+    return { isGameWon: true };
+  }
+
+  return { isGameWon: false };
 };
 
 export const winGame = (winner: Player, gameState: GameState): GameState => {

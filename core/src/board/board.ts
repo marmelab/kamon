@@ -38,7 +38,7 @@ export const getLastPlayedTile = (board: Board): NullableTile => {
   return lastPlayedTile;
 };
 
-const clearAllowedTilesHighlight = (board: Board): Board => {
+const clearAllowedTiles = (board: Board): Board => {
   const newBoard = JSON.parse(JSON.stringify(board));
   board.forEach((line, y) => {
     line.forEach((tile, x) => {
@@ -51,11 +51,21 @@ const clearAllowedTilesHighlight = (board: Board): Board => {
   return newBoard;
 };
 
-export const highlightAllowedTiles = (
-  board: Board,
-  gameState: GameState,
-): Board => {
-  const newBoard = clearAllowedTilesHighlight(board);
+const clearHighlightedTiles = (board: Board): Board => {
+  const newBoard = JSON.parse(JSON.stringify(board));
+  board.forEach((line, y) => {
+    line.forEach((tile, x) => {
+      if (newBoard[y][x] == null) {
+        return;
+      }
+      newBoard[y][x].highlighted = undefined;
+    });
+  });
+  return newBoard;
+};
+
+export const setAllowedTiles = (board: Board, gameState: GameState): Board => {
+  const newBoard = clearHighlightedTiles(clearAllowedTiles(board));
   if (gameState.turnNumber === 0) {
     ALLOWED_FIRST_MOVES.forEach((line, y) => {
       line.forEach((tile, x) => {
@@ -67,6 +77,7 @@ export const highlightAllowedTiles = (
         }
 
         newBoard[y][x].moveAllowed = ALLOWED_FIRST_MOVES[y][x];
+        newBoard[y][x].highlighted = ALLOWED_FIRST_MOVES[y][x];
       });
     });
     return newBoard;
@@ -76,6 +87,7 @@ export const highlightAllowedTiles = (
   playableTiles.forEach((tile) => {
     const { x, y } = findTile(board, tile);
     newBoard[x][y].moveAllowed = true;
+    newBoard[y][x].highlighted = true;
   });
 
   return newBoard.map((line) =>
@@ -85,6 +97,8 @@ export const highlightAllowedTiles = (
       }
       let newTile = { ...tile };
       newTile.moveAllowed = tile.moveAllowed === true;
+      newTile.highlighted = tile.highlighted === true;
+
       return newTile;
     }),
   );
@@ -112,7 +126,7 @@ export const updateBoardState = (
 
   board[lineIndex][tileIndex] = tile;
 
-  const highlightedBoard = highlightAllowedTiles(board, gameState);
+  const highlightedBoard = setAllowedTiles(board, gameState);
 
   return highlightedBoard;
 };

@@ -1,10 +1,11 @@
 import { Controller, Get, Render } from "@nestjs/common";
+import { checkIfGameWon } from "@kamon/core";
 @Controller()
 export class AppController {
   @Get("/game/example")
   @Render("index")
   root() {
-    const game = {
+    let game = {
       gameState: {
         currentPlayer: "white",
         isRunning: true,
@@ -33,12 +34,10 @@ export class AppController {
           {
             symbol: "D",
             color: "cyan",
-            highlighted: true,
           },
           {
             symbol: "A",
             color: "red",
-            highlighted: true,
           },
           null,
           null,
@@ -67,14 +66,12 @@ export class AppController {
             color: "green",
             playedBy: "black",
             lastPlayed: false,
-            highlighted: true,
           },
           {
             symbol: "D",
             color: "green",
             playedBy: "black",
             lastPlayed: true,
-            highlighted: true,
           },
           null,
           null,
@@ -92,7 +89,6 @@ export class AppController {
           {
             symbol: "C",
             color: "yellow",
-            highlighted: true,
           },
           {
             symbol: "B",
@@ -230,6 +226,7 @@ export class AppController {
         ],
       ],
     };
+    const { isGameWon, highlightedPath } = checkIfGameWon(game.board);
     return {
       game,
     };

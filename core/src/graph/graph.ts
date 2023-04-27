@@ -94,3 +94,18 @@ export const getOppositePath = (
   }
   return path;
 };
+
+export const findLoop = (graph: ReturnType<typeof Graph>): string[] | [] => {
+  let path: string[] | [];
+
+  for (const node in graph.nodes()) {
+    try {
+      path = graph.shortestPath(node, node) as string[];
+      if (path.length > 0) return path;
+    } catch (error) {
+      path = [];
+    }
+  }
+
+  return path;
+};
