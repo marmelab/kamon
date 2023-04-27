@@ -40,7 +40,6 @@ export class GameController {
     @Req() request: Request,
   ): Promise<GameResponseTemplate> {
     const foundGame = await this.gameService.findOne(gameId);
-    console.log(foundGame.gameState);
     return { game: foundGame };
   }
 }
