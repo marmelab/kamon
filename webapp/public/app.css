@@ -35,6 +35,16 @@ body {
   font-family: monospace;
 }
 
+button {
+  padding: 10px;
+  border-radius: 0;
+  border: none;
+  cursor: pointer;
+  background: var(--dark);
+  color: var(--light);
+  font-weight: 900;
+}
+
 main {
   width: 80%;
   display: flex;
