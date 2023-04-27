@@ -4,8 +4,6 @@
   "main": "dist/index.js",
   "types": "dist/",
   "version": "1.0.0",
-  "main": "dist/index.js",
-  "types": "dist/",
   "engines": {
     "node": "^18"
   },

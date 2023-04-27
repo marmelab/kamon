@@ -77,6 +77,10 @@ body {
   display: none;
 }
 
+.board [type="submit"].show {
+	display: block;
+  }
+
 @keyframes gelatine {
 
   from,

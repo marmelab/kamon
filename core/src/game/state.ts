@@ -47,6 +47,14 @@ export const checkIfDraw = (gameState: GameState): boolean => {
   return gameState.winner == null && gameState.turnNumber > 35;
 };
 
+export const updateRemainingTiles = (gameState: GameState): GameState => {
+  const newGameState = JSON.parse(JSON.stringify(gameState));
+
+  newGameState.remainingTiles[gameState.currentPlayer] -= 1;
+
+  return newGameState;
+};
+
 export const setGameAsDraw = (gameState: GameState): GameState => {
   let newGameState = JSON.parse(JSON.stringify(gameState));
 
