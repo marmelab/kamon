@@ -4,9 +4,19 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import { join } from "path";
 import { registerPartials } from "./partials";
 import { registerCustomHelpers } from "./hbsHelpers";
+import * as session from "express-session";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  // somewhere in your initialization file
+  app.use(
+    session({
+      secret: "my-secret",
+      resave: false,
+      saveUninitialized: false,
+    }),
+  );
 
   registerCustomHelpers();
 

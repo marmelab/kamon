@@ -6,7 +6,7 @@ import {
   Query,
   Redirect,
   Render,
-  Req,
+  Session,
 } from "@nestjs/common";
 import {
   initRandomGame,
@@ -31,7 +31,11 @@ export class AppController {
 
   @Get("/")
   @Render("index")
-  root(@Query("game-state") gameState) {
+  root(
+    @Query("game-state") gameState,
+    @Session() session: Record<string, any>,
+  ) {
+    console.log(session);
     let game;
     if (gameState) {
       gameState = JSON.parse(gameState);
@@ -46,6 +50,8 @@ export class AppController {
       };
     }
 
+    session.game = game;
+
     return {
       game,
     };
@@ -53,7 +59,7 @@ export class AppController {
 
   @Post("/")
   @Redirect("/")
-  postGame(@Req() req: Request, @Body() body) {
+  postGame(@Body() body) {
     let board = JSON.parse(body["board"]);
     let state = JSON.parse(body["state"]);
     const [color, symbol] = body["played"].split("-");
