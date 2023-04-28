@@ -315,31 +315,37 @@ main {
 }
 
 [class*="tile--played-by"] {
-  border-left: solid 10px;
-  border-right: solid 10px;
   width: 100%;
   height: 100%;
   position: absolute;
 }
 
 .tile--played-by-black {
-  border-color: #000000;
+  background: repeating-linear-gradient(-55deg,
+      #494949da,
+      #494949da 10px,
+      #3333337c 10px,
+      #3333337c 20px);
 }
 
 .tile--played-by-white {
-  border-color: #ffffff;
+  background: repeating-linear-gradient(-55deg,
+      #ffffffa1,
+      #ffffffa1 10px,
+      #3333337c 10px,
+      #3333337c 20px);
 }
 
 .tile--last-played {
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   position: absolute;
   top: 27px;
   left: 7px;
-  box-shadow: rgba(240, 46, 170, 0.4) -2px 2px;
+  box-shadow: rgba(0, 0, 0, 0.74) 8px 8px 8px;
   z-index: 3;
-  background: rgb(34, 128, 156);
+  background: rgb(255, 255, 255);
 }
 
 .tile--allowed-move-false {
