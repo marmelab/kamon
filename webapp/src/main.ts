@@ -11,10 +11,9 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   registerCustomHelpers();
-
   app.use(
     session({
-      secret: "pinkcamel",
+      secret: process.env.SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: { maxAge: 3600000 },
