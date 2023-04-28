@@ -1,24 +1,46 @@
 import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
+import { User } from "./user.entity";
+import { Game } from "src/game/game.entity";
 
 // This should be a real class/interface representing a user entity
-export type User = any;
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: "john",
-      password: "changeme",
-    },
-    {
-      userId: 2,
-      username: "maria",
-      password: "guess",
-    },
-  ];
+  userRepository: Repository<User>;
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
+  constructor(
+    @InjectRepository(User)
+    userRepository: Repository<User>,
+  ) {
+    this.userRepository = userRepository;
+  }
+
+  async findOne(id: number): Promise<User | undefined> {
+    return this.userRepository.findOneBy({ id });
+  }
+
+  async createUser(username: string, password: string): Promise<User | null> {
+    return this.userRepository.save({
+      username,
+      password,
+    });
+  }
+
+  async findByUserName(username: string): Promise<User | undefined> {
+    return this.userRepository.findOneBy({ username });
+  }
+
+  async findMyGame(id: number): Promise<User[] | undefined> {
+    return this.userRepository
+      .createQueryBuilder()
+      .select("g")
+      .from(Game, "g")
+      .addFrom(User, "u")
+      .andWhere("g.player_black = :id")
+      .orWhere("g.player_white = :id")
+      .setParameter("id", id)
+      .getMany();
   }
 }
