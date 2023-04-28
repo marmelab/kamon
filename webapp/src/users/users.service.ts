@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "./user.entity";
-import { Game } from "src/game/game.entity";
+import { Game } from "../game/game.entity";
 
 // This should be a real class/interface representing a user entity
 
