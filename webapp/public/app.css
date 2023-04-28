@@ -314,10 +314,6 @@ main {
   cursor: not-allowed;
 }
 
-[data-allowed-move="false"] {
-  opacity: 0.5;
-}
-
 [class*="tile--played-by"] {
   border-left: solid 10px;
   border-right: solid 10px;
@@ -344,6 +340,11 @@ main {
   box-shadow: rgba(240, 46, 170, 0.4) -2px 2px;
   z-index: 3;
   background: rgb(34, 128, 156);
+}
+
+.tile--allowed-move-false {
+  opacity: 0.5;
+
 }
 
 /* buttons from https://codepen.io/FelipeMarcos/pen/DyEgda*/
