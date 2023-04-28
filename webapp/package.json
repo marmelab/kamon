@@ -19,9 +19,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
-    "db:drop": "yarn run typeorm schema:drop -d src/data-source.ts",
-    "db:gen": "yarn run typeorm migration:generate src/migrations/migration -d src/data-source.ts",
-    "db:migrate": "yarn run typeorm migration:run -d src/data-source.ts"
+    "db:drop": "yarn run typeorm schema:drop -d src/ormconfig.ts",
+    "db:gen": "yarn run typeorm migration:generate src/migrations/migration -d src/ormconfig.ts",
+    "db:migrate": "yarn run typeorm migration:run -d src/ormconfig.ts"
   },
   "dependencies": {
     "@kamon/core": "workspace:^",
