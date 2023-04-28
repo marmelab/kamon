@@ -8,6 +8,7 @@ import { GameController } from "./game/game.controller";
 import { GameModule } from "./game/game.module";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import * as path from "path";
+import { EventsService } from "./events.service";
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import * as path from "path";
     GameModule,
   ],
   controllers: [AppController, GameController],
-  providers: [AppService],
+  providers: [AppService, EventsService],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}
