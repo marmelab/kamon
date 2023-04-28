@@ -36,13 +36,6 @@ export class GameController {
     private readonly eventsService: EventsService,
   ) {}
 
-  @Get("/")
-  @Render("launchGamePage")
-  async launchGame(
-    @Res() response: Response,
-    @Req() request: Request,
-  ): Promise<void> {}
-
   @Post("/game/create")
   async createNewGame(
     @Res() response: Response,
