@@ -23,16 +23,16 @@ export class AuthController {
   @Get("/")
   @Render("userForm")
   registerView() {
-    return { action: "/register", title: "Register" };
+    return { action: "/", title: "Register" };
   }
 
-  @Post("/register")
+  @Post("/")
   @Redirect("/login")
   async register(@Body() body) {
     try {
       await this.userService.createUser(body.username, body.password);
     } catch (error) {
-      return { url: "/register" };
+      return { url: "/" };
     }
   }
 
