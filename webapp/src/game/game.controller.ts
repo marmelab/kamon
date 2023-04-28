@@ -99,12 +99,15 @@ export class GameController {
     response.cookie("gameId", foundGame.id);
 
     state = gameState;
-
-    if (!allowedMove) {
+    const sendResponse = async () => {
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
       this.eventsService.emit({ data: new Date().toISOString() }, sseId);
       return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
+    };
+
+    if (!allowedMove) {
+      return sendResponse();
     }
 
     state.turnNumber += 1;
@@ -114,10 +117,7 @@ export class GameController {
 
     if (checkIfDraw(state)) {
       state = setGameAsDraw(state);
-      await this.gameService.updateBoard(foundGame.id, board);
-      await this.gameService.updateGameState(foundGame.id, state);
-      this.eventsService.emit({ data: new Date().toISOString() }, sseId);
-      return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
+      return sendResponse();
     }
 
     const previousPlayer = state.currentPlayer;
@@ -130,10 +130,7 @@ export class GameController {
         winner: state.currentPlayer,
         isRunning: false,
       };
-      await this.gameService.updateBoard(foundGame.id, board);
-      await this.gameService.updateGameState(foundGame.id, state);
-      this.eventsService.emit({ data: new Date().toISOString() }, sseId);
-      return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
+      return sendResponse();
     }
 
     state = {
@@ -147,9 +144,6 @@ export class GameController {
       state = winGame(previousPlayer, state);
     }
 
-    await this.gameService.updateBoard(foundGame.id, board);
-    await this.gameService.updateGameState(foundGame.id, state);
-    this.eventsService.emit({ data: new Date().toISOString() }, sseId);
-    return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
+    return sendResponse();
   }
 }
