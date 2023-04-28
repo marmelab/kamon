@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { Board } from "@kamon/core";
 import { GameState } from "@kamon/core";
-import { User } from "../user/user.entity";
+import { User } from "../users/user.entity";
 
 @Entity()
 export class Game {

@@ -4,10 +4,11 @@ import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { GameController } from "./game/game.controller";
 import { GameModule } from "./game/game.module";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import * as path from "path";
+import { AuthModule } from "./auth/auth.module";
+import { EventsService } from "./events.service";
 
 @Module({
   imports: [
@@ -33,9 +34,11 @@ import * as path from "path";
     }),
     ConfigModule.forRoot(),
     GameModule,
+    AuthModule,
   ],
-  controllers: [AppController, GameController],
-  providers: [AppService],
+
+  controllers: [AppController],
+  providers: [AppService, EventsService],
 })
 export class AppModule {
   constructor(private dataSource: DataSource) {}

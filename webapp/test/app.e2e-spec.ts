@@ -4,6 +4,7 @@ import { AppModule } from "./../src/app.module";
 import { join } from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import { registerCustomHelpers } from "./../src/hbsHelpers";
+import { registerPartials } from "../src/partials";
 
 describe("AppController (e2e)", () => {
   let app: NestExpressApplication;
@@ -19,6 +20,7 @@ describe("AppController (e2e)", () => {
     app.useStaticAssets(join(__dirname, "..", "public"));
     app.setBaseViewsDir(join(__dirname, "..", "views"));
     app.setViewEngine("hbs");
+    registerPartials();
     await app.init();
   });
 
