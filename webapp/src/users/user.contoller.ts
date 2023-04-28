@@ -11,7 +11,6 @@ export class UserController {
   @Render("me")
   async me(@Session() session) {
     const games = await this.userService.findMyGame(session.passport.user.id);
-    console.log(games);
     return { games, userId: session.passport.user.id };
   }
 }
