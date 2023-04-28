@@ -81,6 +81,9 @@ export const findTile = (board: Board, toFind: Tile): TileCoordinate => {
 
   board.forEach((line, l) => {
     line.forEach((tile, t) => {
+      if (tile == null) {
+        return;
+      }
       if (tile?.symbol == toFind.symbol && tile?.color === toFind.color) {
         y = t;
         x = l;

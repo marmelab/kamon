@@ -7,6 +7,10 @@ export interface GameState {
   isRunning: boolean;
   isDraw: boolean;
   winner?: Player;
+  remainingTiles: {
+    black: number;
+    white: number;
+  };
   turnNumber: number;
   message: string;
 }
@@ -16,6 +20,10 @@ export const initGameState = (): GameState => ({
   isRunning: true,
   winner: null,
   isDraw: false,
+  remainingTiles: {
+    black: 18,
+    white: 18,
+  },
   turnNumber: 0,
   message: "Welcome to Kamon 🍱 ! Black player, you turn",
 });
@@ -37,6 +45,14 @@ export const winGame = (winner: Player, gameState: GameState): GameState => {
 
 export const checkIfDraw = (gameState: GameState): boolean => {
   return gameState.winner == null && gameState.turnNumber > 35;
+};
+
+export const updateRemainingTiles = (gameState: GameState): GameState => {
+  const newGameState = JSON.parse(JSON.stringify(gameState));
+
+  newGameState.remainingTiles[gameState.currentPlayer] -= 1;
+
+  return newGameState;
 };
 
 export const setGameAsDraw = (gameState: GameState): GameState => {
