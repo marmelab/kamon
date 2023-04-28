@@ -18,8 +18,7 @@ document.querySelector("#toggleHighlight").addEventListener("click", (e) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const eventSource = new EventSource("/sse_game_resfresh");
-  console.log(eventSource);
   eventSource.onmessage = (data) => {
-    console.log(data);
+    window.location.reload();
   };
 });
