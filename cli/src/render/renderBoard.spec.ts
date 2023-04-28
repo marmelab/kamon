@@ -1,4 +1,4 @@
-import { Board } from "@kamon/core/src/board/board";
+import { Board } from "@kamon/core";
 import { renderBoard } from "./renderBoard";
 
 describe("renderBoard", () => {

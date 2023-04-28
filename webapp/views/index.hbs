@@ -1,33 +1,62 @@
-<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="5" />
     <title>App</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/public/app.css">
-    <link rel="stylesheet" href="/public/hud.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="/app.css" />
+    <link rel="stylesheet" href="/hub.css" />
   </head>
   <body>
+    {{> HUD game=game}}
     <main>
-      {{> HUD}}
-      <div class="board">
+      <form class="board" method="post">
+        <input
+          type="hidden"
+          name="board"
+          value="{{JSONstringify game.board}}"
+        />
+        <input
+          type="hidden"
+          name="state"
+          value="{{JSONstringify game.gameState}}"
+        />
         {{#each game.board}}
           <ul>
-          {{#each this}}
-            {{#if this}}
-              <li class="tile-wrap">
-                
-                <div class="tile tile--{{this.color}} tile--{{this.symbol}}">
-                  {{#if this.lastPlayed}}<span class="tile--last-played"></span>{{/if}}
-                  {{#if this.playedBy}}<span class="tile--played-by-{{this.playedBy}}"></span>{{/if}}
-                  {{#if this.highlighted}}<div class="tile-highlighter"></div>{{/if}}
-                </div>
-              </li>
-            {{/if}}
-          {{/each}}
+            {{#each this}}
+              {{#if this}}
+                <li class="tile-wrap">
+                  <label
+                    data-allowed-move="{{this.moveAllowed}}"
+                    class="tile tile--{{this.color}} tile--{{this.symbol}}"
+                  >
+                    {{#if this.lastPlayed}}<span
+                        class="tile--last-played"
+                      ></span>{{/if}}
+                    {{#if this.playedBy}}<span
+                        class="tile--played-by-{{this.playedBy}}"
+                      ></span>{{/if}}
+                    {{#unless this.playedBy}}
+                      <input
+                        type="submit"
+                        name="played"
+                        value="{{this.color}}-{{this.symbol}}"
+                      />
+                    {{/unless}}
+                  </label>
+                </li>
+              {{/if}}
+            {{/each}}
           </ul>
         {{/each}}
-      </div>
+      </form>
     </main>
+    <script src="app.js"></script>
   </body>
 </html>

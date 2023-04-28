@@ -2,23 +2,22 @@ import {
   Board,
   setAllowedTiles,
   updateBoardState,
-} from "@kamon/core/src/board/board";
-import { initCLI } from "./cli";
-import { loadGameConfigFromFile } from "./game/load";
-import { prompt } from "./prompt/prompt";
-import { checkUserMove } from "@kamon/core/src/move/move";
-import {
+  checkUserMove,
   checkIfGameWon,
   checkIfDraw,
   initGameState,
   winGame,
   setGameAsDraw,
+  getOppositePath,
+  updateGraphState,
+  switchPlayer,
 } from "@kamon/core";
+import { initCLI } from "./cli";
+import { loadGameConfigFromFile } from "./game/load";
+import { prompt } from "./prompt/prompt";
 import { renderTurnDisplay } from "./render/turn";
 import { renderWinMessage } from "./render/victory";
 import { renderDrawMessage } from "./render/draw";
-import { getOppositePath, updateGraphState } from "@kamon/core/src/graph/graph";
-import { switchPlayer } from "@kamon/core/src/player/player";
 import { renderBoard } from "./render/renderBoard";
 
 initCLI();
@@ -53,7 +52,7 @@ let updatedBoard = highlightedInitialBoard;
 
     currentGameState.turnNumber += 1;
 
-    updatedBoard = updateBoardState(gameConfig, action, currentGameState);
+    updatedBoard = updateBoardState(gameConfig, action.value, currentGameState);
     const previousPlayer = currentGameState.currentPlayer;
     const graph = updateGraphState(
       currentGameState.currentPlayer,

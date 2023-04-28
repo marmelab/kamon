@@ -1,5 +1,5 @@
 import { renderTile } from "../render/renderTile";
-import { Tile } from "@kamon/core/src/tile/tile";
+import { Tile } from "@kamon/core";
 
 describe("renderTile", () => {
   it("should render a tile", () => {

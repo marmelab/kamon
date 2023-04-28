@@ -1,9 +1,9 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { INestApplication } from "@nestjs/common";
 import * as request from "supertest";
 import { AppModule } from "./../src/app.module";
 import { join } from "path";
 import { NestExpressApplication } from "@nestjs/platform-express";
+import { registerCustomHelpers } from "./../src/hbsHelpers";
 
 describe("AppController (e2e)", () => {
   let app: NestExpressApplication;
@@ -12,6 +12,8 @@ describe("AppController (e2e)", () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();
+
+    registerCustomHelpers();
 
     app = moduleFixture.createNestApplication();
     app.useStaticAssets(join(__dirname, "..", "public"));

@@ -9,8 +9,5 @@
       "core",
       "webapp"
     ]
-  },
-  "dependencies": {
-    "@kamon/core": "workspace:^"
   }
 }

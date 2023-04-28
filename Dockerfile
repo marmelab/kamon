@@ -3,6 +3,7 @@ COPY ./ /app
 WORKDIR /app
 RUN apt-get update && apt-get install make
 RUN make install
+RUN make build-core
 RUN make build-cli
 RUN make build-webapp
 

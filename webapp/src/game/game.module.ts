@@ -3,7 +3,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { Game } from "./game.entity";
 import { GameService } from "./game.service";
 import { GameController } from "./game.controller";
-import { User } from "src/user/user.entity";
+import { User } from "../user/user.entity";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Game]), TypeOrmModule.forFeature([User])],
