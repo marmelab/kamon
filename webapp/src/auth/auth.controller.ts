@@ -13,33 +13,33 @@ import { AuthService } from "./auth.service";
 import { UsersService } from "src/users/users.service";
 import { LocalAuthGuard } from "./local-auth.guard";
 
-@Controller("/auth")
+@Controller()
 export class AuthController {
   constructor(
     private authService: AuthService,
     private userService: UsersService,
   ) {}
 
-  @Get("/register")
+  @Get("/")
   @Render("userForm")
   registerView() {
-    return { action: "/auth/register", title: "Register" };
+    return { action: "/register", title: "Register" };
   }
 
   @Post("/register")
-  @Redirect("/auth/login")
+  @Redirect("/login")
   async register(@Body() body) {
     try {
       await this.userService.createUser(body.username, body.password);
     } catch (error) {
-      return { url: "/auth/register" };
+      return { url: "/register" };
     }
   }
 
   @Get("/login")
   @Render("userForm")
   signView() {
-    return { action: "/auth/login", title: "Login" };
+    return { action: "/login", title: "Login" };
   }
 
   @UseGuards(LocalAuthGuard)
@@ -50,7 +50,7 @@ export class AuthController {
   }
 
   @Get("/logout")
-  @Redirect("/auth/login")
+  @Redirect("/login")
   logout(@Session() session) {
     session.destroy();
   }

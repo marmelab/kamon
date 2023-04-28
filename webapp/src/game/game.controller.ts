@@ -30,13 +30,6 @@ import {
 export class GameController {
   constructor(private gameService: GameService) {}
 
-  @Get("/")
-  @Render("launchGamePage")
-  async launchGame(
-    @Res() response: Response,
-    @Req() request: Request,
-  ): Promise<void> {}
-
   @Post("/game/create")
   async createNewGame(
     @Res() response: Response,
