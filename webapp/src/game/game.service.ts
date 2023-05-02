@@ -64,7 +64,7 @@ export class GameService {
     return this.gameRepository
       .createQueryBuilder("g")
       .andWhere("g.gameState ::jsonb @> :state")
-      .setParameter("state", { onGoing: true })
+      .setParameter("state", { isRunning: true })
       .getMany();
   }
 }
