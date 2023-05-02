@@ -216,3 +216,20 @@ export const findSiblings = (
 
   return coords;
 };
+
+export const findLoopInBoard = (
+  board: Board,
+): { isLoopDetected: boolean; playerOwningLoop: Player | undefined } => {
+  let isLoopDetected = false;
+  let playerOwningLoop;
+
+  board.forEach((line, y) => {
+    line.forEach((tile, x) => {
+      if (board[y][x] == null) {
+        return;
+      }
+    });
+  });
+
+  return { isLoopDetected, playerOwningLoop };
+};

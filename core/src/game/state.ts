@@ -1,9 +1,4 @@
-import Graph from "graph-data-structure";
-import { Board, getLastPlayedTile } from "../board/board";
-import { findLoop, getOppositePath } from "../graph/graph";
-import { getPlayableTilesForNextMove } from "../move/move";
 import { BLACK_PLAYER, Player } from "../player/player";
-import { Tile } from "../tile/tile";
 
 export interface GameState {
   currentPlayer: Player;
@@ -31,57 +26,14 @@ export const initGameState = (): GameState => ({
   message: "Welcome to Kamon 🍱 ! Black player, you turn",
 });
 
-export const checkNoMoveLeftVictory = (board: Board): boolean =>
-  getPlayableTilesForNextMove(board, getLastPlayedTile(board)).length === 0;
-
-export const checkIfGameWon = (
-  gameState: GameState,
-  board: Board,
-  graph: ReturnType<typeof Graph> | undefined = undefined,
-): { isGameWon: boolean; highlightedPath?: Tile[] } => {
-  let graphPath;
-  if (checkNoMoveLeftVictory(board)) {
-    return { isGameWon: true };
-  }
-  graphPath = getOppositePath(graph);
-  if (graphPath.length > 0) {
-    return { isGameWon: true };
-  }
-
-  graphPath = findLoop(graph);
-  if (graphPath.length > 0) {
-    return { isGameWon: true };
-  }
-
-  return { isGameWon: false };
-};
-
-export const winGame = (winner: Player, gameState: GameState): GameState => {
-  return { ...gameState, isRunning: false, winner: winner };
-};
-
-export const checkIfDraw = (gameState: GameState): boolean => {
-  return gameState.winner == null && gameState.turnNumber > 35;
-};
-
 export const updateRemainingTiles = (gameState: GameState): GameState => {
   const newGameState = JSON.parse(JSON.stringify(gameState));
 
-  newGameState.remainingTiles[gameState.currentPlayer] -= 1;
-
-  return newGameState;
-};
-
-export const setGameAsDraw = (gameState: GameState): GameState => {
-  let newGameState = JSON.parse(JSON.stringify(gameState));
-
-  if (newGameState.winner != null) {
-    return;
+  if (gameState.currentPlayer === null) {
+    return newGameState;
   }
 
-  newGameState.winner = null;
-  newGameState.isRunning = false;
-  newGameState.isDraw = true;
+  newGameState.remainingTiles[gameState.currentPlayer] -= 1;
 
   return newGameState;
 };

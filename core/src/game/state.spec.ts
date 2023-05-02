@@ -1,52 +1,29 @@
-import { getMockFromJson } from "../mocks/getMock";
-import { initGameState, winGame, checkIfGameWon, checkIfDraw } from "./state";
+import { WHITE_PLAYER } from "../player";
+import { initGameState, updateRemainingTiles } from "./state";
 
-const mockFilledBoard = getMockFromJson("games/filled.json");
-
-describe("winGame", () => {
-  it("should set player as winner", () => {
-    expect(winGame("black", initGameState()).winner).toBe("black");
+describe("updateRemainingTiles", () => {
+  it("should remove a tile from black at the begining", () => {
+    const initialGameState = initGameState();
+    const updatedGameState = updateRemainingTiles(initialGameState);
+    expect(updatedGameState.remainingTiles).toEqual({
+      black: 17,
+      white: 18,
+    });
   });
 
-  it("should stop game", () => {
-    expect(winGame("black", initGameState()).isRunning).toBeFalsy();
-  });
-});
+  it("should remove tile from white if white is current player", () => {
+    let testGameState = initGameState();
+    testGameState.currentPlayer = WHITE_PLAYER;
 
-describe("checkIfGameWon", () => {
-  it("should win game when there is no remaining move", () => {
-    const { isGameWon } = checkIfGameWon(initGameState(), mockFilledBoard);
-    expect(isGameWon).toBeTruthy();
+    const updatedGameState = updateRemainingTiles(testGameState);
+    expect(updatedGameState.remainingTiles).toEqual({ black: 18, white: 17 });
   });
 
-  it("shouldn't win game when there is a possible move", () => {
-    let boardWithPossibleMove = JSON.parse(JSON.stringify(mockFilledBoard));
-    boardWithPossibleMove[0][4] = { symbol: "D", color: "blue" };
-    const { isGameWon } = checkIfGameWon(
-      initGameState(),
-      boardWithPossibleMove,
-    );
-    expect(isGameWon).toBeFalsy();
-  });
-});
+  it("should remove no tile if there is no current player", () => {
+    let testGameState = initGameState();
+    testGameState.currentPlayer = null;
 
-describe("checkIfDraw", () => {
-  it("should be false if there is a winner", () => {
-    let gameState = initGameState();
-    gameState.turnNumber = 36;
-    gameState.winner = "black";
-    expect(checkIfDraw(gameState)).toBeFalsy();
-  });
-
-  it("should be true for turn number after 35", () => {
-    let gameState = initGameState();
-    gameState.turnNumber = 36;
-    expect(checkIfDraw(gameState)).toBeTruthy();
-  });
-
-  it("should be false for turn number 35 and below", () => {
-    let gameState = initGameState();
-    gameState.turnNumber = 35;
-    expect(checkIfDraw(gameState)).toBeFalsy();
+    const updatedGameState = updateRemainingTiles(testGameState);
+    expect(updatedGameState.remainingTiles).toEqual({ black: 18, white: 18 });
   });
 });

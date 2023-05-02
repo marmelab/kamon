@@ -87,7 +87,7 @@ export const setAllowedTiles = (board: Board, gameState: GameState): Board => {
   playableTiles.forEach((tile) => {
     const { x, y } = findTile(board, tile);
     newBoard[x][y].moveAllowed = true;
-    newBoard[y][x].highlighted = true;
+    newBoard[x][y].highlighted = true;
   });
 
   return newBoard.map((line) =>

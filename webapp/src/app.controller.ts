@@ -16,7 +16,7 @@ import {
   setGameAsDraw,
   checkUserMove,
   updateGraphState,
-  highlightAllowedTiles,
+  setAllowedTiles,
   getOppositePath,
   switchPlayer,
   checkIfGameWon,
@@ -289,7 +289,7 @@ export class AppController {
     const previousPlayer = state.currentPlayer;
     const graph = updateGraphState(state.currentPlayer, board);
 
-    board = highlightAllowedTiles(board, state);
+    board = setAllowedTiles(board, state);
 
     if (getOppositePath(graph).length > 0) {
       state = {
