@@ -6,37 +6,11 @@ import {
   PlayableTile,
   playTile,
   removeLastPlayed,
-  Tile,
 } from "../tile/tile";
 import { GameState } from "../game/state";
-import {
-  Action,
-  ALLOWED_FIRST_MOVES,
-  getPlayableTilesForNextMove,
-} from "../move/move";
-
-export type NullableTile = Tile | null;
-export type Board = NullableTile[][];
-
-export const getLastPlayedTile = (board: Board): NullableTile => {
-  let lastPlayedTile: NullableTile;
-
-  board.forEach((line) => {
-    if (lastPlayedTile != undefined) {
-      return;
-    }
-    line.forEach((tile: Tile) => {
-      if (lastPlayedTile != undefined || tile == undefined) {
-        return;
-      }
-      if (tile.lastPlayed) {
-        lastPlayedTile = tile;
-      }
-    });
-  });
-
-  return lastPlayedTile;
-};
+import { ALLOWED_FIRST_MOVES, getPlayableTilesForNextMove } from "../move/move";
+import { Board } from "./boardType";
+import { getLastPlayedTile } from "./boardGetters";
 
 const clearAllowedTilesHighlight = (board: Board): Board => {
   const newBoard = JSON.parse(JSON.stringify(board));

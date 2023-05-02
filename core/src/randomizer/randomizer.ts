@@ -1,4 +1,4 @@
-import { Board } from "../board/board";
+import { Board } from "../board/boardType";
 import { getAllSymbols } from "../tile/tile";
 
 export const createNullableTiles = (number: number): undefined[] => {

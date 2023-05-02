@@ -1,4 +1,6 @@
 export * from "./board/board";
+export * from "./board/boardGetters";
+export * from "./board/boardType";
 export * from "./game/state";
 export * from "./graph/graph";
 export * from "./move/move";

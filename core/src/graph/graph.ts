@@ -1,5 +1,5 @@
 import { Graph } from "graph-data-structure";
-import { Board } from "../board/board";
+import { Board } from "../board/boardType";
 import {
   PlayableTile,
   findFirstPlayableTile,

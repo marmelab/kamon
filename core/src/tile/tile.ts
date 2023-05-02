@@ -1,5 +1,5 @@
 import { Player } from "../player/player";
-import { Board } from "../board/board";
+import { Board } from "../board/boardType";
 
 export const colors = [
   "yellow",
@@ -15,6 +15,8 @@ export type Color = (typeof colors)[number];
 export type Symbol = (typeof symbols)[number];
 
 export type Tile = PlayableTile | NeutralTile;
+
+export type NullableTile = Tile | null;
 
 export interface PlayableTile {
   color: Color;

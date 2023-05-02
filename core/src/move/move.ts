@@ -1,4 +1,5 @@
-import { Board, getLastPlayedTile } from "../board/board";
+import { getLastPlayedTile } from "../board/boardGetters";
+import { Board } from "../board/boardType";
 import { GameState } from "../game/state";
 import {
   NEUTRALE_TILE,
