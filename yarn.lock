@@ -2648,7 +2648,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@kamon/cli@workspace:cli"
   dependencies:
-    "@kamon/core": 1.0.0
+    "@kamon/core": "workspace:^"
     "@types/blessed": ^0.1.17
     "@types/jest": ^26.0.23
     "@types/node": ^18.15.11
@@ -2672,7 +2672,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kamon/core@1.0.0, @kamon/core@workspace:core":
+"@kamon/core@workspace:^, @kamon/core@workspace:core":
   version: 0.0.0-use.local
   resolution: "@kamon/core@workspace:core"
   dependencies:
@@ -2696,7 +2696,7 @@ __metadata:
   resolution: "@kamon/mobileapp@workspace:mobileapp"
   dependencies:
     "@babel/core": ^7.20.0
-    "@kamon/core": 1.0.0
+    "@kamon/core": "workspace:^"
     "@tsconfig/react-native": ^3.0.0
     "@types/jest": ^29.5.1
     "@types/react": ~18.0.27
@@ -2713,7 +2713,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@kamon/webapp@workspace:webapp"
   dependencies:
-    "@kamon/core": 1.0.0
+    "@kamon/core": "workspace:^"
     "@nestjs/cli": ^9.0.0
     "@nestjs/common": ^9.0.0
     "@nestjs/config": ^2.3.1
