@@ -1047,6 +1047,7 @@ __metadata:
     "@nestjs/config": ^2.3.1
     "@nestjs/core": ^9.0.0
     "@nestjs/jwt": ^10.0.3
+    "@nestjs/mapped-types": "*"
     "@nestjs/passport": ^9.0.3
     "@nestjs/platform-express": ^9.0.0
     "@nestjs/schematics": ^9.0.0
@@ -1203,6 +1204,23 @@ __metadata:
   peerDependencies:
     "@nestjs/common": ^8.0.0 || ^9.0.0
   checksum: 8c0f8184b7985adb56fba4181a390570343747a9ed740a5f282d9ad7e6c593a3351d5f507c66b38d4ef48c181feeb7344abe7067ce6fcaaecec2ec30fdf3b17c
+  languageName: node
+  linkType: hard
+
+"@nestjs/mapped-types@npm:*":
+  version: 1.2.2
+  resolution: "@nestjs/mapped-types@npm:1.2.2"
+  peerDependencies:
+    "@nestjs/common": ^7.0.8 || ^8.0.0 || ^9.0.0
+    class-transformer: ^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0
+    class-validator: ^0.11.1 || ^0.12.0 || ^0.13.0 || ^0.14.0
+    reflect-metadata: ^0.1.12
+  peerDependenciesMeta:
+    class-transformer:
+      optional: true
+    class-validator:
+      optional: true
+  checksum: 85f295a1474c6dd1b6fb07556f744fee138571f3c6a4c5e693c72bddc716aeb8e73c02f8146fb3457e4e4a604559aa6c40985e3fbf1b3aadc0ea04a6970016d1
   languageName: node
   linkType: hard
 

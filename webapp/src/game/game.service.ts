@@ -2,6 +2,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Game } from "./game.entity";
 import { initGameState, initRandomGame, Board, GameState } from "@kamon/core";
+import { UpdateGameDto } from "./dto/update-game.dto";
 
 export class GameService {
   gameRepository: Repository<Game>;
@@ -53,5 +54,9 @@ export class GameService {
 
   async remove(id: number): Promise<void> {
     await this.gameRepository.delete(id);
+  }
+
+  async update(id: number, updateGameDto: UpdateGameDto) {
+    return await this.gameRepository.update(id, updateGameDto);
   }
 }

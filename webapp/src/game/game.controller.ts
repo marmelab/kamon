@@ -9,6 +9,8 @@ import {
   Res,
   Body,
   Sse,
+  Patch,
+  NotFoundException,
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { GameService } from "./game.service";
@@ -27,7 +29,7 @@ import {
   updateRemainingTiles,
 } from "@kamon/core";
 import { EventsService } from "../events.service";
-import { serialize } from "cookie";
+import { UpdateGameDto } from "./dto/update-game.dto";
 
 @Controller()
 export class GameController {
@@ -143,5 +145,19 @@ export class GameController {
   @Get("/games")
   findAll() {
     return this.gameService.findAll();
+  }
+
+  @Patch("/games/:id")
+  async update(@Param("id") id: number, @Body() updateGameDto: UpdateGameDto) {
+    let game = await this.gameService.findOne(id);
+    if (!game) {
+      throw new NotFoundException();
+    }
+    const updated = await this.gameService.update(+id, updateGameDto);
+    if (updated.affected < 0) {
+      return game;
+    }
+    game = await this.gameService.findOne(id);
+    return game;
   }
 }
