@@ -147,6 +147,16 @@ export class GameController {
     return this.gameService.findAll();
   }
 
+  @Get("games/ongoing")
+  async findOnGoingGames() {
+    const onGoing = await this.gameService.findOnGoing();
+
+    if (onGoing.length < 1) {
+      throw new NotFoundException();
+    }
+    return onGoing;
+  }
+
   @Patch("/games/:id")
   async update(@Param("id") id: number, @Body() updateGameDto: UpdateGameDto) {
     let game = await this.gameService.findOne(id);

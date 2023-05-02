@@ -59,4 +59,12 @@ export class GameService {
   async update(id: number, updateGameDto: UpdateGameDto) {
     return await this.gameRepository.update(id, updateGameDto);
   }
+
+  findOnGoing() {
+    return this.gameRepository
+      .createQueryBuilder("g")
+      .andWhere("g.gameState ::jsonb @> :state")
+      .setParameter("state", { onGoing: true })
+      .getMany();
+  }
 }
