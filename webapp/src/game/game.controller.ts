@@ -4,17 +4,16 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Render,
   Req,
   Res,
   Body,
   Sse,
   Patch,
   NotFoundException,
+  Headers,
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { GameService } from "./game.service";
-import { GameResponseTemplate } from "./game.template";
 import {
   checkIfDraw,
   setGameAsDraw,
@@ -51,19 +50,22 @@ export class GameController {
   }
 
   @Get("/game/:gameId")
-  @Render("index")
   async renderGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
-  ): Promise<GameResponseTemplate> {
+    @Headers() headers,
+  ): Promise<any> {
     const foundGame = await this.gameService.findOne(gameId);
 
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
-
-    response.cookie("gameId", `${foundGame.id}`);
-
     const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
-    return { game: updatedGame };
+
+    if (headers["accept"] === "text/html") {
+      response.cookie("gameId", `${foundGame.id}`);
+      return response.render("index", { game: updatedGame });
+    }
+
+    return response.send({ game: updatedGame });
   }
 
   @Sse("sse_game_resfresh")
