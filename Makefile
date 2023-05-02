@@ -8,6 +8,7 @@ install: ## Install NodeJS dependencies with Yarn
 
 build: build-core build-webapp
 
+# CORE
 build-core:
 	yarn workspace @kamon/core build
 
@@ -24,6 +25,7 @@ build-cli: ## Build all workspaces
 test-cli:
 	yarn workspace @kamon/cli test 
 
+# WEB APP
 run-webapp:
 	yarn workspace @kamon/webapp start
 
@@ -35,3 +37,7 @@ unit-test-webapp:
 
 e2e-test-webapp:
 	yarn workspace @kamon/webapp test:e2e
+
+# MOBILE
+run-mobileapp: ## Run an android dev server for mobile app	
+	yarn workspace @kamon/mobileapp start
