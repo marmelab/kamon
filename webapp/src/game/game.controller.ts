@@ -139,4 +139,9 @@ export class GameController {
 
     return sendResponse();
   }
+
+  @Get("/games")
+  findAll() {
+    return this.gameService.findAll();
+  }
 }
