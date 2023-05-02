@@ -2691,6 +2691,24 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@kamon/mobileapp@workspace:mobileapp":
+  version: 0.0.0-use.local
+  resolution: "@kamon/mobileapp@workspace:mobileapp"
+  dependencies:
+    "@babel/core": ^7.20.0
+    "@kamon/core": 1.0.0
+    "@tsconfig/react-native": ^3.0.0
+    "@types/jest": ^29.5.1
+    "@types/react": ~18.0.27
+    "@types/react-test-renderer": ^18.0.0
+    expo: ~48.0.15
+    expo-status-bar: ~1.4.4
+    react: 18.2.0
+    react-native: 0.71.7
+    typescript: ^4.9.4
+  languageName: unknown
+  linkType: soft
+
 "@kamon/webapp@workspace:webapp":
   version: 0.0.0-use.local
   resolution: "@kamon/webapp@workspace:webapp"
@@ -3686,7 +3704,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.2.0":
+"@types/react@npm:*":
   version: 18.2.0
   resolution: "@types/react@npm:18.2.0"
   dependencies:
@@ -3694,6 +3712,17 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: db3d92b423150222a666329f7aa3023e3e942044700557b8a7d161530847e621aec9f56c9e7f71761b06dd164c8a7b17ad52355863efe80963dffa5537e8e5fd
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:~18.0.27":
+  version: 18.0.38
+  resolution: "@types/react@npm:18.0.38"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 34481c79f4f7ea2aefbaa45281319dc183200230d932d968463eba1643bd3635073d0a17c5c613150a69e36ca18b811ecffafea6384fa3dff3b5203866339d69
   languageName: node
   linkType: hard
 
@@ -10469,24 +10498,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"kamonmobile@workspace:mobileapp":
-  version: 0.0.0-use.local
-  resolution: "kamonmobile@workspace:mobileapp"
-  dependencies:
-    "@babel/core": ^7.20.0
-    "@kamon/core": 1.0.0
-    "@tsconfig/react-native": ^3.0.0
-    "@types/jest": ^29.5.1
-    "@types/react": ^18.2.0
-    "@types/react-test-renderer": ^18.0.0
-    expo: ~48.0.15
-    expo-status-bar: ~1.4.4
-    react: 18.2.0
-    react-native: 0.71.7
-    typescript: ^5.0.4
-  languageName: unknown
-  linkType: soft
-
 "kind-of@npm:^3.0.2, kind-of@npm:^3.0.3, kind-of@npm:^3.1.0, kind-of@npm:^3.2.0":
   version: 3.2.2
   resolution: "kind-of@npm:3.2.2"
@@ -15027,7 +15038,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:4.9.5, typescript@npm:^4.7.4":
+"typescript@npm:4.9.5, typescript@npm:^4.7.4, typescript@npm:^4.9.4":
   version: 4.9.5
   resolution: "typescript@npm:4.9.5"
   bin:
@@ -15047,7 +15058,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@4.9.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>":
+"typescript@patch:typescript@4.9.5#~builtin<compat/typescript>, typescript@patch:typescript@^4.7.4#~builtin<compat/typescript>, typescript@patch:typescript@^4.9.4#~builtin<compat/typescript>":
   version: 4.9.5
   resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=23ec76"
   bin:
