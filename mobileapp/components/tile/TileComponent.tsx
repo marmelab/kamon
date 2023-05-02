@@ -10,6 +10,7 @@ const COLOR_PALETTE = {
   blue: "#6929f2",
   yellow: "#f2b807",
   magenta: "#9b72f2",
+  grey: "grey",
 };
 
 const styles = StyleSheet.create({
