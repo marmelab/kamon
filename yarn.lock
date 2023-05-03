@@ -1829,6 +1829,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@expo/configure-splash-screen@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@expo/configure-splash-screen@npm:0.6.0"
+  dependencies:
+    color-string: ^1.5.3
+    commander: ^5.1.0
+    fs-extra: ^9.0.0
+    glob: ^7.1.6
+    lodash: ^4.17.15
+    pngjs: ^5.0.0
+    xcode: ^3.0.0
+    xml-js: ^1.6.11
+  bin:
+    configure-splash-screen: build/index-cli.js
+    expo-splash-screen: build/index-cli.js
+  checksum: 59f088d79f2fdaa21f0e60b41dab3e8cf4387b519ee32bd6b03b1c140512433f1e81dca1bf1842cfee2a86c36e24f26b12e8650327ea3ef8c3a30ad9ec1987cf
+  languageName: node
+  linkType: hard
+
 "@expo/dev-server@npm:0.3.0":
   version: 0.3.0
   resolution: "@expo/dev-server@npm:0.3.0"
@@ -2556,6 +2575,8 @@ __metadata:
     "@types/react": ~18.0.27
     "@types/react-test-renderer": ^18.0.0
     expo: ~48.0.15
+    expo-font: ^11.1.1
+    expo-splash-screen: ^0.18.2
     expo-status-bar: ~1.4.4
     jest: ^29.5.0
     react: 18.2.0
@@ -5915,10 +5936,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:~1.1.4":
+"color-name@npm:^1.0.0, color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: b0445859521eb4021cd0fb0cc1a75cecf67fceecae89b63f62b201cca8d345baf8b952c966862a9d9a2632987d4f6581f0ec8d957dfacece86f0a7919316f610
+  languageName: node
+  linkType: hard
+
+"color-string@npm:^1.5.3":
+  version: 1.9.1
+  resolution: "color-string@npm:1.9.1"
+  dependencies:
+    color-name: ^1.0.0
+    simple-swizzle: ^0.2.2
+  checksum: c13fe7cff7885f603f49105827d621ce87f4571d78ba28ef4a3f1a104304748f620615e6bf065ecd2145d0d9dad83a3553f52bb25ede7239d18e9f81622f1cc5
   languageName: node
   linkType: hard
 
@@ -5972,6 +6003,13 @@ __metadata:
   version: 2.20.3
   resolution: "commander@npm:2.20.3"
   checksum: ab8c07884e42c3a8dbc5dd9592c606176c7eb5c1ca5ff274bcf907039b2c41de3626f684ea75ccf4d361ba004bbaff1f577d5384c155f3871e456bdf27becf9e
+  languageName: node
+  linkType: hard
+
+"commander@npm:^5.1.0":
+  version: 5.1.0
+  resolution: "commander@npm:5.1.0"
+  checksum: 0b7fec1712fbcc6230fcb161d8d73b4730fa91a21dc089515489402ad78810547683f058e2a9835929c212fead1d6a6ade70db28bbb03edbc2829a9ab7d69447
   languageName: node
   linkType: hard
 
@@ -7470,7 +7508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-font@npm:~11.1.1":
+"expo-font@npm:^11.1.1, expo-font@npm:~11.1.1":
   version: 11.1.1
   resolution: "expo-font@npm:11.1.1"
   dependencies:
@@ -7505,13 +7543,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-modules-core@npm:1.2.6":
-  version: 1.2.6
-  resolution: "expo-modules-core@npm:1.2.6"
+"expo-modules-core@npm:1.2.7":
+  version: 1.2.7
+  resolution: "expo-modules-core@npm:1.2.7"
   dependencies:
     compare-versions: ^3.4.0
     invariant: ^2.2.4
-  checksum: 78e82167f73b77f0ae6224027601b4aa3c4cec46e6a2f01eebfd19ac94e63f19e7d03da8e06f67caa0c9323a6df7bb87d4de848349d29a6004741e5b401a00fe
+  checksum: e3f69a62ef3c8dd357e7e3c90d0009d0dd0cfeae93d86c5043580bd78d35c0be5fcd345bd9dfa7b6e58d0a945b823cb6cb8666ad00c86a06bb31fe409eaed7d5
+  languageName: node
+  linkType: hard
+
+"expo-splash-screen@npm:^0.18.2":
+  version: 0.18.2
+  resolution: "expo-splash-screen@npm:0.18.2"
+  dependencies:
+    "@expo/configure-splash-screen": ^0.6.0
+    "@expo/prebuild-config": 6.0.1
+  peerDependencies:
+    expo: "*"
+  checksum: 2c62d2989bf8945efb41056eb93b711cec260d24eed96a58789c961ab86fa3552466d221f1d3e2d926134136aa95337cdba94035d328a28c92793c31de95e718
   languageName: node
   linkType: hard
 
@@ -7523,8 +7573,8 @@ __metadata:
   linkType: hard
 
 "expo@npm:~48.0.15":
-  version: 48.0.15
-  resolution: "expo@npm:48.0.15"
+  version: 48.0.16
+  resolution: "expo@npm:48.0.16"
   dependencies:
     "@babel/runtime": ^7.20.0
     "@expo/cli": 0.7.1
@@ -7540,7 +7590,7 @@ __metadata:
     expo-font: ~11.1.1
     expo-keep-awake: ~12.0.1
     expo-modules-autolinking: 1.2.0
-    expo-modules-core: 1.2.6
+    expo-modules-core: 1.2.7
     fbemitter: ^3.0.0
     getenv: ^1.0.0
     invariant: ^2.2.4
@@ -7550,7 +7600,7 @@ __metadata:
     uuid: ^3.4.0
   bin:
     expo: bin/cli.js
-  checksum: afd0b5b13af37608bba0746ade8868cbd924bca7c8a017fe266ae466059938baa9c556ab3917d15e9f2cbe65e80b0517058bf78524311c4b9aea8dc51b0aa85e
+  checksum: e1d2f68501c8870449fd9c993859d32f37ed1695f6c18a4ad43785805e25fd600d5d1e267a851c961a7f83dea7c140bf62333b34832eed433131e50aaa00149b
   languageName: node
   linkType: hard
 
@@ -9143,6 +9193,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"is-arrayish@npm:^0.3.1":
+  version: 0.3.2
+  resolution: "is-arrayish@npm:0.3.2"
+  checksum: 977e64f54d91c8f169b59afcd80ff19227e9f5c791fa28fa2e5bce355cbaf6c2c356711b734656e80c9dd4a854dd7efcf7894402f1031dfc5de5d620775b4d5f
+  languageName: node
+  linkType: hard
+
 "is-bigint@npm:^1.0.1":
   version: 1.0.4
   resolution: "is-bigint@npm:1.0.4"
@@ -10651,7 +10708,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:4.17.21, lodash@npm:^4.17.13, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
+"lodash@npm:4.17.21, lodash@npm:^4.17.13, lodash@npm:^4.17.15, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -12565,6 +12622,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pngjs@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "pngjs@npm:5.0.0"
+  checksum: 04e912cc45fb9601564e2284efaf0c5d20d131d9b596244f8a6789fc6cdb6b18d2975a6bbf7a001858d7e159d5c5c5dd7b11592e97629b7137f7f5cef05904c8
+  languageName: node
+  linkType: hard
+
 "posix-character-classes@npm:^0.1.0":
   version: 0.1.1
   resolution: "posix-character-classes@npm:0.1.1"
@@ -13535,7 +13599,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sax@npm:>=0.6.0":
+"sax@npm:>=0.6.0, sax@npm:^1.2.4":
   version: 1.2.4
   resolution: "sax@npm:1.2.4"
   checksum: d3df7d32b897a2c2f28e941f732c71ba90e27c24f62ee918bd4d9a8cfb3553f2f81e5493c7f0be94a11c1911b643a9108f231dd6f60df3fa9586b5d2e3e9e1fe
@@ -13815,6 +13879,15 @@ __metadata:
     bplist-parser: 0.3.2
     plist: ^3.0.5
   checksum: fa8086f6b781c289f1abad21306481dda4af6373b32a5d998a70e53c2b7218a1d21ebb5ae3e736baae704c21d311d3d39d01d0e6a2387eda01b4020b9ebd909e
+  languageName: node
+  linkType: hard
+
+"simple-swizzle@npm:^0.2.2":
+  version: 0.2.2
+  resolution: "simple-swizzle@npm:0.2.2"
+  dependencies:
+    is-arrayish: ^0.3.1
+  checksum: a7f3f2ab5c76c4472d5c578df892e857323e452d9f392e1b5cf74b74db66e6294a1e1b8b390b519fa1b96b5b613f2a37db6cffef52c3f1f8f3c5ea64eb2d54c0
   languageName: node
   linkType: hard
 
@@ -15808,13 +15881,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xcode@npm:^3.0.1":
+"xcode@npm:^3.0.0, xcode@npm:^3.0.1":
   version: 3.0.1
   resolution: "xcode@npm:3.0.1"
   dependencies:
     simple-plist: ^1.1.0
     uuid: ^7.0.3
   checksum: 908ff85851f81aec6e36ca24427db092e1cc068f052716e14de5e762196858039efabbe053a1abe8920184622501049e74a93618e8692b982f7604a9847db108
+  languageName: node
+  linkType: hard
+
+"xml-js@npm:^1.6.11":
+  version: 1.6.11
+  resolution: "xml-js@npm:1.6.11"
+  dependencies:
+    sax: ^1.2.4
+  bin:
+    xml-js: ./bin/cli.js
+  checksum: 24a55479919413687105fc2d8ab05e613ebedb1c1bc12258a108e07cff5ef793779297db854800a4edf0281303ebd1f177bc4a588442f5344e62b3dddda26c2b
   languageName: node
   linkType: hard
 

@@ -1,6 +1,13 @@
-import BoardComponent from "./components/board/BoardComponent";
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import BoardRenderer from "./components/board/BoardRenderer";
+import { useState, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import * as SplashScreen from "expo-splash-screen";
+import { FontAwesome5 } from "@expo/vector-icons";
+import * as Font from "expo-font";
+
+function cacheFonts(fonts) {
+  return fonts.map((font) => Font.loadAsync(font));
+}
 
 export default function App() {
   const MOCK_BOARD = [
@@ -53,7 +60,7 @@ export default function App() {
         symbol: "D",
         color: "green",
         playedBy: "black",
-        lastPlayed: false,
+        lastPlayed: true,
       },
       null,
       null,
@@ -207,9 +214,37 @@ export default function App() {
       null,
     ],
   ];
+
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  // Load any resources or data that you need prior to rendering the app
+  useEffect(() => {
+    async function loadResourcesAndDataAsync() {
+      try {
+        SplashScreen.preventAutoHideAsync();
+
+        const fontAssets = cacheFonts([FontAwesome5.font]);
+
+        await Promise.all([...fontAssets]);
+      } catch (e) {
+        // You might want to provide this error information to an error reporting service
+        console.warn(e);
+      } finally {
+        setAppIsReady(true);
+        SplashScreen.hideAsync();
+      }
+    }
+
+    loadResourcesAndDataAsync();
+  }, []);
+
+  if (!appIsReady) {
+    return null;
+  }
+
   return (
     <View style={styles.container}>
-      <BoardComponent board={MOCK_BOARD} />
+      <BoardRenderer board={MOCK_BOARD} gameState={undefined} />
     </View>
   );
 }
