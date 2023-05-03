@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 import { Board, GameState } from "@kamon/core";
 import TileComponent from "../tile/TileRenderer";
-import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
