@@ -35,3 +35,6 @@ unit-test-webapp:
 
 e2e-test-webapp:
 	yarn workspace @kamon/webapp test:e2e
+
+load-fixtures-webapp:
+	yarn workspace @kamon/webapp run fixtures load ./src/fixtures --dataSource=./src/ormconfig.ts
