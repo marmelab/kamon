@@ -41,8 +41,6 @@ const COLOR_PALETTE = {
   grey: "grey",
 };
 
-const ICONS_SIZE = 20;
-
 const COMPONENTS_FOR_SYMBOLS = {
   A: <Ghost />,
   B: <Dragon />,
