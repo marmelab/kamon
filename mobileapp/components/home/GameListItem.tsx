@@ -9,7 +9,7 @@ export const GameListItem = ({ id, navigation }: ItemProps) => (
       <Button
         title="Play"
         color="#14d990"
-        onPress={() => navigation.navigate("Game")}
+        onPress={() => navigation.navigate("Game", { itemId: id })}
       />
       <Button
         title="Watch"
