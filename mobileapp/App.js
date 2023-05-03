@@ -1,6 +1,6 @@
 import BoardRenderer from "./components/board/BoardRenderer";
 import { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, StatusBar } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Font from "expo-font";

@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Board, GameState } from "@kamon/core";
 import TileComponent from "../tile/TileRenderer";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
+import { Circle, Line, Path, Rect, Svg } from "react-native-svg";
 
 const styles = StyleSheet.create({
   container: {
@@ -54,6 +55,18 @@ const BoardRenderer = (props: boardProps) => {
   return (
     <ReactNativeZoomableView>
       <View style={styles.container}>{renderTilesFromBoard()}</View>
+      <Svg
+        style={{
+          position: "absolute",
+          height: "100%",
+          width: "100%",
+          // backgroundColor: "blue",
+        }}
+        height="100%"
+        width="200%"
+      >
+        <Circle r="50"></Circle>
+      </Svg>
     </ReactNativeZoomableView>
   );
 };
