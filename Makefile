@@ -4,10 +4,11 @@ help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
 install: ## Install NodeJS dependencies with Yarn 
-	yarn install && yarn workspace @kamon/cli install && yarn workspace @kamon/webapp install && yarn workspace @kamon/core install
+	yarn install
 
 build: build-core build-webapp
 
+# CORE
 build-core:
 	yarn workspace @kamon/core build
 
@@ -24,6 +25,7 @@ build-cli: ## Build all workspaces
 test-cli:
 	yarn workspace @kamon/cli test 
 
+# WEB APP
 run-webapp:
 	yarn workspace @kamon/webapp start
 
@@ -36,5 +38,6 @@ unit-test-webapp:
 e2e-test-webapp:
 	yarn workspace @kamon/webapp test:e2e
 
-load-fixtures-webapp:
-	yarn workspace @kamon/webapp run fixtures load ./src/fixtures --dataSource=./src/ormconfig.ts
+# MOBILE
+run-mobileapp: ## Run an android dev server for mobile app	
+	yarn workspace @kamon/mobileapp start
