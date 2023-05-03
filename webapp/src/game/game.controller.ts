@@ -4,15 +4,16 @@ import {
   Param,
   ParseIntPipe,
   Post,
-  Render,
   Req,
   Res,
   Body,
   Sse,
+  Patch,
+  NotFoundException,
+  Headers,
 } from "@nestjs/common";
 import { Request, Response } from "express";
 import { GameService } from "./game.service";
-import { GameResponseTemplate } from "./game.template";
 import {
   checkIfDraw,
   setGameAsDraw,
@@ -27,7 +28,7 @@ import {
   updateRemainingTiles,
 } from "@kamon/core";
 import { EventsService } from "../events.service";
-import { serialize } from "cookie";
+import { UpdateGameDto } from "./dto/update-game.dto";
 
 @Controller()
 export class GameController {
@@ -48,20 +49,37 @@ export class GameController {
     return response.redirect(`/game/${JSON.stringify(newGame.id)}`);
   }
 
+  @Get("/game/ongoing")
+  async findOnGoingGames() {
+    const onGoing = await this.gameService.findOnGoing();
+
+    if (onGoing.length < 1) {
+      throw new NotFoundException();
+    }
+    return onGoing;
+  }
+
   @Get("/game/:gameId")
-  @Render("index")
   async renderGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
-  ): Promise<GameResponseTemplate> {
+    @Headers() headers,
+  ): Promise<any> {
     const foundGame = await this.gameService.findOne(gameId);
 
+    if (!foundGame) {
+      throw new NotFoundException();
+    }
+
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
-
-    response.cookie("gameId", `${foundGame.id}`);
-
     const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
-    return { game: updatedGame };
+
+    if (headers["accept"] === "text/html") {
+      response.cookie("gameId", `${foundGame.id}`);
+      return response.render("index", { game: updatedGame });
+    }
+
+    return response.send({ game: updatedGame });
   }
 
   @Sse("sse_game_resfresh")
@@ -138,5 +156,42 @@ export class GameController {
     }
 
     return sendResponse();
+  }
+
+  @Get("/game")
+  findAll() {
+    return this.gameService.findAll();
+  }
+
+  @Patch("/game/:id/run")
+  async run(@Param("id") id: number) {
+    let game = await this.gameService.findOne(id);
+    if (!game) {
+      throw new NotFoundException();
+    }
+
+    const updated = await this.gameService.makeRun(id);
+
+    if (updated.affected < 0) {
+      return { error: "Game not updated" };
+    }
+    game = await this.gameService.findOne(id);
+    return game;
+  }
+
+  @Patch("/game/:id/stop")
+  async stop(@Param("id") id: number) {
+    let game = await this.gameService.findOne(id);
+    if (!game) {
+      throw new NotFoundException();
+    }
+
+    const updated = await this.gameService.makeStop(id);
+    if (updated.affected < 0) {
+      return { error: "Game not updated" };
+    }
+
+    game = await this.gameService.findOne(id);
+    return game;
   }
 }

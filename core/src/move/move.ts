@@ -1,4 +1,4 @@
-import { getLastPlayedTile } from "../board/boardGetters";
+import { getLastPlayedTile } from "../board/boardService";
 import { Board } from "../board/boardType";
 import { GameState } from "../game/state";
 import {

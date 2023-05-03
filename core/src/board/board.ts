@@ -10,7 +10,7 @@ import {
 import { GameState } from "../game/state";
 import { ALLOWED_FIRST_MOVES, getPlayableTilesForNextMove } from "../move/move";
 import { Board } from "./boardType";
-import { getLastPlayedTile } from "./boardGetters";
+import { getLastPlayedTile } from "./boardService";
 
 const clearAllowedTilesHighlight = (board: Board): Board => {
   const newBoard = JSON.parse(JSON.stringify(board));
