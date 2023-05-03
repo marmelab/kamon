@@ -12,8 +12,11 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   lineContainer: {
-    flex: 1,
+    flex: 0,
+    marginBottom: -15,
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   nullableTile: {
     width: "1",
