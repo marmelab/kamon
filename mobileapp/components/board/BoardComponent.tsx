@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   lineContainer: {
     flex: 0,
-    marginBottom: -15,
+    marginBottom: -35,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
