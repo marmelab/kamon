@@ -49,6 +49,16 @@ export class GameController {
     return response.redirect(`/game/${JSON.stringify(newGame.id)}`);
   }
 
+  @Get("/game/ongoing")
+  async findOnGoingGames() {
+    const onGoing = await this.gameService.findOnGoing();
+
+    if (onGoing.length < 1) {
+      throw new NotFoundException();
+    }
+    return onGoing;
+  }
+
   @Get("/game/:gameId")
   async renderGame(
     @Param("gameId", ParseIntPipe) gameId: number,
@@ -56,6 +66,10 @@ export class GameController {
     @Headers() headers,
   ): Promise<any> {
     const foundGame = await this.gameService.findOne(gameId);
+
+    if (!foundGame) {
+      throw new NotFoundException();
+    }
 
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
     const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
@@ -147,16 +161,6 @@ export class GameController {
   @Get("/game")
   findAll() {
     return this.gameService.findAll();
-  }
-
-  @Get("game/ongoing")
-  async findOnGoingGames() {
-    const onGoing = await this.gameService.findOnGoing();
-
-    if (onGoing.length < 1) {
-      throw new NotFoundException();
-    }
-    return onGoing;
   }
 
   @Patch("/game/:id/run")
