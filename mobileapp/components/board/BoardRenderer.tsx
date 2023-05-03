@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 import { Board, GameState } from "@kamon/core";
-import TileComponent from "../tile/TileRenderer";
+import TileRenderer from "../tile/TileRenderer";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -32,7 +32,7 @@ const BoardRenderer = ({ board, gameState }: BoardProps) => {
   const renderTilesFromLine = (line, x) =>
     line.map((tile, y) =>
       tile != null ? (
-        <TileComponent
+        <TileRenderer
           key={`${tile.color}_${tile.symbol}`}
           tile={tile}
           coordinates={{ x, y }}
