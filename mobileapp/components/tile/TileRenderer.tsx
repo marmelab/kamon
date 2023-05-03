@@ -51,12 +51,12 @@ const COMPONENTS_FOR_SYMBOLS = {
   O: <View></View>,
 };
 
-type tileProps = {
+type TileProps = {
   tile: Tile;
   coordinates: TileCoordinate;
 };
 
-const TileRenderer = (props: tileProps) => {
+const TileRenderer = (props: TileProps) => {
   const { tile, coordinates } = props;
 
   const PLAYER_COLORS = {
