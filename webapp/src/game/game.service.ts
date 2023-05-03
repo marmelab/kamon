@@ -67,4 +67,16 @@ export class GameService {
       .setParameter("state", { isRunning: true })
       .getMany();
   }
+
+  async makeRun(id: number) {
+    const game = await this.findOne(id);
+    const gameState = { ...game.gameState, isRunning: true };
+    return this.gameRepository.update(id, { ...game, gameState });
+  }
+
+  async makeStop(id: number) {
+    const game = await this.findOne(id);
+    const gameState = { ...game.gameState, isRunning: false };
+    return this.gameRepository.update(id, { ...game, gameState });
+  }
 }
