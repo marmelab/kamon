@@ -1,4 +1,5 @@
-import { Board, getLastPlayedTile } from "../board/board";
+import { getLastPlayedTile } from "../board/boardService";
+import { Board } from "../board/boardType";
 import { getPlayableTilesForNextMove } from "../move/move";
 import { BLACK_PLAYER, Player } from "../player/player";
 
