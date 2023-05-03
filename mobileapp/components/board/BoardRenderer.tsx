@@ -28,9 +28,7 @@ type BoardProps = {
   gameState: GameState;
 };
 
-const BoardRenderer = (props: BoardProps) => {
-  const { board = [], gameState = {} } = props;
-
+const BoardRenderer = ({ board, gameState }: BoardProps) => {
   const renderTilesFromLine = (line, x) =>
     line.map((tile, y) =>
       tile != null ? (
