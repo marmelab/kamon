@@ -23,12 +23,12 @@ const styles = StyleSheet.create({
   },
 });
 
-type boardProps = {
+type BoardProps = {
   board: Board;
   gameState: GameState;
 };
 
-const BoardRenderer = (props: boardProps) => {
+const BoardRenderer = (props: BoardProps) => {
   const { board = [], gameState = {} } = props;
 
   const renderTilesFromLine = (line, x) =>
