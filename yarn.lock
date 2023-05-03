@@ -2697,6 +2697,7 @@ __metadata:
   dependencies:
     "@babel/core": ^7.20.0
     "@kamon/core": 1.0.0
+    "@openspacelabs/react-native-zoomable-view": ^2.1.1
     "@tsconfig/react-native": ^3.0.0
     "@types/jest": ^29.5.1
     "@types/react": ~18.0.27
@@ -3052,6 +3053,18 @@ __metadata:
   bin:
     opencollective: bin/opencollective.js
   checksum: fd3737c12edf55b5c2279674664c3ed5e756410ea82e9cd324c3f0e032ed5ccd8df1959ec69ea97f2f1c9c33c884aae3d7a7108a73ea0faa90d74ea47cf364d4
+  languageName: node
+  linkType: hard
+
+"@openspacelabs/react-native-zoomable-view@npm:^2.1.1":
+  version: 2.2.0
+  resolution: "@openspacelabs/react-native-zoomable-view@npm:2.2.0"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    react: ">=16.8.0"
+    react-native: ">=0.54.0"
+  checksum: 3227ec0954b52440ed3a69781582c08901df7a8fc265ceed4eef3d948a1826f4ccf293a45fe14d2f93e1d8863e5122563543ba506c11bfe37a3679f12ddb6027
   languageName: node
   linkType: hard
 
@@ -12807,7 +12820,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:*":
+"prop-types@npm:*, prop-types@npm:^15.7.2":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:

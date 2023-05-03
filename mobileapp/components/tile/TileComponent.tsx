@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Tile, TileCoordinate } from "@kamon/core";
 import Hexagon from "components/hexagon/Hexagon";
 
@@ -27,7 +27,11 @@ type tileProps = {
 const TileComponent = (props: tileProps) => {
   const { tile, coordinates } = props;
 
-  return <Hexagon color={`${COLOR_PALETTE[tile.color]}`} />;
+  return (
+    <View>
+      <Hexagon color={`${COLOR_PALETTE[tile.color]}`} />
+    </View>
+  );
 };
 
 export default TileComponent;
