@@ -2,6 +2,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Game } from "./game.entity";
 import { initGameState, initRandomGame, Board, GameState } from "@kamon/core";
+import { UpdateGameDto } from "./dto/update-game.dto";
 
 export class GameService {
   gameRepository: Repository<Game>;
@@ -53,5 +54,29 @@ export class GameService {
 
   async remove(id: number): Promise<void> {
     await this.gameRepository.delete(id);
+  }
+
+  async update(id: number, updateGameDto: UpdateGameDto) {
+    return await this.gameRepository.update(id, updateGameDto);
+  }
+
+  findOnGoing() {
+    return this.gameRepository
+      .createQueryBuilder("g")
+      .andWhere("g.gameState ::jsonb @> :state")
+      .setParameter("state", { isRunning: true })
+      .getMany();
+  }
+
+  async makeRun(id: number) {
+    const game = await this.findOne(id);
+    const gameState = { ...game.gameState, isRunning: true };
+    return this.gameRepository.update(id, { ...game, gameState });
+  }
+
+  async makeStop(id: number) {
+    const game = await this.findOne(id);
+    const gameState = { ...game.gameState, isRunning: false };
+    return this.gameRepository.update(id, { ...game, gameState });
   }
 }
