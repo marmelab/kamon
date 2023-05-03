@@ -5,11 +5,18 @@ type ItemProps = { id: number };
 export const GameListItem = ({ id }: ItemProps) => (
   <View style={styles.item}>
     <Text style={styles.title}>Game n°{id}</Text>
-    <Button
-      title="Watch"
-      color="#f24968"
-      onPress={() => Alert.alert(`Watch game ${id}: in progress`)}
-    />
+    <View>
+      <Button
+        title="Play"
+        color="#14d990"
+        onPress={() => Alert.alert(`Watch game ${id}: in progress`)}
+      />
+      <Button
+        title="Watch"
+        color="#f24968"
+        onPress={() => Alert.alert(`Watch game ${id}: in progress`)}
+      />
+    </View>
   </View>
 );
 
