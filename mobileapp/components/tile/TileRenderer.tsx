@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Tile, TileCoordinate } from "@kamon/core";
 import Hexagon from "../shapes/Hexagon";
-import { Svg, Circle, Path, G } from "react-native-svg";
+import { Svg, Circle } from "react-native-svg";
 import GamePad from "../shapes/Gamepad";
 import Dragon from "../shapes/Dragon";
 import Ghost from "../shapes/Ghost";
