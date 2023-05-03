@@ -3,8 +3,6 @@ import { StyleSheet, View } from "react-native";
 import { Board, GameState } from "@kamon/core";
 import TileComponent from "../tile/TileRenderer";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
-import { Circle, Line, Path, Rect, Svg } from "react-native-svg";
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
