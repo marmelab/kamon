@@ -7,7 +7,8 @@
     "packages": [
       "cli",
       "core",
-      "webapp"
+      "webapp",
+      "mobileapp"
     ]
   }
 }
