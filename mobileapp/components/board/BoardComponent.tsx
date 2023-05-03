@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Board, GameState } from "@kamon/core";
-import TileComponent from "components/tile/TileComponent";
+import TileComponent from "../tile/TileComponent";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 
 const styles = StyleSheet.create({
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   lineContainer: {
     flex: 0,
-    marginBottom: -35,
+    marginBottom: -15,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",

@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Tile, TileCoordinate } from "@kamon/core";
-import Hexagon from "components/hexagon/Hexagon";
-import { FontAwesome5 } from "@expo/vector-icons";
+import Hexagon from "../hexagon/Hexagon";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
 const styles = StyleSheet.create({
   container: {
@@ -12,10 +12,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: "white",
-    elevation: 1,
+    elevation: 10,
     width: 50,
     height: 50,
     position: "absolute",
+    top: 0,
   },
 });
 
