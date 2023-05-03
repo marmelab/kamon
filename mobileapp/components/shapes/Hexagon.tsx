@@ -4,19 +4,38 @@ import Svg, { Path, G } from "react-native-svg";
 type HexagonProps = {
   height?: string;
   width?: string;
-  color: string | undefined;
+  style?: object | undefined;
+  colorFill?: string | undefined;
+  colorStroke?: string | undefined;
+  strokeWidth?: string | undefined;
+  dashed?: boolean;
+  opacity?: string;
 };
 
 const Hexagon = (props: HexagonProps) => {
-  const { height = "100", width = "90", color = "black" } = props;
+  const {
+    height = "100",
+    width = "90",
+    colorFill = "black",
+    colorStroke = "black",
+    strokeWidth = "0",
+    dashed = false,
+    opacity = "1",
+    style,
+  } = props;
 
   return (
-    <Svg height={height} width={width}>
+    <Svg style={style} height={height} width={width}>
       <G scale="0.5">
         <Path
           d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z"
-          fill={color != null ? color : "grey"}
-          strokeWidth="0"
+          fill={colorFill != null ? colorFill : "grey"}
+          stroke={colorStroke}
+          stroke-dasharray={"0 4 0"}
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          fillOpacity={opacity}
+          strokeWidth={strokeWidth}
         />
       </G>
     </Svg>

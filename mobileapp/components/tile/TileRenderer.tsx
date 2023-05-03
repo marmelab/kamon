@@ -62,13 +62,28 @@ const TileRenderer = (props: tileProps) => {
   const { tile, coordinates } = props;
 
   const PLAYER_COLORS = {
-    white: "white",
+    white: "grey",
     black: "black",
   };
 
   return (
     <View style={styles.container}>
-      <Hexagon color={`${COLOR_PALETTE[tile.color]}`} />
+      <Hexagon
+        colorFill={`${COLOR_PALETTE[tile.color]}`}
+        opacity={tile.playedBy != null ? "0.5" : "1"}
+      />
+      {tile.playedBy && (
+        <Hexagon
+          style={{ position: "absolute" }}
+          colorFill="none"
+          height="100%"
+          width="100%"
+          colorStroke={PLAYER_COLORS[tile.playedBy]}
+          strokeWidth="18"
+          dashed={true}
+          opacity="1"
+        />
+      )}
       {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
       {tile.lastPlayed && tile.playedBy && (
         <Svg style={{ position: "absolute" }} height={"100%"} width={"100%"}>
