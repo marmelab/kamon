@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { View, ActivityIndicator, Button, Text } from "react-native";
 import { API_ENDPOINT } from "@env";
 import { Board, GameState } from "@kamon/core";
+import EventSource, { EventSourceListener } from "react-native-sse";
 import BoardRenderer from "../board/BoardRenderer";
 import { HUD } from "../HUD/HUD";
 import { useRoute } from "@react-navigation/native";
@@ -16,9 +17,9 @@ export const Game = () => {
   const gameId =
     route != null && route.params != null ? route.params.itemId : "";
 
-  const fetchGameData = () => {
+  const fetchGameData = async () => {
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
-    fetch(url)
+    return fetch(url)
       .then((r) => r.json())
       .then((game) => {
         if (game?.game) {
@@ -33,7 +34,25 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    fetchGameData();
+    const SseUrl = new URL("sse_game_resfresh", API_ENDPOINT);
+    const eventSource = new EventSource(SseUrl, {
+      headers: {
+        Cookie: `gameId=${gameId}`,
+      },
+    });
+
+    eventSource.addEventListener("message", (event) => {
+      fetchGameData();
+    });
+
+    if (game == null) {
+      fetchGameData();
+    }
+
+    return () => {
+      eventSource.removeAllEventListeners();
+      eventSource.close();
+    };
   }, []);
 
   if (game == null) {
