@@ -1,16 +1,7 @@
 import {
   Board,
   highlightAllowedTiles,
-  updateBoardState,
-  checkUserMove,
-  checkIfGameWon,
-  checkIfDraw,
   initGameState,
-  winGame,
-  setGameAsDraw,
-  getOppositePath,
-  updateGraphState,
-  switchPlayer,
   mainLogic,
 } from "@kamon/core";
 import { initCLI } from "./cli";
@@ -20,75 +11,58 @@ import { renderTurnDisplay } from "./render/turn";
 import { renderWinMessage } from "./render/victory";
 import { renderDrawMessage } from "./render/draw";
 import { renderBoard } from "./render/renderBoard";
+import { save } from "./game/save";
 
 initCLI();
 
-const gameConfig: Board = loadGameConfigFromFile();
+let board: Board = loadGameConfigFromFile();
 
 let currentGameState = initGameState();
-const highlightedInitialBoard = highlightAllowedTiles(
-  gameConfig,
-  currentGameState,
-);
+board = highlightAllowedTiles(board, currentGameState);
 renderTurnDisplay(currentGameState.turnNumber);
-renderBoard(highlightedInitialBoard);
-let updatedBoard = highlightedInitialBoard;
+renderBoard(board);
 
 (async () => {
   while (currentGameState.isRunning) {
-    if (checkIfDraw(currentGameState)) {
-      currentGameState = setGameAsDraw(currentGameState);
-    }
-    if (currentGameState.isDraw === true) {
-      renderDrawMessage();
+    const action = await prompt(currentGameState, board);
+
+    if (action.value === "q") {
       return;
     }
 
-    const action = await prompt(currentGameState, updatedBoard);
-
-    if (action.value === "q") {
-      return {
-        gameState: { ...currentGameState, isRunning: false },
-        allowedMove: false,
-      };
-    }
-
     if (action.value === "log") {
-      console.log(currentGameState, updateBoardState);
-      return {
-        gameState: { ...currentGameState },
-        allowedMove: false,
-      };
+      console.log(currentGameState, board);
+      continue;
     }
 
     if (action.value === "s") {
-      return {
-        currentGameState,
-        allowedMove: false,
-      };
+      save(board);
+      continue;
     }
 
     if (action.value == undefined) {
-      return {
-        gameState: {
-          ...currentGameState,
-          message: `Oops, this tile does not exit in the board 😆 ! Please player ${currentGameState.currentPlayer.toUpperCase()} choose an existing tile`,
-        },
-        allowedMove: false,
-      };
+      console.log(
+        `Oops, this tile does not exit in the board 😆 ! Please player ${currentGameState.currentPlayer.toUpperCase()} choose an existing tile`,
+      );
+      continue;
     }
 
-    ({ currentGameState, updatedBoard } = mainLogic(
-      updatedBoard,
+    ({ gameState: currentGameState, board } = mainLogic(
+      board,
       currentGameState,
       action.value,
     ));
 
-    // TODO: if move is not allowed, continue and show a message
-    // TODO: if a game is won, stop and show a message
-    // TODO: if a game is a draw, stop and show a message
-    // TODO: display turn with renderTurnDisplay(currentGameState.turnNumber);
+    if (!!currentGameState.winner) {
+      console.log(currentGameState.message);
+      renderWinMessage(currentGameState.winner);
+    }
 
-    renderBoard(updatedBoard);
+    if (currentGameState.isDraw === true) {
+      renderDrawMessage();
+    }
+
+    renderTurnDisplay(currentGameState.turnNumber);
+    renderBoard(board);
   }
 })();

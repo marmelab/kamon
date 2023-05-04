@@ -32,7 +32,7 @@ export const initGameState = (): GameState => ({
 export const checkNoMoveLeftVictory = (board: Board): boolean =>
   getPlayableTilesForNextMove(board, getLastPlayedTile(board)).length === 0;
 
-export const checkIfGameWon = (gameState: GameState, board: Board): boolean => {
+export const checkIfGameWon = (board: Board): boolean => {
   if (checkNoMoveLeftVictory(board)) {
     return true;
   }

@@ -5,53 +5,72 @@ import { getOppositePath, updateGraphState } from "../graph";
 import { switchPlayer } from "../player";
 import { PlayableTile } from "../tile";
 import { checkUserMove } from "../move";
+import { checkIfDraw } from "./state";
+import { setGameAsDraw } from "./state";
 
 export const mainLogic = (
-  gameConfig: Board,
-  currentGameState: GameState,
+  board: Board,
+  gameState: GameState,
   tile: PlayableTile,
 ) => {
-  const { gameState, allowedMove } = checkUserMove(
-    gameConfig,
+  const { gameState: updatedGameState, allowedMove } = checkUserMove(
+    board,
     tile,
-    currentGameState,
+    gameState,
   );
-  currentGameState = gameState;
-  if (!allowedMove)
-    //continue;
 
-    currentGameState.turnNumber += 1;
+  gameState = updatedGameState;
 
-  let updatedBoard = updateBoardState(gameConfig, tile, currentGameState);
-  const previousPlayer = currentGameState.currentPlayer;
-  const graph = updateGraphState(currentGameState.currentPlayer, updatedBoard);
+  if (!allowedMove) {
+    return {
+      gameState,
+      board,
+    };
+  }
 
-  updatedBoard = highlightAllowedTiles(updatedBoard, currentGameState);
+  gameState.turnNumber += 1;
 
-  //renderTurnDisplay(currentGameState.turnNumber);
+  board = updateBoardState(board, tile, gameState);
+  const previousPlayer = gameState.currentPlayer;
+  const graph = updateGraphState(gameState.currentPlayer, board);
+
+  board = highlightAllowedTiles(board, gameState);
 
   if (getOppositePath(graph).length > 0) {
-    currentGameState = {
-      ...currentGameState,
-      message: `!!!!!! ${currentGameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
-      winner: currentGameState.currentPlayer,
-      isRunning: false,
+    return {
+      gameState: {
+        ...gameState,
+        message: `!!!!!! ${gameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
+        winner: gameState.currentPlayer,
+        isRunning: false,
+      },
+      board,
     };
-    console.log(currentGameState.message);
   }
 
-  currentGameState = {
-    ...currentGameState,
-    currentPlayer: switchPlayer(currentGameState.currentPlayer),
-    message: `${switchPlayer(
-      currentGameState.currentPlayer,
-    ).toUpperCase()}, your turn`,
-  };
-
-  const isGameWon = checkIfGameWon(gameState, updatedBoard);
+  const isGameWon = checkIfGameWon(board);
   if (isGameWon) {
-    currentGameState = winGame(previousPlayer, currentGameState);
+    return {
+      gameState: winGame(previousPlayer, gameState),
+      board,
+    };
   }
 
-  return { currentGameState, updatedBoard };
+  if (checkIfDraw(gameState)) {
+    return {
+      gameState: setGameAsDraw(gameState),
+      board,
+    };
+  }
+
+  return {
+    gameState: {
+      ...gameState,
+      currentPlayer: switchPlayer(gameState.currentPlayer),
+      message: `${switchPlayer(
+        gameState.currentPlayer,
+      ).toUpperCase()}, your turn`,
+    },
+    board,
+  };
 };
