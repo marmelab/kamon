@@ -117,7 +117,7 @@ export const HUD = (props: hudProps) => {
     <View style={styles.container}>
       <View style={styles.turnCounter}>
         <Text style={styles.turnCounterText}>
-          Turn n° {gameState.turnNumber}
+          Turn # {gameState.turnNumber}
         </Text>
       </View>
       <View style={styles.playersBlock}>
