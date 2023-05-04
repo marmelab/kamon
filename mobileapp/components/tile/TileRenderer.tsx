@@ -58,7 +58,7 @@ type TileProps = {
 
 const TileRenderer = ({ tile, coordinates }: TileProps) => {
   const PLAYER_COLORS = {
-    white: "grey",
+    white: "white",
     black: "black",
   };
 

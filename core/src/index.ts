@@ -5,3 +5,4 @@ export * from "./player";
 export * from "./randomizer";
 export * from "./tile";
 export * from "./game";
+export * from "./mocks";
