@@ -4,12 +4,16 @@ import { StyleSheet, View, StatusBar } from "react-native";
 import * as SplashScreen from "expo-splash-screen";
 import { FontAwesome5 } from "@expo/vector-icons";
 import * as Font from "expo-font";
+import { initGameState } from "@kamon/core/dist";
+import { HUD } from "./components/HUD/HUD";
 
 function cacheFonts(fonts) {
   return fonts.map((font) => Font.loadAsync(font));
 }
 
 export default function App() {
+  const gameState = initGameState();
+
   const MOCK_BOARD = [
     [
       null,
@@ -244,7 +248,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <BoardRenderer board={MOCK_BOARD} gameState={undefined} />
+      <BoardRenderer board={MOCK_BOARD} gameState={gameState} />
+      <HUD gameState={gameState} />
     </View>
   );
 }
