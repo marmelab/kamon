@@ -13,7 +13,7 @@ describe("checkUserMove", () => {
     const tile: Tile = { symbol: "E", color: "blue" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
-      { value: tile },
+      tile,
       initialGameState,
     );
     expect(allowedMove).toBeFalsy();

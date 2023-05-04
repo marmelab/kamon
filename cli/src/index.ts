@@ -11,6 +11,7 @@ import {
   getOppositePath,
   updateGraphState,
   switchPlayer,
+  mainLogic,
 } from "@kamon/core";
 import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./game/load";
@@ -71,58 +72,23 @@ let updatedBoard = highlightedInitialBoard;
       return {
         gameState: {
           ...currentGameState,
-          message: `Oops, this tile does not exit in the board 😆 ! Please player ${gameState.currentPlayer.toUpperCase()} choose an existing tile`,
+          message: `Oops, this tile does not exit in the board 😆 ! Please player ${currentGameState.currentPlayer.toUpperCase()} choose an existing tile`,
         },
         allowedMove: false,
       };
     }
 
-    const { gameState, updatedBoard } = logic;
-
-    const { gameState, allowedMove } = checkUserMove(
-      gameConfig,
-      action,
-      currentGameState,
-    );
-    currentGameState = gameState;
-    if (!allowedMove) continue;
-
-    currentGameState.turnNumber += 1;
-
-    updatedBoard = updateBoardState(gameConfig, action.value, currentGameState);
-    const previousPlayer = currentGameState.currentPlayer;
-    const graph = updateGraphState(
-      currentGameState.currentPlayer,
+    ({ currentGameState, updatedBoard } = mainLogic(
       updatedBoard,
-    );
+      currentGameState,
+      action.value,
+    ));
 
-    updatedBoard = highlightAllowedTiles(updatedBoard, currentGameState);
+    // TODO: if move is not allowed, continue and show a message
+    // TODO: if a game is won, stop and show a message
+    // TODO: if a game is a draw, stop and show a message
+    // TODO: display turn with renderTurnDisplay(currentGameState.turnNumber);
 
-    renderTurnDisplay(currentGameState.turnNumber);
-
-    if (getOppositePath(graph).length > 0) {
-      currentGameState = {
-        ...currentGameState,
-        message: `!!!!!! ${currentGameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
-        winner: currentGameState.currentPlayer,
-        isRunning: false,
-      };
-      console.log(currentGameState.message);
-    }
-
-    currentGameState = {
-      ...currentGameState,
-      currentPlayer: switchPlayer(currentGameState.currentPlayer),
-      message: `${switchPlayer(
-        currentGameState.currentPlayer,
-      ).toUpperCase()}, your turn`,
-    };
-
-    const isGameWon = checkIfGameWon(gameState, updatedBoard);
-    if (isGameWon) {
-      currentGameState = winGame(previousPlayer, currentGameState);
-      renderWinMessage(currentGameState.winner);
-    }
     renderBoard(updatedBoard);
   }
 })();

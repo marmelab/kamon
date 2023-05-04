@@ -1,23 +1,15 @@
 import { Board } from "../board/boardType";
-import { GameState, checkIfGameWon, winGame } from "../game/state";
+import { GameState, checkIfGameWon, winGame } from "./state";
 import { highlightAllowedTiles, updateBoardState } from "../board";
 import { getOppositePath, updateGraphState } from "../graph";
 import { switchPlayer } from "../player";
 import { PlayableTile } from "../tile";
 import { checkUserMove } from "../move";
 
-type ReturnType = {
-  state: {
-    gameState: GameState;
-    board: Board;
-  };
-};
-
-export const logic = (
+export const mainLogic = (
   gameConfig: Board,
   currentGameState: GameState,
-  
-  : PlayableTile,
+  tile: PlayableTile,
 ) => {
   const { gameState, allowedMove } = checkUserMove(
     gameConfig,
@@ -59,8 +51,7 @@ export const logic = (
   const isGameWon = checkIfGameWon(gameState, updatedBoard);
   if (isGameWon) {
     currentGameState = winGame(previousPlayer, currentGameState);
-    //renderWinMessage(currentGameState.winner);
   }
 
-  return { currentGameState, updateBoardState };
+  return { currentGameState, updatedBoard };
 };
