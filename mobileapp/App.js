@@ -1,8 +1,10 @@
-import { Home } from "components/home/Home";
+import { useState, useEffect } from "react";
+import { Home } from "./components/home/Home";
 import { SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { Game } from "components/game/Game";
+import { Game } from "./components/game/Game";
+import { initGameState } from "@kamon/core";
 
 const Stack = createNativeStackNavigator();
 
