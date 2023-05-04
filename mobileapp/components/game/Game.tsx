@@ -38,11 +38,8 @@ export const Game = () => {
 
   if (game == null) {
     return (
-      <View
-        testID="loader"
-        style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-      >
-        <ActivityIndicator size="large" />
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <ActivityIndicator accessibilityRole="progressbar" size="large" />
       </View>
     );
   }
@@ -50,7 +47,7 @@ export const Game = () => {
   if (game.board == null || game.gameState == null) {
     return (
       <View
-        testID="refreshButton"
+        accessibilityRole="button"
         style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
       >
         <Text>Couldn't fetch data. Please check your connection.</Text>
