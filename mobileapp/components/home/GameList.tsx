@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, StatusBar } from "react-native";
-
 import { API_ENDPOINT } from "@env";
 import { GameListItem } from "./GameListItem";
 
