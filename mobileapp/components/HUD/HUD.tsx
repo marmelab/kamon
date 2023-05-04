@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: "rgb(116, 121, 125)",
+    backgroundColor: "rgb(136, 141, 145)",
     bottom: 0,
     paddingTop: 10,
     paddingBottom: 15,
