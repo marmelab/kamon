@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     justifyContent: "center",
     alignContent: "center",
-    backgroundColor: "white",
+    backgroundColor: "rgb(116, 121, 125)",
     bottom: 0,
     paddingTop: 10,
     paddingBottom: 15,
@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     height: "15%",
     width: "100%",
+    elevation: 4,
   },
   playersBlock: {
     flex: 1,
@@ -27,7 +28,7 @@ const styles = StyleSheet.create({
   playerContainer: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     maxWidth: "25%",
     marginRight: "10%",
   },
@@ -40,12 +41,24 @@ const styles = StyleSheet.create({
   remainingTilesText: {
     position: "absolute",
     right: 24,
-    top: 13,
+    top: 5,
     height: "100%",
   },
   remainingTilesHexagon: { position: "absolute", right: 0 },
-  turnCounter: {},
+  turnCounter: {
+    flex: 1,
+    justifyContent: "center",
+    alignContent: "center",
+  },
+  turnCounterText: {
+    marginBottom: 10,
+    marginTop: -15,
+    fontSize: 20,
+  },
   messageContainer: {},
+  messageText: {
+    color: "white",
+  },
 });
 
 type hudProps = {
@@ -57,9 +70,9 @@ export const HUD = (props: hudProps) => {
 
   const PLAYER_COLORS = {
     black: "black",
-    white: "grey",
-    playing: "yellow",
-    not_playing: "grey",
+    white: "white",
+    playing: "rgba(209, 209, 0, 0.767)",
+    not_playing: "white",
   };
 
   const generatePlayerBlock = (playerName) => {
@@ -102,15 +115,17 @@ export const HUD = (props: hudProps) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.turnCounter}>
+        <Text style={styles.turnCounterText}>
+          Turn n° {gameState.turnNumber}
+        </Text>
+      </View>
       <View style={styles.playersBlock}>
         {generatePlayerBlock("black")}
         {generatePlayerBlock("white")}
       </View>
-      <View style={styles.turnCounter}>
-        <Text>Turn n° {gameState.turnNumber}</Text>
-      </View>
       <View style={styles.messageContainer}>
-        <Text>{gameState.message}</Text>
+        <Text style={styles.messageText}>{gameState.message}</Text>
       </View>
     </View>
   );
