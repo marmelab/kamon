@@ -50,6 +50,10 @@ const BoardRenderer = ({ board, gameState }: BoardProps) => {
 
   return (
     <ReactNativeZoomableView
+      contentHeight={1250}
+      contentWidth={1000}
+      movementSensibility={1.7}
+      bindToBorders={true}
       style={{ backgroundColor: "#112b3c", width: "1000%", minHeight: "1000%" }}
     >
       <View style={styles.container}>{renderTilesFromBoard()}</View>
