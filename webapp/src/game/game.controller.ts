@@ -12,23 +12,10 @@ import {
   NotFoundException,
   Headers,
 } from "@nestjs/common";
-import { Request, Response } from "express";
+import { Response } from "express";
 import { GameService } from "./game.service";
-import {
-  checkIfDraw,
-  setGameAsDraw,
-  checkUserMove,
-  updateBoardState,
-  updateGraphState,
-  highlightAllowedTiles,
-  getOppositePath,
-  switchPlayer,
-  checkIfGameWon,
-  winGame,
-  updateRemainingTiles,
-} from "@kamon/core";
+import { highlightAllowedTiles, updateGame } from "@kamon/core";
 import { EventsService } from "../events.service";
-import { UpdateGameDto } from "./dto/update-game.dto";
 
 @Controller()
 export class GameController {
@@ -38,10 +25,7 @@ export class GameController {
   ) {}
 
   @Post("/game/create")
-  async createNewGame(
-    @Res() response: Response,
-    @Req() request: Request,
-  ): Promise<void> {
+  async createNewGame(@Res() response: Response): Promise<void> {
     const newGame = await this.gameService.createGame();
     const board = highlightAllowedTiles(newGame.board, newGame.gameState);
     await this.gameService.updateBoard(newGame.id, board);
@@ -74,7 +58,7 @@ export class GameController {
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
     const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
 
-    if (headers["accept"] === "text/html") {
+    if (headers["accept"].includes("text/html")) {
       response.cookie("gameId", `${foundGame.id}`);
       return response.render("index", { game: updatedGame });
     }
@@ -92,7 +76,6 @@ export class GameController {
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
-    @Req() req: Request,
     @Body() body,
   ): Promise<void> {
     const foundGame = await this.gameService.findOne(gameId);
@@ -101,15 +84,6 @@ export class GameController {
     let state = JSON.parse(body["state"]);
     const [color, symbol] = body["played"].split("-");
 
-    const { gameState, allowedMove } = checkUserMove(
-      board,
-      { value: { symbol, color } },
-      state,
-    );
-
-    response.cookie("gameId", foundGame.id);
-
-    state = gameState;
     const sendResponse = async () => {
       await this.gameService.updateBoard(foundGame.id, board);
       await this.gameService.updateGameState(foundGame.id, state);
@@ -117,42 +91,16 @@ export class GameController {
       return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
     };
 
-    if (!allowedMove) {
+    response.cookie("gameId", foundGame.id);
+
+    ({ gameState: state, board } = updateGame(board, state, { symbol, color }));
+
+    if (state.isDraw) {
       return sendResponse();
     }
 
-    state.turnNumber += 1;
-    state = updateRemainingTiles(state);
-
-    board = updateBoardState(board, { symbol, color }, state);
-
-    if (checkIfDraw(state)) {
-      state = setGameAsDraw(state);
+    if (state.winner) {
       return sendResponse();
-    }
-
-    const previousPlayer = state.currentPlayer;
-    const graph = updateGraphState(state.currentPlayer, board);
-
-    if (getOppositePath(graph).length > 0) {
-      state = {
-        ...state,
-        message: `!!!!!! ${state.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
-        winner: state.currentPlayer,
-        isRunning: false,
-      };
-      return sendResponse();
-    }
-
-    state = {
-      ...state,
-      currentPlayer: switchPlayer(state.currentPlayer),
-      message: `${switchPlayer(state.currentPlayer).toUpperCase()}, your turn`,
-    };
-
-    const isGameWon = checkIfGameWon(gameState, board);
-    if (isGameWon) {
-      state = winGame(previousPlayer, state);
     }
 
     return sendResponse();
