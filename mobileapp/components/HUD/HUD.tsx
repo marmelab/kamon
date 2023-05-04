@@ -79,7 +79,7 @@ export const HUD = (props: HudProps) => {
 
     return (
       <View style={styles.playerContainer}>
-        <Svg height="100%" width={"100%"}>
+        <Svg height="100%" width="100%">
           <G scale="0.5">
             <Ellipse
               fill={PLAYER_COLORS[playerName]}
