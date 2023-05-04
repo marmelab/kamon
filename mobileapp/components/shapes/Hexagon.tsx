@@ -8,6 +8,7 @@ type HexagonProps = {
   colorFill?: string | undefined;
   colorStroke?: string | undefined;
   strokeWidth?: string | undefined;
+  scale?: string | undefined;
   dashed?: boolean;
   opacity?: string;
 };
@@ -21,12 +22,13 @@ const Hexagon = (props: HexagonProps) => {
     strokeWidth = "0",
     dashed = false,
     opacity = "1",
+    scale = "0.5",
     style,
   } = props;
 
   return (
     <Svg style={style} height={height} width={width}>
-      <G scale="0.5">
+      <G scale={scale}>
         <Path
           d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z"
           fill={colorFill != null ? colorFill : "grey"}
