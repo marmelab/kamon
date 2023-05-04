@@ -14,7 +14,7 @@ export const GameListItem = ({ id, navigation }: ItemProps) => (
       <Button
         title="Watch"
         color="#f24968"
-        onPress={() => Alert.alert(`Watch game ${id}: in progress`)}
+        onPress={() => navigation.navigate("Game", { itemId: id })}
       />
     </View>
   </View>
