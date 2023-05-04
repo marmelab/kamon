@@ -1,15 +1,10 @@
-import BoardRenderer from "./components/board/BoardRenderer";
-import { useState, useEffect } from "react";
-import { StyleSheet, View, StatusBar } from "react-native";
-import * as SplashScreen from "expo-splash-screen";
-import { FontAwesome5 } from "@expo/vector-icons";
-import * as Font from "expo-font";
-import { initGameState } from "@kamon/core/dist";
-import { HUD } from "./components/HUD/HUD";
+import { Home } from "components/home/Home";
+import { SafeAreaView, StyleSheet, StatusBar } from "react-native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import { Game } from "components/game/Game";
 
-function cacheFonts(fonts) {
-  return fonts.map((font) => Font.loadAsync(font));
-}
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   const gameState = initGameState();
@@ -247,19 +242,35 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <BoardRenderer board={MOCK_BOARD} gameState={gameState} />
-      <HUD gameState={gameState} />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <StatusBar style="auto" animated={true} backgroundColor="#f2b807" />
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: "#f2b807",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        >
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ title: "Welcome to Kamon" }}
+          />
+          <Stack.Screen name="Game" component={Game} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: StatusBar.currentHeight || 0,
     flex: 1,
     backgroundColor: "#112b3c",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });

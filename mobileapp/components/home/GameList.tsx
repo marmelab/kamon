@@ -3,7 +3,7 @@ import { View, FlatList, StyleSheet, StatusBar } from "react-native";
 import { API_ENDPOINT } from "@env";
 import { GameListItem } from "./GameListItem";
 
-export const GameList = () => {
+export const GameList = ({ navigation }) => {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
@@ -18,7 +18,9 @@ export const GameList = () => {
       {games && (
         <FlatList
           data={games}
-          renderItem={({ item }) => <GameListItem id={item.id} />}
+          renderItem={({ item }) => (
+            <GameListItem id={item.id} navigation={navigation} />
+          )}
           keyExtractor={(item) => item.id}
         />
       )}
