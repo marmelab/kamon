@@ -1,5 +1,10 @@
 import { Board } from "../board/boardType";
-import { GameState, checkIfGameWon, winGame } from "./state";
+import {
+  GameState,
+  checkIfGameWon,
+  updateRemainingTiles,
+  winGame,
+} from "./state";
 import { highlightAllowedTiles, updateBoardState } from "../board";
 import { getOppositePath, updateGraphState } from "../graph";
 import { switchPlayer } from "../player";
@@ -29,6 +34,7 @@ export const mainLogic = (
   }
 
   gameState.turnNumber += 1;
+  gameState = updateRemainingTiles(gameState);
 
   board = updateBoardState(board, tile, gameState);
   const previousPlayer = gameState.currentPlayer;
