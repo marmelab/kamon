@@ -60,11 +60,11 @@ const styles = StyleSheet.create({
   },
 });
 
-type hudProps = {
+type HudProps = {
   gameState: GameState;
 };
 
-export const HUD = (props: hudProps) => {
+export const HUD = (props: HudProps) => {
   const { gameState } = props;
 
   const PLAYER_COLORS = {
@@ -123,7 +123,7 @@ export const HUD = (props: hudProps) => {
         {generatePlayerBlock("black")}
         {generatePlayerBlock("white")}
       </View>
-      <View style={styles.messageContainer}>
+      <View>
         <Text style={styles.messageText}>{gameState.message}</Text>
       </View>
     </View>
