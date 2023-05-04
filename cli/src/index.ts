@@ -53,7 +53,7 @@ renderBoard(board);
       action.value,
     ));
 
-    if (!!currentGameState.winner) {
+    if (currentGameState.winner) {
       console.log(currentGameState.message);
       renderWinMessage(currentGameState.winner);
     }
