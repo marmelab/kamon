@@ -12,8 +12,7 @@ export const Game = ({ route, navigation }) => {
   const [game, setGame] = useState<Game>();
 
   const fetchGameData = () => {
-    const API_HOST = API_ENDPOINT;
-    const url = new URL(`/game/${itemId}`, API_HOST);
+    const url = new URL(`/game/${itemId}`, API_ENDPOINT);
     fetch(url)
       .then((r) => r.json())
       .then((games) => setGame(games));
