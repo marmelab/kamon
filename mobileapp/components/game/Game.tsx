@@ -3,6 +3,7 @@ import { View, ActivityIndicator, Button, Text } from "react-native";
 import { API_ENDPOINT } from "@env";
 import { Board, GameState } from "@kamon/core";
 import BoardRenderer from "../board/BoardRenderer";
+import { HUD } from "../HUD/HUD";
 
 type Game = { gameState: GameState; board: Board };
 
@@ -15,7 +16,9 @@ export const Game = ({ route, navigation }) => {
     const url = new URL(`/game/${itemId}`, API_ENDPOINT);
     fetch(url)
       .then((r) => r.json())
-      .then((games) => setGame(games));
+      .then((game) => {
+        setGame(game.game);
+      });
   };
 
   useEffect(() => {
@@ -39,5 +42,10 @@ export const Game = ({ route, navigation }) => {
     );
   }
 
-  return <BoardRenderer board={game.board} gameState={game.gameState} />;
+  return (
+    <>
+      <BoardRenderer board={game.board} gameState={game.gameState} />
+      <HUD gameState={game.gameState} />
+    </>
+  );
 };

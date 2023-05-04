@@ -105,7 +105,9 @@ export const HUD = (props: HudProps) => {
             }
           />
           <Text style={styles.remainingTilesText}>
-            {gameState.remainingTiles.black}
+            {gameState.remainingTiles != null
+              ? gameState.remainingTiles.black
+              : "-"}
           </Text>
         </View>
       </View>
