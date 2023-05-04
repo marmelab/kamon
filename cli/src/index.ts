@@ -45,6 +45,40 @@ let updatedBoard = highlightedInitialBoard;
 
     const action = await prompt(currentGameState, updatedBoard);
 
+    if (action.value === "q") {
+      return {
+        gameState: { ...currentGameState, isRunning: false },
+        allowedMove: false,
+      };
+    }
+
+    if (action.value === "log") {
+      console.log(currentGameState, updateBoardState);
+      return {
+        gameState: { ...currentGameState },
+        allowedMove: false,
+      };
+    }
+
+    if (action.value === "s") {
+      return {
+        currentGameState,
+        allowedMove: false,
+      };
+    }
+
+    if (action.value == undefined) {
+      return {
+        gameState: {
+          ...currentGameState,
+          message: `Oops, this tile does not exit in the board 😆 ! Please player ${gameState.currentPlayer.toUpperCase()} choose an existing tile`,
+        },
+        allowedMove: false,
+      };
+    }
+
+    const { gameState, updatedBoard } = logic;
+
     const { gameState, allowedMove } = checkUserMove(
       gameConfig,
       action,

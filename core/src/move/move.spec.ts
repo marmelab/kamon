@@ -24,7 +24,7 @@ describe("checkUserMove", () => {
     const tile: Tile = { symbol: "A", color: "yellow" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
-      { value: tile },
+      tile,
       initialGameState,
     );
     expect(allowedMove).toBeTruthy();
@@ -46,7 +46,7 @@ describe("checkUserMove", () => {
     const tile: Tile = { symbol: "D", color: "red" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
-      { value: tile },
+      tile,
       initialGameState,
     );
     expect(allowedMove).toBeTruthy();
@@ -68,7 +68,7 @@ describe("checkUserMove", () => {
     const tile: Tile = { symbol: "A", color: "cyan" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
-      { value: tile },
+      tile,
       initialGameState,
     );
     expect(allowedMove).toBeTruthy();
@@ -90,7 +90,7 @@ describe("checkUserMove", () => {
     const tile: Tile = { symbol: "E", color: "green" };
     const { gameState, allowedMove } = checkUserMove(
       mockBoard,
-      { value: tile },
+      tile,
       initialGameState,
     );
     expect(allowedMove).toBeFalsy();
