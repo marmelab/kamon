@@ -7,8 +7,7 @@ export const GameList = ({ navigation }) => {
   const [games, setGames] = useState([]);
 
   useEffect(() => {
-    const API_HOST = API_ENDPOINT;
-    const url = new URL("/game/ongoing", API_HOST);
+    const url = new URL("/game/ongoing", API_ENDPOINT);
     fetch(url)
       .then((r) => r.json())
       .then((games) => setGames(games));
