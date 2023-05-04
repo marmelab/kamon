@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     marginTop: -15,
     fontSize: 20,
   },
-  messageContainer: {},
   messageText: {
     color: "white",
   },
