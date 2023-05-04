@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Tile, TileCoordinate } from "@kamon/core";
 import Hexagon from "../shapes/Hexagon";
 import { Svg, Circle } from "react-native-svg";
@@ -54,9 +54,10 @@ const COMPONENTS_FOR_SYMBOLS = {
 type TileProps = {
   tile: Tile;
   coordinates: TileCoordinate;
+  play: Function;
 };
 
-const TileRenderer = ({ tile, coordinates }: TileProps) => {
+const TileRenderer = ({ tile, coordinates, play }: TileProps) => {
   const PLAYER_COLORS = {
     white: "white",
     black: "black",
@@ -64,35 +65,37 @@ const TileRenderer = ({ tile, coordinates }: TileProps) => {
 
   return (
     <View style={styles.container}>
-      <Hexagon
-        colorFill={`${COLOR_PALETTE[tile.color]}`}
-        opacity={tile.playedBy != null ? "0.5" : "1"}
-      />
-      {tile.playedBy && (
+      <Pressable onPress={() => play(coordinates)}>
         <Hexagon
-          style={{ position: "absolute" }}
-          colorFill="none"
-          height="100%"
-          width="100%"
-          colorStroke={PLAYER_COLORS[tile.playedBy]}
-          strokeWidth="18"
-          dashed={true}
-          opacity="1"
+          colorFill={`${COLOR_PALETTE[tile.color]}`}
+          opacity={tile.playedBy != null ? "0.5" : "1"}
         />
-      )}
-      {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
-      {tile.lastPlayed && tile.playedBy && (
-        <Svg style={{ position: "absolute" }} height="100%" width="100%">
-          <Circle
-            fill="yellow"
-            stroke="black"
-            strokeWidth={3}
-            cx={"25%"}
-            cy={"25%"}
-            r={10}
+        {tile.playedBy && (
+          <Hexagon
+            style={{ position: "absolute" }}
+            colorFill="none"
+            height="100%"
+            width="100%"
+            colorStroke={PLAYER_COLORS[tile.playedBy]}
+            strokeWidth="18"
+            dashed={true}
+            opacity="1"
           />
-        </Svg>
-      )}
+        )}
+        {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
+        {tile.lastPlayed && tile.playedBy && (
+          <Svg style={{ position: "absolute" }} height="100%" width="100%">
+            <Circle
+              fill="yellow"
+              stroke="black"
+              strokeWidth={3}
+              cx={"25%"}
+              cy={"25%"}
+              r={10}
+            />
+          </Svg>
+        )}
+      </Pressable>
     </View>
   );
 };

@@ -26,9 +26,10 @@ const styles = StyleSheet.create({
 type BoardProps = {
   board: Board;
   gameState: GameState;
+  play: Function;
 };
 
-const BoardRenderer = ({ board, gameState }: BoardProps) => {
+const BoardRenderer = ({ board, gameState, play }: BoardProps) => {
   const renderTilesFromLine = (line, x) =>
     line.map((tile, y) =>
       tile != null ? (
@@ -36,6 +37,7 @@ const BoardRenderer = ({ board, gameState }: BoardProps) => {
           key={`${tile.color}_${tile.symbol}`}
           tile={tile}
           coordinates={{ x, y }}
+          play={play}
         />
       ) : (
         <View key={`nullTile_${x}_${y}`}></View>

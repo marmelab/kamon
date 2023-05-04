@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import { View, ActivityIndicator, Button, Text } from "react-native";
 import { API_ENDPOINT } from "@env";
-import { Board, GameState } from "@kamon/core";
+import {
+  Board,
+  GameState,
+  TileCoordinate,
+  findTileByCoordinate,
+  updateGame,
+} from "@kamon/core";
 import BoardRenderer from "../board/BoardRenderer";
 import { HUD } from "../HUD/HUD";
 import { useRoute } from "@react-navigation/native";
@@ -36,6 +42,13 @@ export const Game = () => {
     fetchGameData();
   }, []);
 
+  const play = ({ x, y }: TileCoordinate) => {
+    const tile = findTileByCoordinate(game.board, { x, y });
+    const { gameState, board } = updateGame(game.board, game.gameState, tile);
+
+    setGame({ gameState, board });
+  };
+
   if (game == null) {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -58,7 +71,11 @@ export const Game = () => {
 
   return (
     <>
-      <BoardRenderer board={game.board} gameState={game.gameState} />
+      <BoardRenderer
+        board={game.board}
+        gameState={game.gameState}
+        play={play}
+      />
       <HUD gameState={game.gameState} />
     </>
   );
