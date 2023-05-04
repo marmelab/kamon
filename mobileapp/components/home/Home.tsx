@@ -1,4 +1,4 @@
-import { Button, StatusBar, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { GameList } from "./GameList";
 
 export const Home = ({ navigation }) => {
