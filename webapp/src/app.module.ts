@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { DataSource } from "typeorm";
@@ -36,6 +37,7 @@ import { EventsService } from "./events.service";
     AuthModule,
   ],
 
+  controllers: [AppController],
   providers: [AppService, EventsService],
 })
 export class AppModule {
