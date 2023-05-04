@@ -8,20 +8,7 @@ import {
   Render,
   Req,
 } from "@nestjs/common";
-import {
-  initRandomGame,
-  initGameState,
-  updateBoardState,
-  checkIfDraw,
-  setGameAsDraw,
-  checkUserMove,
-  updateGraphState,
-  highlightAllowedTiles,
-  getOppositePath,
-  switchPlayer,
-  checkIfGameWon,
-  winGame,
-} from "@kamon/core";
+import { initRandomGame, initGameState, mainLogic } from "@kamon/core";
 
 @Controller()
 export class AppController {
@@ -58,51 +45,14 @@ export class AppController {
     let state = JSON.parse(body["state"]);
     const [color, symbol] = body["played"].split("-");
 
-    const { gameState, allowedMove } = checkUserMove(
-      board,
-      { value: { symbol, color } },
-      state,
-    );
+    ({ gameState: state, board } = mainLogic(board, state, { symbol, color }));
 
-    state = gameState;
-
-    if (!allowedMove) {
+    if (state.isDraw === true) {
       return this.getStateUrl(state, board);
     }
 
-    state.turnNumber += 1;
-
-    board = updateBoardState(board, { symbol, color }, state);
-
-    if (checkIfDraw(state)) {
-      state = setGameAsDraw(state);
+    if (!!state.winner) {
       return this.getStateUrl(state, board);
-    }
-
-    const previousPlayer = state.currentPlayer;
-    const graph = updateGraphState(state.currentPlayer, board);
-
-    board = highlightAllowedTiles(board, state);
-
-    if (getOppositePath(graph).length > 0) {
-      state = {
-        ...state,
-        message: `!!!!!! ${state.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
-        winner: state.currentPlayer,
-        isRunning: false,
-      };
-      return this.getStateUrl(state, board);
-    }
-
-    state = {
-      ...state,
-      currentPlayer: switchPlayer(state.currentPlayer),
-      message: `${switchPlayer(state.currentPlayer).toUpperCase()}, your turn`,
-    };
-
-    const isGameWon = checkIfGameWon(gameState, board);
-    if (isGameWon) {
-      state = winGame(previousPlayer, state);
     }
 
     return this.getStateUrl(state, board);
