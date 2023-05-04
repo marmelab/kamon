@@ -55,17 +55,16 @@ const styles = StyleSheet.create({
     marginTop: -15,
     fontSize: 20,
   },
-  messageContainer: {},
   messageText: {
     color: "white",
   },
 });
 
-type hudProps = {
+type HudProps = {
   gameState: GameState;
 };
 
-export const HUD = (props: hudProps) => {
+export const HUD = (props: HudProps) => {
   const { gameState } = props;
 
   const PLAYER_COLORS = {
@@ -80,7 +79,7 @@ export const HUD = (props: hudProps) => {
 
     return (
       <View style={styles.playerContainer}>
-        <Svg height="100%" width={"100%"}>
+        <Svg height="100%" width="100%">
           <G scale="0.5">
             <Ellipse
               fill={PLAYER_COLORS[playerName]}
@@ -124,7 +123,7 @@ export const HUD = (props: hudProps) => {
         {generatePlayerBlock("black")}
         {generatePlayerBlock("white")}
       </View>
-      <View style={styles.messageContainer}>
+      <View>
         <Text style={styles.messageText}>{gameState.message}</Text>
       </View>
     </View>
