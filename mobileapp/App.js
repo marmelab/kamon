@@ -8,11 +8,11 @@ import * as Font from "expo-font";
 import { Home } from "./components/home/Home";
 import { Game } from "./components/game/Game";
 
-export default function App() {
-  function cacheFonts(fonts) {
-    return fonts.map((font) => Font.loadAsync(font));
-  }
+function cacheFonts(fonts) {
+  return fonts.map((font) => Font.loadAsync(font));
+}
 
+export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
 
   // Load any resources or data that you need prior to rendering the app
