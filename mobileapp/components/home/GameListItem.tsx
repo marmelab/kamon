@@ -1,15 +1,22 @@
 import { Alert, Button, StyleSheet, Text, View } from "react-native";
 
-type ItemProps = { id: number };
+type ItemProps = { id: number; navigation: any };
 
-export const GameListItem = ({ id }: ItemProps) => (
+export const GameListItem = ({ id, navigation }: ItemProps) => (
   <View style={styles.item}>
     <Text style={styles.title}>Game n°{id}</Text>
-    <Button
-      title="Watch"
-      color="#f24968"
-      onPress={() => Alert.alert(`Watch game ${id}: in progress`)}
-    />
+    <View>
+      <Button
+        title="Play"
+        color="#14d990"
+        onPress={() => navigation.navigate("Game", { itemId: id })}
+      />
+      <Button
+        title="Watch"
+        color="#f24968"
+        onPress={() => Alert.alert(`Watch game ${id}: in progress`)}
+      />
+    </View>
   </View>
 );
 

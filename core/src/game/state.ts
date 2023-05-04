@@ -26,7 +26,7 @@ export const initGameState = (): GameState => ({
     white: 18,
   },
   turnNumber: 0,
-  message: "Welcome to Kamon 🍱 ! Black player, you turn",
+  message: "Welcome to Kamon 🍱 ! Black player, it's your turn",
 });
 
 export const checkNoMoveLeftVictory = (board: Board): boolean =>
