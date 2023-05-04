@@ -1,2 +1,2 @@
 export * from "./state";
-export * from "./mainLogic";
+export * from "./updateGame";

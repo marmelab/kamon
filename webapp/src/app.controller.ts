@@ -8,7 +8,7 @@ import {
   Render,
   Req,
 } from "@nestjs/common";
-import { initRandomGame, initGameState, mainLogic } from "@kamon/core";
+import { initRandomGame, initGameState, updateGame } from "@kamon/core";
 
 @Controller()
 export class AppController {
@@ -45,7 +45,7 @@ export class AppController {
     let state = JSON.parse(body["state"]);
     const [color, symbol] = body["played"].split("-");
 
-    ({ gameState: state, board } = mainLogic(board, state, { symbol, color }));
+    ({ gameState: state, board } = updateGame(board, state, { symbol, color }));
 
     if (state.isDraw === true) {
       return this.getStateUrl(state, board);

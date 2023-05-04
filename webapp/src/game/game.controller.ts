@@ -14,7 +14,7 @@ import {
 } from "@nestjs/common";
 import { Response } from "express";
 import { GameService } from "./game.service";
-import { highlightAllowedTiles, mainLogic } from "@kamon/core";
+import { highlightAllowedTiles, updateGame } from "@kamon/core";
 import { EventsService } from "../events.service";
 
 @Controller()
@@ -93,7 +93,7 @@ export class GameController {
 
     response.cookie("gameId", foundGame.id);
 
-    ({ gameState: state, board } = mainLogic(board, state, { symbol, color }));
+    ({ gameState: state, board } = updateGame(board, state, { symbol, color }));
 
     if (state.isDraw === true) {
       return sendResponse();

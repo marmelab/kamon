@@ -2,7 +2,7 @@ import {
   Board,
   highlightAllowedTiles,
   initGameState,
-  mainLogic,
+  updateGame,
 } from "@kamon/core";
 import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./game/load";
@@ -47,7 +47,7 @@ renderBoard(board);
       continue;
     }
 
-    ({ gameState: currentGameState, board } = mainLogic(
+    ({ gameState: currentGameState, board } = updateGame(
       board,
       currentGameState,
       action.value,

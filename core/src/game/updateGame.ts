@@ -13,7 +13,7 @@ import { checkUserMove } from "../move";
 import { checkIfDraw } from "./state";
 import { setGameAsDraw } from "./state";
 
-export const mainLogic = (
+export const updateGame = (
   board: Board,
   gameState: GameState,
   tile: PlayableTile,
