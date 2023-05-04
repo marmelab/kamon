@@ -82,7 +82,7 @@ const TileRenderer = ({ tile, coordinates }: TileProps) => {
       )}
       {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
       {tile.lastPlayed && tile.playedBy && (
-        <Svg style={{ position: "absolute" }} height={"100%"} width={"100%"}>
+        <Svg style={{ position: "absolute" }} height="100%" width="100%">
           <Circle
             fill="yellow"
             stroke="black"
