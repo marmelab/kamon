@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { Tile, TileCoordinate } from "@kamon/core";
 import Hexagon from "../shapes/Hexagon";
-import { Svg, Circle, Path, G } from "react-native-svg";
+import { Svg, Circle } from "react-native-svg";
 import GamePad from "../shapes/Gamepad";
 import Dragon from "../shapes/Dragon";
 import Ghost from "../shapes/Ghost";
@@ -41,8 +41,6 @@ const COLOR_PALETTE = {
   grey: "grey",
 };
 
-const ICONS_SIZE = 20;
-
 const COMPONENTS_FOR_SYMBOLS = {
   A: <Ghost />,
   B: <Dragon />,
@@ -53,14 +51,12 @@ const COMPONENTS_FOR_SYMBOLS = {
   O: <View></View>,
 };
 
-type tileProps = {
+type TileProps = {
   tile: Tile;
   coordinates: TileCoordinate;
 };
 
-const TileRenderer = (props: tileProps) => {
-  const { tile, coordinates } = props;
-
+const TileRenderer = ({ tile, coordinates }: TileProps) => {
   const PLAYER_COLORS = {
     white: "grey",
     black: "black",
@@ -86,7 +82,7 @@ const TileRenderer = (props: tileProps) => {
       )}
       {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
       {tile.lastPlayed && tile.playedBy && (
-        <Svg style={{ position: "absolute" }} height={"100%"} width={"100%"}>
+        <Svg style={{ position: "absolute" }} height="100%" width="100%">
           <Circle
             fill="yellow"
             stroke="black"
