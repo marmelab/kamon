@@ -19,6 +19,8 @@ export const Game = () => {
 
   const [game, setGame] = useState<Game>();
 
+  const [playable, setPlayable] = useState(route.params.playable);
+
   const gameId =
     route != null && route.params != null ? route.params.itemId : "";
 
@@ -43,10 +45,17 @@ export const Game = () => {
   }, []);
 
   const play = ({ x, y }: TileCoordinate) => {
+    if (!playable) {
+      return;
+    }
     const tile = findTileByCoordinate(game.board, { x, y });
     const { gameState, board } = updateGame(game.board, game.gameState, tile);
 
     setGame({ gameState, board });
+
+    if (gameState.winner || gameState.isDraw) {
+      setPlayable(false);
+    }
   };
 
   if (game == null) {
