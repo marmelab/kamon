@@ -47,11 +47,11 @@ export class AppController {
 
     ({ gameState: state, board } = updateGame(board, state, { symbol, color }));
 
-    if (state.isDraw === true) {
+    if (state.isDraw) {
       return this.getStateUrl(state, board);
     }
 
-    if (!!state.winner) {
+    if (state.winner) {
       return this.getStateUrl(state, board);
     }
 

@@ -95,11 +95,11 @@ export class GameController {
 
     ({ gameState: state, board } = updateGame(board, state, { symbol, color }));
 
-    if (state.isDraw === true) {
+    if (state.isDraw) {
       return sendResponse();
     }
 
-    if (!!state.winner) {
+    if (state.winner) {
       return sendResponse();
     }
 
