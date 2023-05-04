@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { GameList } from "./GameList";
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text>Wecome to Kamon</Text>
-      <GameList />
+      <GameList navigation={navigation} />
     </View>
   );
 };
