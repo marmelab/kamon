@@ -18,7 +18,7 @@ export const Game = () => {
 
   const fetchGameData = async () => {
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
-    return fetch(url)
+    fetch(url)
       .then((r) => r.json())
       .then((game) => {
         if (game?.game) {
