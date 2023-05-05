@@ -58,6 +58,11 @@ const styles = StyleSheet.create({
   messageText: {
     color: "white",
   },
+  winMessage: {
+    textAlign: "center",
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
 });
 
 type HudProps = {
@@ -128,6 +133,11 @@ export const HUD = (props: HudProps) => {
       <View>
         <Text style={styles.messageText}>{gameState.message}</Text>
       </View>
+      {gameState.winner && (
+        <View>
+          <Text style={styles.winMessage}>{gameState.winner} won !</Text>
+        </View>
+      )}
     </View>
   );
 };
