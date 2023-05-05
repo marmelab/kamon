@@ -8,6 +8,7 @@ import {
   findTileByCoordinate,
   updateGame,
 } from "@kamon/core";
+import EventSource from "react-native-sse";
 import BoardRenderer from "../board/BoardRenderer";
 import { HUD } from "../HUD/HUD";
 import { useRoute } from "@react-navigation/native";
@@ -41,7 +42,25 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    fetchGameData();
+    const SseUrl = new URL("sse_game_resfresh", API_ENDPOINT);
+    const eventSource = new EventSource(SseUrl, {
+      headers: {
+        Cookie: `gameId=${gameId}`,
+      },
+    });
+
+    eventSource.addEventListener("message", (event) => {
+      fetchGameData();
+    });
+
+    if (game == null) {
+      fetchGameData();
+    }
+
+    return () => {
+      eventSource.removeAllEventListeners();
+      eventSource.close();
+    };
   }, []);
 
   const play = ({ x, y }: TileCoordinate) => {
