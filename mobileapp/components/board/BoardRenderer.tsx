@@ -3,7 +3,6 @@ import { StyleSheet, View } from "react-native";
 import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
 import { Board, GameState } from "@kamon/core";
 import TileRenderer from "../tile/TileRenderer";
-import { Circle, Svg } from "react-native-svg";
 const styles = StyleSheet.create({
   container: {
     position: "relative",
