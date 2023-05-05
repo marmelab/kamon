@@ -15,10 +15,10 @@ import {
   Res,
 } from "@nestjs/common";
 import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
-import { EventsService } from "src/events.service";
-import { UpdateGameDto } from "src/game/dto/update-game.dto";
-import { Game } from "src/game/game.entity";
-import { GameService } from "src/game/game.service";
+import { EventsService } from "..//events.service";
+import { UpdateGameDto } from "../game/dto/update-game.dto";
+import { Game } from "../game/game.entity";
+import { GameService } from "../game/game.service";
 
 @Controller("api")
 export class ApiController {

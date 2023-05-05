@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ApiController } from "./api.controller";
-import { GameModule } from "src/game/game.module";
-import { EventsService } from "src/events.service";
+import { GameModule } from "../game/game.module";
+import { EventsService } from "../events.service";
 
 @Module({
   controllers: [ApiController],
