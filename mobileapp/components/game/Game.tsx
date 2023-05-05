@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { View, ActivityIndicator, Button, Text } from "react-native";
 import { API_ENDPOINT } from "@env";
 import { Board, GameState } from "@kamon/core";
-import EventSource, { EventSourceListener } from "react-native-sse";
+import EventSource from "react-native-sse";
 import BoardRenderer from "../board/BoardRenderer";
 import { HUD } from "../HUD/HUD";
 import { useRoute } from "@react-navigation/native";
