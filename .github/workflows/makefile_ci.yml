@@ -107,4 +107,4 @@ jobs:
           SSH_HOST: ${{ secrets.AWS_SSH_HOST }}
 
       - name: Deploy
-        run: ssh aws 'cd ~/kamon && git pull && docker compose stop && docker compose build && docker compose up -d'
+        run: ssh aws 'cd ~/kamon && git pull && docker-compose stop && docker-compose build && docker-compose up -d && docker builder prune'

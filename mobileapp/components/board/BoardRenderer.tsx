@@ -5,6 +5,7 @@ import { Board, GameState, TileCoordinate } from "@kamon/core";
 import TileRenderer from "../tile/TileRenderer";
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
@@ -58,7 +59,7 @@ const BoardRenderer = ({ board, gameState, play }: BoardProps) => {
       contentWidth={1000}
       movementSensibility={1.7}
       bindToBorders={true}
-      style={{ backgroundColor: "#112b3c", width: "1000%", minHeight: "1000%" }}
+      style={{ backgroundColor: "#183E57", width: "1000%", minHeight: "1000%" }}
     >
       <View style={styles.container}>{renderTilesFromBoard()}</View>
     </ReactNativeZoomableView>
