@@ -14,7 +14,7 @@ import {
   Post,
   Res,
 } from "@nestjs/common";
-import { ApiBody } from "@nestjs/swagger";
+import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
 import { EventsService } from "src/events.service";
 import { UpdateGameDto } from "src/game/dto/update-game.dto";
 import { Game } from "src/game/game.entity";
@@ -28,6 +28,9 @@ export class ApiController {
   ) {}
 
   @Post("/game/create")
+  @ApiCreatedResponse({
+    type: Game,
+  })
   async createNewGame(): Promise<Game> {
     const newGame = await this.gameService.createGame();
     const board = highlightAllowedTiles(newGame.board, newGame.gameState);
@@ -37,6 +40,9 @@ export class ApiController {
   }
 
   @Get("/game/ongoing")
+  @ApiCreatedResponse({
+    type: [Game],
+  })
   async getOnGoingGames(): Promise<Game[]> {
     const onGoing = await this.gameService.findOnGoing();
 
@@ -47,6 +53,9 @@ export class ApiController {
   }
 
   @Get("/game/:gameId")
+  @ApiCreatedResponse({
+    type: Game,
+  })
   async get(@Param("gameId", ParseIntPipe) gameId: number): Promise<Game> {
     const foundGame = await this.gameService.findOne(gameId);
 
@@ -60,11 +69,17 @@ export class ApiController {
   }
 
   @Get("/game")
+  @ApiCreatedResponse({
+    type: [Game],
+  })
   getAll(): Promise<Game[]> {
     return this.gameService.findAll();
   }
 
   @Patch("/game/:id/run")
+  @ApiCreatedResponse({
+    type: Game,
+  })
   async run(@Param("id") id: number): Promise<Game> {
     let game = await this.gameService.findOne(id);
     if (!game) {
@@ -78,6 +93,9 @@ export class ApiController {
   }
 
   @Patch("/game/:id/stop")
+  @ApiCreatedResponse({
+    type: Game,
+  })
   async stop(@Param("id") id: number): Promise<Game> {
     let game = await this.gameService.findOne(id);
     if (!game) {
@@ -92,6 +110,9 @@ export class ApiController {
 
   @Post("/game/:gameId")
   @ApiBody({ type: UpdateGameDto })
+  @ApiCreatedResponse({
+    type: Game,
+  })
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Body() body: UpdateGameDto,
