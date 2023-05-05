@@ -7,9 +7,19 @@ import { registerCustomHelpers } from "./hbsHelpers";
 import * as session from "express-session";
 import * as passport from "passport";
 import * as cookieParser from "cookie-parser";
+import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  const config = new DocumentBuilder()
+    .setTitle("Kamon API")
+    .setDescription("The Kamon API that allow you play Kamon where you want")
+    .setVersion("1.0")
+    .addTag("kamon")
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup("api", app, document);
 
   registerCustomHelpers();
   app.use(
