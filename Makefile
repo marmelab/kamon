@@ -56,5 +56,4 @@ e2e-test-webapp:
 # MOBILE
 run-mobileapp: run-webapp ## Run an android dev server for mobile app
 	touch ./mobileapp/.env
-	
 	yarn workspace @kamon/mobileapp start
