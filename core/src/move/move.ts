@@ -3,6 +3,7 @@ import { Board } from "../board/boardType";
 import { GameState } from "../game/state";
 import {
   NEUTRALE_TILE,
+  PlayableTile,
   Tile,
   TileCoordinate,
   findTile,
@@ -105,45 +106,13 @@ export const getPlayableTilesForNextMove = (
 
 export const checkUserMove = (
   board: Board,
-  action: Action,
+  tile: PlayableTile,
   gameState: GameState,
 ): CheckedUserMove => {
   let newAllowedMoveValue: boolean = true;
   let newMessageValue = "";
 
-  if (action.value === "q") {
-    return {
-      gameState: { ...gameState, isRunning: false },
-      allowedMove: false,
-    };
-  }
-
-  if (action.value === "log") {
-    console.log(board);
-    return {
-      gameState: { ...gameState },
-      allowedMove: false,
-    };
-  }
-
-  if (action.value === "s") {
-    return {
-      gameState,
-      allowedMove: false,
-    };
-  }
-
-  if (action.value == undefined) {
-    return {
-      gameState: {
-        ...gameState,
-        message: `Oops, this tile does not exit in the board 😆 ! Please player ${gameState.currentPlayer.toUpperCase()} choose an existing tile`,
-      },
-      allowedMove: false,
-    };
-  }
-
-  const { x, y } = findTile(board, action.value);
+  const { x, y } = findTile(board, tile);
   const playedTile = findTileByCoordinate(board, { x, y });
 
   if (gameState.turnNumber === 0) {

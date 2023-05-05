@@ -1,16 +1,8 @@
 import {
   Board,
   highlightAllowedTiles,
-  updateBoardState,
-  checkUserMove,
-  checkIfGameWon,
-  checkIfDraw,
   initGameState,
-  winGame,
-  setGameAsDraw,
-  getOppositePath,
-  updateGraphState,
-  switchPlayer,
+  updateGame,
 } from "@kamon/core";
 import { initCLI } from "./cli";
 import { loadGameConfigFromFile } from "./game/load";
@@ -19,76 +11,58 @@ import { renderTurnDisplay } from "./render/turn";
 import { renderWinMessage } from "./render/victory";
 import { renderDrawMessage } from "./render/draw";
 import { renderBoard } from "./render/renderBoard";
+import { save } from "./game/save";
 
 initCLI();
 
-const gameConfig: Board = loadGameConfigFromFile();
+let board: Board = loadGameConfigFromFile();
 
 let currentGameState = initGameState();
-const highlightedInitialBoard = highlightAllowedTiles(
-  gameConfig,
-  currentGameState,
-);
+board = highlightAllowedTiles(board, currentGameState);
 renderTurnDisplay(currentGameState.turnNumber);
-renderBoard(highlightedInitialBoard);
-let updatedBoard = highlightedInitialBoard;
+renderBoard(board);
 
 (async () => {
   while (currentGameState.isRunning) {
-    if (checkIfDraw(currentGameState)) {
-      currentGameState = setGameAsDraw(currentGameState);
-    }
-    if (currentGameState.isDraw === true) {
-      renderDrawMessage();
+    const action = await prompt(currentGameState, board);
+
+    if (action.value === "q") {
       return;
     }
 
-    const action = await prompt(currentGameState, updatedBoard);
-
-    const { gameState, allowedMove } = checkUserMove(
-      gameConfig,
-      action,
-      currentGameState,
-    );
-    currentGameState = gameState;
-    if (!allowedMove) continue;
-
-    currentGameState.turnNumber += 1;
-
-    updatedBoard = updateBoardState(gameConfig, action.value, currentGameState);
-    const previousPlayer = currentGameState.currentPlayer;
-    const graph = updateGraphState(
-      currentGameState.currentPlayer,
-      updatedBoard,
-    );
-
-    updatedBoard = highlightAllowedTiles(updatedBoard, currentGameState);
-
-    renderTurnDisplay(currentGameState.turnNumber);
-
-    if (getOppositePath(graph).length > 0) {
-      currentGameState = {
-        ...currentGameState,
-        message: `!!!!!! ${currentGameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
-        winner: currentGameState.currentPlayer,
-        isRunning: false,
-      };
-      console.log(currentGameState.message);
+    if (action.value === "log") {
+      console.log(currentGameState, board);
+      continue;
     }
 
-    currentGameState = {
-      ...currentGameState,
-      currentPlayer: switchPlayer(currentGameState.currentPlayer),
-      message: `${switchPlayer(
-        currentGameState.currentPlayer,
-      ).toUpperCase()}, your turn`,
-    };
+    if (action.value === "s") {
+      save(board);
+      continue;
+    }
 
-    const isGameWon = checkIfGameWon(gameState, updatedBoard);
-    if (isGameWon) {
-      currentGameState = winGame(previousPlayer, currentGameState);
+    if (action.value == undefined) {
+      console.log(
+        `Oops, this tile does not exit in the board 😆 ! Please player ${currentGameState.currentPlayer.toUpperCase()} choose an existing tile`,
+      );
+      continue;
+    }
+
+    ({ gameState: currentGameState, board } = updateGame(
+      board,
+      currentGameState,
+      action.value,
+    ));
+
+    if (currentGameState.winner) {
+      console.log(currentGameState.message);
       renderWinMessage(currentGameState.winner);
     }
-    renderBoard(updatedBoard);
+
+    if (currentGameState.isDraw === true) {
+      renderDrawMessage();
+    }
+
+    renderTurnDisplay(currentGameState.turnNumber);
+    renderBoard(board);
   }
 })();

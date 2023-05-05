@@ -44,6 +44,7 @@ describe("generatePromptChoices", () => {
       },
       { title: "Quit", value: "q" },
       { title: "Save", value: "s" },
+      { title: "Log", value: "log" },
     ];
 
     const choices = generatePromptChoices(JSON.parse(gameStartMockBoard));
@@ -99,6 +100,7 @@ describe("generatePromptChoices", () => {
       },
       { title: "Quit", value: "q" },
       { title: "Save", value: "s" },
+      { title: "Log", value: "log" },
     ];
 
     const choices = generatePromptChoices(JSON.parse(gameOneTileMockBoard));

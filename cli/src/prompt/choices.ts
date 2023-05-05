@@ -31,6 +31,7 @@ export const generatePromptChoices = (board: Board) => {
 
   choices.push({ title: "Quit", value: "q" });
   choices.push({ title: "Save", value: "s" });
+  choices.push({ title: "Log", value: "log" });
 
   return choices;
 };

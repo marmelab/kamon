@@ -4,8 +4,6 @@ import { generatePromptChoices } from "./choices";
 
 export const prompt = async (gameState: GameState, board: Board) => {
   const choices = generatePromptChoices(board);
-  choices.push({ title: "Quit", value: "q" });
-  choices.push({ title: "Log", value: "log" });
   return await askToPlay(choices, gameState.message);
 };
 
