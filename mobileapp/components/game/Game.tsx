@@ -29,8 +29,8 @@ export const Game = () => {
     fetch(url)
       .then((r) => r.json())
       .then((game) => {
-        if (game?.game) {
-          setGame(game.game);
+        if (game) {
+          setGame({ board: game.board, gameState: game.gameState });
         } else {
           setGame({ board: null, gameState: null });
         }

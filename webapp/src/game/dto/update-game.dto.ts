@@ -1,8 +1,6 @@
 import { PartialType } from "@nestjs/mapped-types";
 import { CreateGameDto } from "./create-game.dto";
 import { ApiProperty } from "@nestjs/swagger";
-import { Board, GameState, PlayableTile } from "@kamon/core/dist";
-
 export class UpdateGameDto extends PartialType(CreateGameDto) {
   /*@ApiProperty({
     description: "The board with all tiles",
@@ -43,9 +41,9 @@ export class UpdateGameDto extends PartialType(CreateGameDto) {
   gameState: GameState;*/
 
   @ApiProperty({
-    description: "The tile that has been played",
+    description: "The coordinates (x-y) of the tile that has been played",
     type: "string",
-    example: "A-yellow",
+    example: "0-3",
   })
   played: string;
 }
