@@ -21,7 +21,7 @@ import {
 } from "@kamon/core";
 import { EventsService } from "../events.service";
 import { UpdateGameDto } from "./dto/update-game.dto";
-import { ApiBody } from "@nestjs/swagger";
+import { ApiBody, ApiExcludeEndpoint } from "@nestjs/swagger";
 
 @Controller()
 export class GameController {
@@ -73,6 +73,7 @@ export class GameController {
   }
 
   @Sse("sse_game_resfresh")
+  @ApiExcludeEndpoint()
   events(@Req() req) {
     const gameId = req.cookies.gameId;
     return this.eventsService.subscribe(`sse_game_refresh_${gameId}`);

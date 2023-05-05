@@ -12,8 +12,10 @@ import {
 import { AuthService } from "./auth.service";
 import { UsersService } from "../users/users.service";
 import { LocalAuthGuard } from "./local-auth.guard";
+import { ApiExcludeController } from "@nestjs/swagger";
 
 @Controller()
+@ApiExcludeController()
 export class AuthController {
   constructor(
     private authService: AuthService,
