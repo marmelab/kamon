@@ -92,8 +92,8 @@ const TileRenderer = ({ tile, coordinates }: TileProps) => {
           height="105%"
           width="105%"
           colorStroke={"yellow"}
-          strokeWidth="12"
-          viewBox="-13 0 120 100"
+          strokeWidth="13"
+          viewBox="-12 0 120 100"
           opacity="1"
         />
       )}
