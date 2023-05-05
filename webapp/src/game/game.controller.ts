@@ -74,7 +74,7 @@ export class GameController {
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
     const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
 
-    if (headers["accept"] === "text/html") {
+    if (headers?.accept && headers.accept.includes("text/html")) {
       response.cookie("gameId", `${foundGame.id}`);
       return response.render("index", { game: updatedGame });
     }
