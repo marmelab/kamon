@@ -9,8 +9,10 @@ import {
   Req,
 } from "@nestjs/common";
 import { initRandomGame, initGameState, updateGame } from "@kamon/core";
+import { ApiExcludeController } from "@nestjs/swagger";
 
 @Controller()
+@ApiExcludeController()
 export class AppController {
   getStateUrl(state, board) {
     return { url: `/?game-state=${JSON.stringify({ state, board })}` };
