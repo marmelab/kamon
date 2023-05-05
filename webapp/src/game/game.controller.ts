@@ -106,6 +106,34 @@ export class GameController {
     return sendResponse();
   }
 
+  @Get("/game/link/:gameId")
+  async getLinkForJoiningGame(
+    @Param("gameId", ParseIntPipe) gameId: number,
+    @Res() response: Response,
+    @Headers() headers,
+  ): Promise<any> {
+    const foundGame = await this.gameService.findOne(gameId);
+
+    if (!foundGame) {
+      throw new NotFoundException();
+    }
+  }
+
+  @Post("/game/join/:gameId")
+  async joinGame(
+    @Param("gameId", ParseIntPipe) gameId: number,
+    @Res() response: Response,
+    @Body() body,
+  ): Promise<void> {
+    const foundGame = await this.gameService.findOne(gameId);
+
+    if (!foundGame) {
+      throw new NotFoundException();
+    }
+
+    foundGame;
+  }
+
   @Get("/game")
   findAll() {
     return this.gameService.findAll();

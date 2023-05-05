@@ -11,7 +11,7 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { UsersService } from "../users/users.service";
-import { LocalAuthGuard } from "./local-auth.guard";
+import { JwtAuthGuard } from "./jwt-auth.guard";
 
 @Controller()
 export class AuthController {
@@ -30,6 +30,14 @@ export class AuthController {
   @Redirect("/login")
   async register(@Body() body) {
     try {
+      const alreadyExistingUser = this.userService.findByUserName(
+        body.username,
+      );
+
+      if (alreadyExistingUser) {
+        return { url: "/" };
+      }
+
       await this.userService.createUser(body.username, body.password);
     } catch (error) {
       return { url: "/" };
@@ -42,7 +50,7 @@ export class AuthController {
     return { action: "/login", title: "Login" };
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post("/login")
   @Redirect("/me")
   login(@Request() req) {
