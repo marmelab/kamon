@@ -62,6 +62,71 @@ const TileRenderer = ({ tile, coordinates }: TileProps) => {
     black: "black",
   };
 
+  const BORDERS_INDICATORS_STYLES_FOR_COORDINATES = {
+    "0": {
+      "4": {
+        containerStyle: {
+          position: "absolute",
+          top: "-33%",
+          right: "-75%",
+        },
+        indicatorColor: "#14d990",
+      },
+    },
+    "1": {
+      "2": {
+        containerStyle: {
+          position: "absolute",
+          top: "33%",
+          left: "-66%",
+        },
+        indicatorColor: "#f2b807",
+      },
+      "6": {
+        containerStyle: {
+          position: "absolute",
+          bottom: "-33%",
+          right: "-105%",
+        },
+        indicatorColor: "#9b72f2",
+      },
+    },
+    "2": {},
+    "3": {},
+    "4": {
+      "1": {
+        containerStyle: {
+          position: "absolute",
+          bottom: "-95%",
+          left: "-10%",
+        },
+        indicatorColor: "#9b72f2",
+      },
+      "6": {
+        containerStyle: {
+          position: "absolute",
+          bottom: "-100%",
+          right: "-66%",
+        },
+        indicatorColor: "#f2b807",
+      },
+    },
+    "5": {},
+    "6": {
+      "4": {
+        containerStyle: {
+          position: "absolute",
+          bottom: "-85%",
+          right: "-75%",
+        },
+        indicatorColor: "#14d990",
+      },
+    },
+  };
+
+  const borderIndicatorStyle =
+    BORDERS_INDICATORS_STYLES_FOR_COORDINATES[coordinates.x][coordinates.y];
+
   return (
     <View style={styles.container}>
       <Hexagon
@@ -90,6 +155,25 @@ const TileRenderer = ({ tile, coordinates }: TileProps) => {
             cx={"25%"}
             cy={"25%"}
             r={10}
+          />
+        </Svg>
+      )}
+      {borderIndicatorStyle && (
+        <Svg
+          style={[
+            { position: "absolute" },
+            borderIndicatorStyle.containerStyle,
+          ]}
+          height="100%"
+          width="100%"
+        >
+          <Circle
+            fill={borderIndicatorStyle.indicatorColor}
+            stroke="black"
+            strokeWidth={3}
+            cx={"25%"}
+            cy={"25%"}
+            r={20}
           />
         </Svg>
       )}

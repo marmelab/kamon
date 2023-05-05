@@ -16,9 +16,9 @@ export const Game = () => {
   const gameId =
     route != null && route.params != null ? route.params.itemId : "";
 
-  const fetchGameData = () => {
+  const fetchGameData = async () => {
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
-    fetch(url)
+    return fetch(url)
       .then((r) => r.json())
       .then((game) => {
         if (game?.game) {
