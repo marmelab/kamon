@@ -1,1 +1,1 @@
-# core
+# Kamon Core
