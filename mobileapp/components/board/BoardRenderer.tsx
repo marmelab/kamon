@@ -5,6 +5,7 @@ import { Board, GameState } from "@kamon/core";
 import TileRenderer from "../tile/TileRenderer";
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
     flexDirection: "column",
     justifyContent: "center",
