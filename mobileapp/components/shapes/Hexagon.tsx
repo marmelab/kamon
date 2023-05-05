@@ -9,6 +9,7 @@ type HexagonProps = {
   colorStroke?: string | undefined;
   strokeWidth?: string | undefined;
   scale?: string | undefined;
+  viewBox?: string | undefined;
   dashed?: boolean;
   opacity?: string;
 };
@@ -21,13 +22,14 @@ const Hexagon = (props: HexagonProps) => {
     colorStroke = "black",
     strokeWidth = "0",
     dashed = false,
+    viewBox,
     opacity = "1",
     scale = "0.5",
     style,
   } = props;
 
   return (
-    <Svg style={style} height={height} width={width}>
+    <Svg style={style} height={height} width={width} viewBox={viewBox}>
       <G scale={scale}>
         <Path
           d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z"

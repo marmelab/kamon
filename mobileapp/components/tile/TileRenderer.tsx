@@ -35,7 +35,7 @@ const COLOR_PALETTE = {
   cyan: "#96d2d9",
   green: "#14d990",
   red: "#f24968",
-  blue: "#6929f2",
+  blue: "#1E83F9",
   yellow: "#f2b807",
   magenta: "#9b72f2",
   grey: "grey",
@@ -59,39 +59,43 @@ type TileProps = {
 const TileRenderer = ({ tile, coordinates }: TileProps) => {
   const PLAYER_COLORS = {
     white: "white",
-    black: "black",
+    black: "#2B1E06",
   };
 
   return (
     <View style={styles.container}>
-      <Hexagon
-        colorFill={`${COLOR_PALETTE[tile.color]}`}
-        opacity={tile.playedBy != null ? "0.5" : "1"}
-      />
+      <Hexagon colorFill={`${COLOR_PALETTE[tile.color]}`} />
+      {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
+      {/* {tile.playedBy != null && (
+        <Hexagon
+          style={{ position: "absolute" }}
+          colorFill={`black`}
+          opacity={"0.2"}
+        />
+      )} */}
       {tile.playedBy && (
         <Hexagon
           style={{ position: "absolute" }}
           colorFill="none"
-          height="100%"
-          width="100%"
+          height="105%"
+          width="105%"
           colorStroke={PLAYER_COLORS[tile.playedBy]}
-          strokeWidth="18"
-          dashed={true}
+          strokeWidth="19"
+          viewBox="-2 0 98 100"
           opacity="1"
         />
       )}
-      {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
       {tile.lastPlayed && tile.playedBy && (
-        <Svg style={{ position: "absolute" }} height="100%" width="100%">
-          <Circle
-            fill="yellow"
-            stroke="black"
-            strokeWidth={3}
-            cx={"25%"}
-            cy={"25%"}
-            r={10}
-          />
-        </Svg>
+        <Hexagon
+          style={{ position: "absolute" }}
+          colorFill="none"
+          height="105%"
+          width="105%"
+          colorStroke={"yellow"}
+          strokeWidth="12"
+          viewBox="-13 0 120 100"
+          opacity="1"
+        />
       )}
     </View>
   );
