@@ -14,8 +14,14 @@ import {
 } from "@nestjs/common";
 import { Response } from "express";
 import { GameService } from "./game.service";
-import { highlightAllowedTiles, updateGame } from "@kamon/core";
+import {
+  findTileByCoordinate,
+  highlightAllowedTiles,
+  updateGame,
+} from "@kamon/core";
 import { EventsService } from "../events.service";
+import { UpdateGameDto } from "./dto/update-game.dto";
+import { ApiBody } from "@nestjs/swagger";
 
 @Controller()
 export class GameController {
@@ -73,16 +79,19 @@ export class GameController {
   }
 
   @Post("/game/:gameId")
+  @ApiBody({ type: UpdateGameDto })
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
-    @Body() body,
+    @Body() body: UpdateGameDto,
   ): Promise<void> {
     const foundGame = await this.gameService.findOne(gameId);
     const sseId = `sse_game_refresh_${foundGame.id}`;
-    let board = JSON.parse(body["board"]);
-    let state = JSON.parse(body["state"]);
-    const [color, symbol] = body["played"].split("-");
+
+    const coords = body.played.split("-").map((el) => {
+      return Number(el);
+    });
+    const [x, y] = coords;
 
     const sendResponse = async () => {
       await this.gameService.updateBoard(foundGame.id, board);
@@ -92,8 +101,12 @@ export class GameController {
     };
 
     response.cookie("gameId", foundGame.id);
-
-    ({ gameState: state, board } = updateGame(board, state, { symbol, color }));
+    const tile = findTileByCoordinate(foundGame.board, { x, y });
+    const { gameState: state, board } = updateGame(
+      foundGame.board,
+      foundGame.gameState,
+      tile,
+    );
 
     if (state.isDraw) {
       return sendResponse();

@@ -1,3 +1,3 @@
-import { NullableTile } from "../tile";
+import { NullableTile, Tile } from "../tile";
 
-export type Board = NullableTile[][];
+export type Board = Tile[][];
