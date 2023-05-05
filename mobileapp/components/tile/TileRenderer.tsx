@@ -51,10 +51,12 @@ const COMPONENTS_FOR_SYMBOLS = {
   O: <View></View>,
 };
 
+type play = (coordinates: TileCoordinate) => void;
+
 type TileProps = {
   tile: Tile;
   coordinates: TileCoordinate;
-  play: Function;
+  play: play;
 };
 
 const TileRenderer = ({ tile, coordinates, play }: TileProps) => {
