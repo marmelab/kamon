@@ -169,8 +169,8 @@ const TileRenderer = ({ tile, coordinates }: TileProps) => {
         >
           <Circle
             fill={borderIndicatorStyle.indicatorColor}
-            stroke="black"
-            strokeWidth={3}
+            stroke="white"
+            strokeWidth={1}
             cx={"25%"}
             cy={"25%"}
             r={20}
