@@ -12,7 +12,6 @@ import {
   ParseIntPipe,
   Patch,
   Post,
-  Res,
 } from "@nestjs/common";
 import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
 import { EventsService } from "..//events.service";
@@ -30,6 +29,7 @@ export class ApiController {
   @Post("/game/create")
   @ApiCreatedResponse({
     type: Game,
+    description: "create a new game",
   })
   async createNewGame(): Promise<Game> {
     const newGame = await this.gameService.createGame();
@@ -42,6 +42,7 @@ export class ApiController {
   @Get("/game/ongoing")
   @ApiCreatedResponse({
     type: [Game],
+    description: "Get all ongoing games",
   })
   async getOnGoingGames(): Promise<Game[]> {
     const onGoing = await this.gameService.findOnGoing();
@@ -55,6 +56,7 @@ export class ApiController {
   @Get("/game/:gameId")
   @ApiCreatedResponse({
     type: Game,
+    description: "Get a game",
   })
   async get(@Param("gameId", ParseIntPipe) gameId: number): Promise<Game> {
     const foundGame = await this.gameService.findOne(gameId);
@@ -71,6 +73,7 @@ export class ApiController {
   @Get("/game")
   @ApiCreatedResponse({
     type: [Game],
+    description: "Get all the games",
   })
   getAll(): Promise<Game[]> {
     return this.gameService.findAll();
@@ -79,6 +82,7 @@ export class ApiController {
   @Patch("/game/:id/run")
   @ApiCreatedResponse({
     type: Game,
+    description: "Run a game",
   })
   async run(@Param("id") id: number): Promise<Game> {
     let game = await this.gameService.findOne(id);
@@ -95,6 +99,7 @@ export class ApiController {
   @Patch("/game/:id/stop")
   @ApiCreatedResponse({
     type: Game,
+    description: "Stop a game",
   })
   async stop(@Param("id") id: number): Promise<Game> {
     let game = await this.gameService.findOne(id);
@@ -112,6 +117,7 @@ export class ApiController {
   @ApiBody({ type: UpdateGameDto })
   @ApiCreatedResponse({
     type: Game,
+    description: "Send the coordinates of the played tile to update the game",
   })
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
