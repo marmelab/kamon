@@ -6,10 +6,12 @@ import {
   StatusBar,
   ActivityIndicator,
 } from "react-native";
+import { NavigationContext } from "@react-navigation/native";
 import { API_ENDPOINT } from "@env";
 import { GameListItem } from "./GameListItem";
 
-export const GameList = ({ navigation }) => {
+export const GameList = () => {
+  const navigation = React.useContext(NavigationContext);
   const [games, setGames] = useState(null);
 
   useEffect(() => {
@@ -35,9 +37,7 @@ export const GameList = ({ navigation }) => {
       {games && (
         <FlatList
           data={games}
-          renderItem={({ item }) => (
-            <GameListItem id={item.id} navigation={navigation} />
-          )}
+          renderItem={({ item }) => <GameListItem id={item.id} />}
           keyExtractor={(item) => item.id}
         />
       )}
