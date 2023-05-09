@@ -6,12 +6,10 @@ import {
   StatusBar,
   ActivityIndicator,
 } from "react-native";
-import { NavigationContext } from "@react-navigation/native";
 import { API_ENDPOINT } from "@env";
 import { GameListItem } from "./GameListItem";
 
 export const GameList = () => {
-  const navigation = React.useContext(NavigationContext);
   const [games, setGames] = useState(null);
 
   useEffect(() => {
