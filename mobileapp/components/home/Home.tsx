@@ -24,7 +24,7 @@ export const Home = () => {
 
   return (
     <View style={styles.container}>
-      <Button title="Play online" onPress={createGame} />
+      <Button title="Play online" onPress={createGame} color="#f24968" />
       <GameList />
     </View>
   );
