@@ -10,6 +10,7 @@ import {
   Sse,
   NotFoundException,
   Render,
+  Headers,
 } from "@nestjs/common";
 import { Response } from "express";
 import { GameService } from "./game.service";
@@ -20,10 +21,15 @@ import {
 } from "@kamon/core";
 import { EventsService } from "../events.service";
 import { UpdateGameDto } from "./dto/update-game.dto";
-import { ApiExcludeController } from "@nestjs/swagger";
+import {
+  ApiBody,
+  ApiCreatedResponse,
+  ApiExcludeController,
+} from "@nestjs/swagger";
+import { Game } from "./game.entity";
 
 @Controller()
-@ApiExcludeController()
+//@ApiExcludeController()
 export class GameController {
   constructor(
     private gameService: GameService,
@@ -65,11 +71,17 @@ export class GameController {
   }
 
   @Post("/game/:gameId")
+  @ApiBody({ type: UpdateGameDto })
+  @ApiCreatedResponse({
+    type: Game,
+    description: "Send the coordinates of the played tile to update the game",
+  })
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
     @Body() body: UpdateGameDto,
-  ): Promise<void> {
+    @Headers() headers,
+  ) {
     const foundGame = await this.gameService.findOne(gameId);
     const sseId = `sse_game_refresh_${foundGame.id}`;
 
@@ -77,13 +89,6 @@ export class GameController {
       return Number(el);
     });
     const [x, y] = coords;
-
-    const sendResponse = async () => {
-      await this.gameService.updateBoard(foundGame.id, board);
-      await this.gameService.updateGameState(foundGame.id, state);
-      this.eventsService.emit({ data: new Date().toISOString() }, sseId);
-      return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
-    };
 
     response.cookie("gameId", foundGame.id);
     const tile = findTileByCoordinate(foundGame.board, { x, y });
@@ -93,14 +98,14 @@ export class GameController {
       tile,
     );
 
-    if (state.isDraw) {
-      return sendResponse();
+    let game = await this.gameService.updateBoard(foundGame.id, board);
+    game = await this.gameService.updateGameState(foundGame.id, state);
+    this.eventsService.emit({ data: new Date().toISOString() }, sseId);
+
+    if (headers?.accept && headers.accept === "application/json") {
+      return response.send(game);
     }
 
-    if (state.winner) {
-      return sendResponse();
-    }
-
-    return sendResponse();
+    return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
   }
 }

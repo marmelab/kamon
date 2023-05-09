@@ -12,9 +12,13 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Req,
+  Res,
+  Sse,
 } from "@nestjs/common";
+import { Response } from "express";
 import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
-import { EventsService } from "..//events.service";
+import { EventsService } from "../events.service";
 import { UpdateGameDto } from "../game/dto/update-game.dto";
 import { Game } from "../game/game.entity";
 import { GameService } from "../game/game.service";
@@ -58,7 +62,10 @@ export class ApiController {
     type: Game,
     description: "Get a game",
   })
-  async get(@Param("gameId", ParseIntPipe) gameId: number): Promise<Game> {
+  async get(
+    @Param("gameId", ParseIntPipe) gameId: number,
+    @Res() response: Response,
+  ): Promise<Game> {
     const foundGame = await this.gameService.findOne(gameId);
 
     if (!foundGame) {
@@ -67,6 +74,8 @@ export class ApiController {
 
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
     const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
+    response.cookie("gameId", `${foundGame.id}`);
+    response.send(updatedGame);
     return updatedGame;
   }
 
@@ -111,36 +120,5 @@ export class ApiController {
 
     game = await this.gameService.findOne(id);
     return game;
-  }
-
-  @Post("/game/:gameId")
-  @ApiBody({ type: UpdateGameDto })
-  @ApiCreatedResponse({
-    type: Game,
-    description: "Send the coordinates of the played tile to update the game",
-  })
-  async updateGame(
-    @Param("gameId", ParseIntPipe) gameId: number,
-    @Body() body: UpdateGameDto,
-  ) {
-    const foundGame = await this.gameService.findOne(gameId);
-    const sseId = `sse_game_refresh_${foundGame.id}`;
-
-    const coords = body.played.split("-").map((el) => {
-      return Number(el);
-    });
-    const [x, y] = coords;
-
-    const tile = findTileByCoordinate(foundGame.board, { x, y });
-
-    const { gameState: state, board } = updateGame(
-      foundGame.board,
-      foundGame.gameState,
-      tile,
-    );
-
-    await this.gameService.updateBoard(foundGame.id, board);
-    await this.gameService.updateGameState(foundGame.id, state);
-    this.eventsService.emit({ data: new Date().toISOString() }, sseId);
   }
 }

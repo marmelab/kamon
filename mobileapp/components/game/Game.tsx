@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, ActivityIndicator, Button, Text } from "react-native";
-import { API_ENDPOINT } from "@env";
+import { API_ENDPOINT, SSE_ENDPOINT } from "@env";
 import {
   Board,
   GameState,
@@ -42,7 +42,7 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    const SseUrl = new URL("sse_game_resfresh", API_ENDPOINT);
+    const SseUrl = new URL("sse_game_resfresh", SSE_ENDPOINT);
     const eventSource = new EventSource(SseUrl, {
       headers: {
         Cookie: `gameId=${gameId}`,
@@ -68,10 +68,26 @@ export const Game = () => {
       return;
     }
     const tile = findTileByCoordinate(game.board, { x, y });
+
     const { gameState, board } = updateGame(game.board, game.gameState, tile);
 
-    setGame({ gameState, board });
+    const url = new URL(`/game/${gameId}`, SSE_ENDPOINT);
+    fetch(url, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        played: `${x}-${y}`,
+      }),
+    })
+      .then((r) => r.json())
+      .then((json) => {
+        console.log(json);
+      });
 
+    setGame({ gameState, board });
     if (gameState.winner || gameState.isDraw) {
       setPlayable(false);
     }
