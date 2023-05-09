@@ -21,15 +21,10 @@ import {
 } from "@kamon/core";
 import { EventsService } from "../events.service";
 import { UpdateGameDto } from "./dto/update-game.dto";
-import {
-  ApiBody,
-  ApiCreatedResponse,
-  ApiExcludeController,
-} from "@nestjs/swagger";
+import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
 import { Game } from "./game.entity";
 
 @Controller()
-//@ApiExcludeController()
 export class GameController {
   constructor(
     private gameService: GameService,
@@ -37,19 +32,46 @@ export class GameController {
   ) {}
 
   @Post("/game/create")
-  async createNewGame(@Res() response: Response): Promise<void> {
+  @ApiCreatedResponse({
+    type: Game,
+    description: "create a new game",
+  })
+  async createNewGame(@Res() response: Response, @Headers() headers) {
     const newGame = await this.gameService.createGame();
     const board = highlightAllowedTiles(newGame.board, newGame.gameState);
-    await this.gameService.updateBoard(newGame.id, board);
+    const game = await this.gameService.updateBoard(newGame.id, board);
 
-    return response.redirect(`/game/${JSON.stringify(newGame.id)}`);
+    if (headers?.accept && headers.accept === "application/json") {
+      return response.send(game);
+    }
+
+    return response.redirect(`/game/${JSON.stringify(game.id)}`);
+  }
+
+  @Get("/game/ongoing")
+  @ApiCreatedResponse({
+    type: [Game],
+    description: "Get all ongoing games",
+  })
+  async getOnGoingGames(): Promise<Game[]> {
+    const onGoing = await this.gameService.findOnGoing();
+
+    if (onGoing.length < 1) {
+      throw new NotFoundException();
+    }
+    return onGoing;
   }
 
   @Get("/game/:gameId")
+  @ApiCreatedResponse({
+    type: Game,
+    description: "Get a game",
+  })
   @Render("index")
   async renderGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
+    @Headers() headers,
   ): Promise<any> {
     const foundGame = await this.gameService.findOne(gameId);
 
@@ -58,10 +80,15 @@ export class GameController {
     }
 
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
-    const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
+    const game = await this.gameService.updateBoard(foundGame.id, board);
 
     response.cookie("gameId", `${foundGame.id}`);
-    return { game: updatedGame };
+
+    if (headers?.accept && headers.accept === "application/json") {
+      return response.send(game);
+    }
+
+    return { game };
   }
 
   @Sse("sse_game_resfresh")

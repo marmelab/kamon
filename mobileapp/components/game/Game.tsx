@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { View, ActivityIndicator, Button, Text } from "react-native";
-import { API_ENDPOINT, SSE_ENDPOINT } from "@env";
+import { API_ENDPOINT } from "@env";
 import {
   Board,
   GameState,
@@ -27,7 +27,12 @@ export const Game = () => {
 
   const fetchGameData = async () => {
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((r) => r.json())
       .then((game) => {
         if (game) {
@@ -42,7 +47,7 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    const SseUrl = new URL("sse_game_resfresh", SSE_ENDPOINT);
+    const SseUrl = new URL("sse_game_resfresh", API_ENDPOINT);
     const eventSource = new EventSource(SseUrl, {
       headers: {
         Cookie: `gameId=${gameId}`,
@@ -71,7 +76,7 @@ export const Game = () => {
 
     const { gameState, board } = updateGame(game.board, game.gameState, tile);
 
-    const url = new URL(`/game/${gameId}`, SSE_ENDPOINT);
+    const url = new URL(`/game/${gameId}`, API_ENDPOINT);
     fetch(url, {
       method: "post",
       headers: {

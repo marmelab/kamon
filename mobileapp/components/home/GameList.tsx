@@ -15,7 +15,12 @@ export const GameList = ({ navigation }) => {
   useEffect(() => {
     const url = new URL("/game/ongoing", API_ENDPOINT);
 
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((r) => r.json())
       .then((games) => setGames(games));
 
