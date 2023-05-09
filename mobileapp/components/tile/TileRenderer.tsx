@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { Tile, TileCoordinate } from "@kamon/core";
 import Hexagon from "../shapes/Hexagon";
 import { Svg, Circle } from "react-native-svg";
@@ -38,7 +38,7 @@ const COLOR_PALETTE = {
   blue: "#1E83F9",
   yellow: "#f2b807",
   magenta: "#9b72f2",
-  grey: "grey",
+  grey: "transparent",
 };
 
 const COMPONENTS_FOR_SYMBOLS = {
@@ -51,12 +51,15 @@ const COMPONENTS_FOR_SYMBOLS = {
   O: <View></View>,
 };
 
+type play = (coordinates: TileCoordinate) => void;
+
 type TileProps = {
   tile: Tile;
   coordinates: TileCoordinate;
+  play: play;
 };
 
-const TileRenderer = ({ tile, coordinates }: TileProps) => {
+const TileRenderer = ({ tile, coordinates, play }: TileProps) => {
   const PLAYER_COLORS = {
     white: "white",
     black: "#2B1E06",
@@ -129,58 +132,53 @@ const TileRenderer = ({ tile, coordinates }: TileProps) => {
 
   return (
     <View style={styles.container}>
-      <Hexagon colorFill={`${COLOR_PALETTE[tile.color]}`} />
-      {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
-      {/* {tile.playedBy != null && (
-        <Hexagon
-          style={{ position: "absolute" }}
-          colorFill={`black`}
-          opacity={"0.2"}
-        />
-      )} */}
-      {tile.playedBy && (
-        <Hexagon
-          style={{ position: "absolute" }}
-          colorFill="none"
-          height="105%"
-          width="105%"
-          colorStroke={PLAYER_COLORS[tile.playedBy]}
-          strokeWidth="19"
-          viewBox="-2 0 98 100"
-          opacity="1"
-        />
-      )}
-      {tile.lastPlayed && tile.playedBy && (
-        <Hexagon
-          style={{ position: "absolute" }}
-          colorFill="none"
-          height="105%"
-          width="105%"
-          colorStroke={"yellow"}
-          strokeWidth="13"
-          viewBox="-12 0 120 100"
-          opacity="1"
-        />
-      )}
-      {borderIndicatorStyle && (
-        <Svg
-          style={[
-            { position: "absolute" },
-            borderIndicatorStyle.containerStyle,
-          ]}
-          height="100%"
-          width="100%"
-        >
-          <Circle
-            fill={borderIndicatorStyle.indicatorColor}
-            stroke="white"
-            strokeWidth={1}
-            cx={"25%"}
-            cy={"25%"}
-            r={20}
+      <Pressable onPress={() => play(coordinates)}>
+        <Hexagon colorFill={`${COLOR_PALETTE[tile.color]}`} />
+        {COMPONENTS_FOR_SYMBOLS[tile.symbol]}
+        {tile.playedBy && (
+          <Hexagon
+            style={{ position: "absolute" }}
+            colorFill="none"
+            height="105%"
+            width="105%"
+            colorStroke={PLAYER_COLORS[tile.playedBy]}
+            strokeWidth="19"
+            viewBox="-2 0 98 100"
+            opacity="1"
           />
-        </Svg>
-      )}
+        )}
+        {tile.lastPlayed && tile.playedBy && (
+          <Hexagon
+            style={{ position: "absolute" }}
+            colorFill="none"
+            height="105%"
+            width="105%"
+            colorStroke={"yellow"}
+            strokeWidth="13"
+            viewBox="-12 0 120 100"
+            opacity="1"
+          />
+        )}
+        {borderIndicatorStyle && (
+          <Svg
+            style={[
+              { position: "absolute" },
+              borderIndicatorStyle.containerStyle,
+            ]}
+            height="100%"
+            width="100%"
+          >
+            <Circle
+              fill={borderIndicatorStyle.indicatorColor}
+              stroke="white"
+              strokeWidth={1}
+              cx={"25%"}
+              cy={"25%"}
+              r={20}
+            />
+          </Svg>
+        )}
+      </Pressable>
     </View>
   );
 };

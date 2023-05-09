@@ -1,7 +1,14 @@
 import { useState, useEffect } from "react";
 import { View, ActivityIndicator, Button, Text } from "react-native";
 import { API_ENDPOINT } from "@env";
-import { Board, GameState } from "@kamon/core";
+import {
+  Board,
+  GameState,
+  TileCoordinate,
+  findTileByCoordinate,
+  updateGame,
+} from "@kamon/core";
+import EventSource from "react-native-sse";
 import BoardRenderer from "../board/BoardRenderer";
 import { HUD } from "../HUD/HUD";
 import { useRoute } from "@react-navigation/native";
@@ -12,6 +19,8 @@ export const Game = () => {
   const route = useRoute();
 
   const [game, setGame] = useState<Game>();
+
+  const [playable, setPlayable] = useState(route.params.playable);
 
   const gameId =
     route != null && route.params != null ? route.params.itemId : "";
@@ -33,8 +42,40 @@ export const Game = () => {
   };
 
   useEffect(() => {
-    fetchGameData();
+    const SseUrl = new URL("sse_game_resfresh", API_ENDPOINT);
+    const eventSource = new EventSource(SseUrl, {
+      headers: {
+        Cookie: `gameId=${gameId}`,
+      },
+    });
+
+    eventSource.addEventListener("message", (event) => {
+      fetchGameData();
+    });
+
+    if (game == null) {
+      fetchGameData();
+    }
+
+    return () => {
+      eventSource.removeAllEventListeners();
+      eventSource.close();
+    };
   }, []);
+
+  const play = ({ x, y }: TileCoordinate) => {
+    if (!playable) {
+      return;
+    }
+    const tile = findTileByCoordinate(game.board, { x, y });
+    const { gameState, board } = updateGame(game.board, game.gameState, tile);
+
+    setGame({ gameState, board });
+
+    if (gameState.winner || gameState.isDraw) {
+      setPlayable(false);
+    }
+  };
 
   if (game == null) {
     return (
@@ -58,7 +99,11 @@ export const Game = () => {
 
   return (
     <>
-      <BoardRenderer board={game.board} gameState={game.gameState} />
+      <BoardRenderer
+        board={game.board}
+        gameState={game.gameState}
+        play={play}
+      />
       <HUD gameState={game.gameState} />
     </>
   );

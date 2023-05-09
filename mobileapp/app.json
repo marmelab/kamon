@@ -32,10 +32,16 @@
           ],
           "category": ["BROWSABLE", "DEFAULT"]
         }
-      ]
+      ],
+      "package": "com.adrien_marmelab.KamonMobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "53afb01f-1f89-480f-b5de-b51751f2febb"
+      }
     }
   }
 }
