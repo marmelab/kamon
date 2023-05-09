@@ -56,10 +56,6 @@ export class GameService {
     await this.gameRepository.delete(id);
   }
 
-  async update(id: number, updateGameDto: UpdateGameDto) {
-    return await this.gameRepository.update(id, updateGameDto);
-  }
-
   findOnGoing() {
     return this.gameRepository
       .createQueryBuilder("g")

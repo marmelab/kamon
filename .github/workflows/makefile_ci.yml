@@ -68,6 +68,12 @@ jobs:
 
       - name: Run Webapp unit tests
         run: make unit-test-webapp
+        env:
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
 
       - name: Run Webapp e2e tests
         run: make e2e-test-webapp

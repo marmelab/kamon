@@ -1,8 +1,10 @@
 import { Controller, Get, Render, Session, UseGuards } from "@nestjs/common";
 import { UsersService } from "./users.service";
 import { AuthenticatedGuard } from "../auth/authenticated.guard";
+import { ApiExcludeController } from "@nestjs/swagger";
 
 @Controller()
+@ApiExcludeController()
 export class UserController {
   constructor(private userService: UsersService) {}
 

@@ -11,9 +11,11 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { UsersService } from "../users/users.service";
+import { ApiExcludeController } from "@nestjs/swagger";
 import { JwtAuthGuard } from "./jwt-auth.guard";
 
 @Controller()
+@ApiExcludeController()
 export class AuthController {
   constructor(
     private authService: AuthService,
