@@ -2548,7 +2548,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@kamon/core@workspace:^, @kamon/core@workspace:core":
+"@kamon/core@*, @kamon/core@workspace:^, @kamon/core@workspace:core":
   version: 0.0.0-use.local
   resolution: "@kamon/core@workspace:core"
   dependencies:
@@ -2575,7 +2575,7 @@ __metadata:
     "@babel/runtime": ^7.21.5
     "@expo/metro-config": ^0.7.1
     "@expo/vector-icons": ^13.0.0
-    "@kamon/core": "workspace:^"
+    "@kamon/core": "*"
     "@openspacelabs/react-native-zoomable-view": ^2.1.1
     "@react-navigation/native": ^6.1.6
     "@react-navigation/native-stack": ^6.9.12

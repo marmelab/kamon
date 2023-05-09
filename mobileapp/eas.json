@@ -1,12 +1,12 @@
 {
   "build": {
-    "preview": {
+    "apk": {
       "android": {
         "buildType": "apk",
         "env": { "API_ENDPOINT": "http://kamon.marmelab.com" }
       }
     },
-    "preview2": {
+    "preview": {
       "android": {
         "gradleCommand": ":app:assembleRelease",
         "env": { "API_ENDPOINT": "http://kamon.marmelab.com" }
