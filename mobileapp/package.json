@@ -3,17 +3,18 @@
   "version": "1.0.0",
   "main": "./index.js",
   "scripts": {
-    "start": "expo start",
+    "start": "expo start --clear",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest"
+    "test": "jest",
+    "postinstall": "cd .. && yarn workspace @kamon/core build"
   },
   "dependencies": {
     "@babel/runtime": "^7.21.5",
     "@expo/metro-config": "^0.7.1",
     "@expo/vector-icons": "^13.0.0",
-    "@kamon/core": "workspace:^",
+    "@kamon/core": "*",
     "@openspacelabs/react-native-zoomable-view": "^2.1.1",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",

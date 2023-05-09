@@ -163,3 +163,20 @@ Install Expo Go on your phone and run
 ```sh
 make run-mobileapp
 ```
+
+### Build
+
+First, you need an [Expo account](https://expo.dev/accounts/) to build on the Expo Cloud.
+
+When you have an account, you have to run these commands as explain [here](https://docs.expo.dev/build/setup/)
+
+```sh
+npm install -g eas-cli
+eas login
+```
+
+To build the application as an APK, run this
+
+```sh
+eas build --platform android --profile apk
+```
