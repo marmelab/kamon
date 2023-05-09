@@ -58,6 +58,7 @@ jobs:
           echo "POSTGRES_DATABASE="$POSTGRES_DATABASE >> .env
           echo "PORT="$PORT >> .env
           echo "RUN_MIGRATIONS="$RUN_MIGRATIONS >> .env
+          echo "SECRET="$SECRET >> .env
           cat .env
 
       - name: Run postgres docker
@@ -74,6 +75,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+          SECRET: ${{ secrets.SECRET }}
 
       - name: Run Webapp e2e tests
         run: make e2e-test-webapp
@@ -83,6 +85,7 @@ jobs:
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
+          SECRET: ${{ secrets.SECRET }}
 
   deploy:
     name: Deploy
