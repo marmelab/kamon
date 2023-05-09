@@ -168,7 +168,7 @@ make run-mobileapp
 
 First, you need an [Expo account](https://expo.dev/accounts/) to build on the Expo Cloud.
 
-When you have an account, you have run these commands as explain [here](https://docs.expo.dev/build/setup/)
+When you have an account, you have to run these commands as explain [here](https://docs.expo.dev/build/setup/)
 
 ```sh
 npm install -g eas-cli
