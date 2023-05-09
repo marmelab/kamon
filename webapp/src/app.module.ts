@@ -9,6 +9,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import * as path from "path";
 import { AuthModule } from "./auth/auth.module";
 import { EventsService } from "./events.service";
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { EventsService } from "./events.service";
     ConfigModule.forRoot(),
     GameModule,
     AuthModule,
+    ApiModule,
   ],
 
   controllers: [AppController],

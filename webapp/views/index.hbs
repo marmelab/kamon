@@ -2,16 +2,6 @@
     {{> HUD game=game}}
     <main>
       <form class="board" method="post">
-        <input
-          type="hidden"
-          name="board"
-          value="{{JSONstringify game.board}}"
-        />
-        <input
-          type="hidden"
-          name="state"
-          value="{{JSONstringify game.gameState}}"
-        />
         {{#each game.board}}
           <ul>
             {{#each this}}
@@ -31,7 +21,7 @@
                       <input
                         type="submit"
                         name="played"
-                        value="{{this.color}}-{{this.symbol}}"
+                        value="{{@../index}}-{{@index}}"
                       />
                     {{/unless}}
                   </label>

@@ -14,6 +14,7 @@ export const GameList = ({ navigation }) => {
 
   useEffect(() => {
     const url = new URL("/game/ongoing", API_ENDPOINT);
+
     fetch(url)
       .then((r) => r.json())
       .then((games) => setGames(games));
