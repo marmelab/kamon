@@ -38,7 +38,7 @@ const COLOR_PALETTE = {
   blue: "#1E83F9",
   yellow: "#f2b807",
   magenta: "#9b72f2",
-  grey: "grey",
+  grey: "transparent",
 };
 
 const COMPONENTS_FOR_SYMBOLS = {
