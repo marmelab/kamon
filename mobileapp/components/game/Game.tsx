@@ -86,11 +86,7 @@ export const Game = () => {
       body: JSON.stringify({
         played: `${x}-${y}`,
       }),
-    })
-      .then((r) => r.json())
-      .then((json) => {
-        console.log(json);
-      });
+    });
 
     setGame({ gameState, board });
     if (gameState.winner || gameState.isDraw) {
