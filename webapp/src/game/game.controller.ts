@@ -10,6 +10,7 @@ import {
   Sse,
   NotFoundException,
   Render,
+  Headers,
 } from "@nestjs/common";
 import { Response } from "express";
 import { GameService } from "./game.service";
@@ -20,10 +21,10 @@ import {
 } from "@kamon/core";
 import { EventsService } from "../events.service";
 import { UpdateGameDto } from "./dto/update-game.dto";
-import { ApiExcludeController } from "@nestjs/swagger";
+import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
+import { Game } from "./game.entity";
 
 @Controller()
-@ApiExcludeController()
 export class GameController {
   constructor(
     private gameService: GameService,
@@ -31,19 +32,46 @@ export class GameController {
   ) {}
 
   @Post("/game/create")
-  async createNewGame(@Res() response: Response): Promise<void> {
+  @ApiCreatedResponse({
+    type: Game,
+    description: "create a new game",
+  })
+  async createNewGame(@Res() response: Response, @Headers() headers) {
     const newGame = await this.gameService.createGame();
     const board = highlightAllowedTiles(newGame.board, newGame.gameState);
-    await this.gameService.updateBoard(newGame.id, board);
+    const game = await this.gameService.updateBoard(newGame.id, board);
 
-    return response.redirect(`/game/${JSON.stringify(newGame.id)}`);
+    if (headers?.accept && headers.accept === "application/json") {
+      return response.send(game);
+    }
+
+    return response.redirect(`/game/${JSON.stringify(game.id)}`);
+  }
+
+  @Get("/game/ongoing")
+  @ApiCreatedResponse({
+    type: [Game],
+    description: "Get all ongoing games",
+  })
+  async getOnGoingGames(): Promise<Game[]> {
+    const onGoing = await this.gameService.findOnGoing();
+
+    if (onGoing.length < 1) {
+      throw new NotFoundException();
+    }
+    return onGoing;
   }
 
   @Get("/game/:gameId")
+  @ApiCreatedResponse({
+    type: Game,
+    description: "Get a game",
+  })
   @Render("index")
   async renderGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
+    @Headers() headers,
   ): Promise<any> {
     const foundGame = await this.gameService.findOne(gameId);
 
@@ -52,10 +80,15 @@ export class GameController {
     }
 
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
-    const updatedGame = await this.gameService.updateBoard(foundGame.id, board);
+    const game = await this.gameService.updateBoard(foundGame.id, board);
 
     response.cookie("gameId", `${foundGame.id}`);
-    return { game: updatedGame };
+
+    if (headers?.accept && headers.accept === "application/json") {
+      return response.send(game);
+    }
+
+    return { game };
   }
 
   @Sse("sse_game_resfresh")
@@ -65,11 +98,17 @@ export class GameController {
   }
 
   @Post("/game/:gameId")
+  @ApiBody({ type: UpdateGameDto })
+  @ApiCreatedResponse({
+    type: Game,
+    description: "Send the coordinates of the played tile to update the game",
+  })
   async updateGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
     @Body() body: UpdateGameDto,
-  ): Promise<void> {
+    @Headers() headers,
+  ) {
     const foundGame = await this.gameService.findOne(gameId);
     const sseId = `sse_game_refresh_${foundGame.id}`;
 
@@ -77,13 +116,6 @@ export class GameController {
       return Number(el);
     });
     const [x, y] = coords;
-
-    const sendResponse = async () => {
-      await this.gameService.updateBoard(foundGame.id, board);
-      await this.gameService.updateGameState(foundGame.id, state);
-      this.eventsService.emit({ data: new Date().toISOString() }, sseId);
-      return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
-    };
 
     response.cookie("gameId", foundGame.id);
     const tile = findTileByCoordinate(foundGame.board, { x, y });
@@ -93,14 +125,14 @@ export class GameController {
       tile,
     );
 
-    if (state.isDraw) {
-      return sendResponse();
+    let game = await this.gameService.updateBoard(foundGame.id, board);
+    game = await this.gameService.updateGameState(foundGame.id, state);
+    this.eventsService.emit({ data: new Date().toISOString() }, sseId);
+
+    if (headers?.accept && headers.accept === "application/json") {
+      return response.send(game);
     }
 
-    if (state.winner) {
-      return sendResponse();
-    }
-
-    return sendResponse();
+    return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
   }
 }

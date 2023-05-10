@@ -9,13 +9,18 @@ import {
 import { API_ENDPOINT } from "@env";
 import { GameListItem } from "./GameListItem";
 
-export const GameList = ({ navigation }) => {
+export const GameList = () => {
   const [games, setGames] = useState(null);
 
   useEffect(() => {
     const url = new URL("/game/ongoing", API_ENDPOINT);
 
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((r) => r.json())
       .then((games) => setGames(games));
 
@@ -30,9 +35,7 @@ export const GameList = ({ navigation }) => {
       {games && (
         <FlatList
           data={games}
-          renderItem={({ item }) => (
-            <GameListItem id={item.id} navigation={navigation} />
-          )}
+          renderItem={({ item }) => <GameListItem id={item.id} />}
           keyExtractor={(item) => item.id}
         />
       )}

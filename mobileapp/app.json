@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#112b3c"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -22,6 +20,19 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "http",
+              "host": "kamon.marmelab.com",
+              "pathPrefix": "/game"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ],
       "package": "com.adrien_marmelab.KamonMobile"
     },
     "web": {

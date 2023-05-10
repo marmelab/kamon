@@ -9,6 +9,11 @@
         "include": "../views",
         "outDir": "dist/views",
         "watchAssets": true
+      },
+      {
+        "include": "../public",
+        "outDir": "dist/public",
+        "watchAssets": true
       }
     ],
     "watchAssets": true

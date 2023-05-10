@@ -20,6 +20,14 @@ export class AuthService {
     };
   }
 
+  async login(userId) {
+    const user = await this.usersService.findOne(userId);
+    const payload = { username: user.username, sub: user.id };
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
+  }
+
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.findByUserName(username);
 

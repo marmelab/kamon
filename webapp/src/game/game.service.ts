@@ -61,6 +61,7 @@ export class GameService {
       .createQueryBuilder("g")
       .andWhere("g.gameState ::jsonb @> :state")
       .setParameter("state", { isRunning: true })
+      .orderBy("id", "DESC")
       .getMany();
   }
 

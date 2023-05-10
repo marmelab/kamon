@@ -27,7 +27,12 @@ export const Game = () => {
 
   const fetchGameData = async () => {
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
       .then((r) => r.json())
       .then((game) => {
         if (game) {
@@ -68,10 +73,22 @@ export const Game = () => {
       return;
     }
     const tile = findTileByCoordinate(game.board, { x, y });
+
     const { gameState, board } = updateGame(game.board, game.gameState, tile);
 
-    setGame({ gameState, board });
+    const url = new URL(`/game/${gameId}`, API_ENDPOINT);
+    fetch(url, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        played: `${x}-${y}`,
+      }),
+    });
 
+    setGame({ gameState, board });
     if (gameState.winner || gameState.isDraw) {
       setPlayable(false);
     }
