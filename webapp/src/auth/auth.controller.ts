@@ -69,7 +69,7 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post("login")
   signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.signIn(signInDto.username, signInDto.password);
+    return this.authService.login(signInDto.username);
   }
 
   @Post("/auth/register")
