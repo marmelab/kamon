@@ -24,7 +24,7 @@ async function bootstrap() {
   registerCustomHelpers();
   app.use(
     session({
-      secret: process.env.SECRET,
+      secret: process.env.APP_SECRET,
       resave: false,
       saveUninitialized: false,
       cookie: { maxAge: 3600000 },

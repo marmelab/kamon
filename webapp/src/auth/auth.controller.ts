@@ -13,6 +13,7 @@ import { AuthService } from "./auth.service";
 import { UsersService } from "../users/users.service";
 import { ApiExcludeController } from "@nestjs/swagger";
 import { JwtAuthGuard } from "./jwt-auth.guard";
+import { LocalAuthGuard } from "./local-auth.guard";
 
 @Controller()
 @ApiExcludeController()
@@ -53,9 +54,8 @@ export class AuthController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post("/login")
-  @Redirect("/me")
-  login(@Request() req) {
+  @Get("/me")
+  me(@Request() req) {
     return req.user;
   }
 
@@ -63,5 +63,11 @@ export class AuthController {
   @Redirect("/login")
   logout(@Session() session) {
     session.destroy();
+  }
+
+  @UseGuards(LocalAuthGuard)
+  @Post("login")
+  signIn(@Body() signInDto: Record<string, any>) {
+    return this.authService.signIn(signInDto.username, signInDto.password);
   }
 }
