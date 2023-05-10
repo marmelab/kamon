@@ -14,9 +14,10 @@ import { UsersService } from "../users/users.service";
 import { ApiExcludeController } from "@nestjs/swagger";
 import { JwtAuthGuard } from "./jwt-auth.guard";
 import { LocalAuthGuard } from "./local-auth.guard";
+import { CreateUserDto } from "src/users/dto/create-user.dto";
+import * as argon2 from "argon2";
 
 @Controller()
-@ApiExcludeController()
 export class AuthController {
   constructor(
     private authService: AuthService,
@@ -29,7 +30,7 @@ export class AuthController {
     return { action: "/", title: "Register" };
   }
 
-  @Post("/")
+  /*@Post("/")
   @Redirect("/login")
   async register(@Body() body) {
     try {
@@ -45,7 +46,7 @@ export class AuthController {
     } catch (error) {
       return { url: "/" };
     }
-  }
+  }*/
 
   @Get("/login")
   @Render("userForm")
@@ -69,5 +70,35 @@ export class AuthController {
   @Post("login")
   signIn(@Body() signInDto: Record<string, any>) {
     return this.authService.signIn(signInDto.username, signInDto.password);
+  }
+
+  @Post("/auth/register")
+  async register(@Body() createUserDto: CreateUserDto) {
+    const alreadyExistingUser = await this.userService.findByUserName(
+      createUserDto.username,
+    );
+
+    if (alreadyExistingUser) {
+      return {
+        error: "Account already exist",
+      };
+    }
+
+    try {
+      createUserDto.password = await argon2.hash(createUserDto.password);
+    } catch (error) {
+      return {
+        error,
+      };
+    }
+
+    const user = await this.userService.createUser(
+      createUserDto.username,
+      createUserDto.password,
+    );
+
+    const { password, ...rest } = user;
+
+    return rest;
   }
 }
