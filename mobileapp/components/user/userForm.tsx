@@ -16,6 +16,7 @@ export const UserForm = ({ username, setUsername, password, setPassword }) => {
         textContentType="password"
         onChangeText={setPassword}
         value={password}
+        secureTextEntry={true}
       />
     </View>
   );
