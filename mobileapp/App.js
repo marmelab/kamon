@@ -7,7 +7,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Home } from "./components/home/Home";
 import { Game } from "./components/game/Game";
-import { Login } from "./components/user/login";
+import { Login } from "./components/user/Login";
 
 function cacheFonts(fonts) {
   return fonts.map((font) => Font.loadAsync(font));

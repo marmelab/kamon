@@ -1,8 +1,7 @@
 import { Alert, Button } from "react-native";
 import { useState } from "react";
-import * as SecureStore from "expo-secure-store";
 import { API_ENDPOINT } from "@env";
-import { UserForm } from "./userForm";
+import { UserForm } from "./UserForm";
 import { getAccesToken, storeAccessToken } from "../../util/accessToken";
 
 export const Login = () => {

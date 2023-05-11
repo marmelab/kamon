@@ -3,7 +3,7 @@ import { NavigationContext } from "@react-navigation/native";
 import React from "react";
 import { GameList } from "./GameList";
 import { API_ENDPOINT } from "@env";
-import { Login } from "../user/login";
+import { Login } from "../user/Login";
 
 export const Home = () => {
   const navigation = React.useContext(NavigationContext);
