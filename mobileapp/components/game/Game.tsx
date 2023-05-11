@@ -12,6 +12,7 @@ import EventSource from "react-native-sse";
 import BoardRenderer from "../board/BoardRenderer";
 import { HUD } from "../HUD/HUD";
 import { useRoute } from "@react-navigation/native";
+import { getAccesToken } from "../../util/accessToken";
 
 type Game = { gameState: GameState; board: Board };
 
@@ -27,10 +28,13 @@ export const Game = () => {
 
   const fetchGameData = async () => {
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
+    const accessToken = await getAccesToken();
+
     fetch(url, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     })
       .then((r) => r.json())
