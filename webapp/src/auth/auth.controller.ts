@@ -1,14 +1,9 @@
 import {
   Body,
   Controller,
-  Get,
   Headers,
   Post,
-  Redirect,
-  Render,
-  Request,
   Res,
-  Session,
   UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
@@ -43,12 +38,6 @@ export class AuthController {
       return { url: "/" };
     }
   }*/
-
-  @Get("/logout")
-  @Redirect("/login")
-  logout(@Session() session) {
-    session.destroy();
-  }
 
   @UseGuards(LocalAuthGuard)
   @Post("login")
