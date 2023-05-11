@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Get,
   Headers,
   Post,
+  Request,
   Res,
   UseGuards,
 } from "@nestjs/common";
@@ -13,6 +15,7 @@ import { LocalAuthGuard } from "./local-auth.guard";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
 import * as argon2 from "argon2";
 import { Response } from "express";
+import { JwtAuthGuard } from "./jwt-auth.guard";
 
 @Controller()
 export class AuthController {
@@ -72,5 +75,14 @@ export class AuthController {
     const { password, ...rest } = user;
 
     return rest;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get("/logout")
+  async logout(@Request() request, @Res() response: Response) {
+    response.cookie("jwt", "");
+    const user = await this.userService.findOne(request.user.sub);
+    this.authService.logout(user);
+    return response.send("logout");
   }
 }

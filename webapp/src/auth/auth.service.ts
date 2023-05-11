@@ -3,6 +3,7 @@ import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
 import { UsersService } from "../users/users.service";
 import { JwtsService } from "../jwts/jwts.service";
+import { User } from "../users/user.entity";
 
 @Injectable()
 export class AuthService {
@@ -53,5 +54,10 @@ export class AuthService {
     return {
       access_token,
     };
+  }
+
+  async logout(user: User) {
+    const jwt = await this.jwtsService.findOneByUser(user);
+    return this.jwtsService.update(jwt.id, { ...jwt, isActive: false });
   }
 }

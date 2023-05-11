@@ -39,7 +39,6 @@ export class JwtsService {
   async update(id: number, updateJwtDto: UpdateJwtDto) {
     const toUpdate = await this.findOne(id);
     const updated = { ...toUpdate, ...updateJwtDto };
-    console.log(updated);
     return this.jwtRepository.save(updated);
   }
 
