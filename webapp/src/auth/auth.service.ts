@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as argon2 from "argon2";
 import { UsersService } from "../users/users.service";
@@ -15,6 +15,10 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.findByUserName(username);
+
+    if (!user) {
+      throw new NotFoundException();
+    }
 
     const isPasswordOk = await argon2.verify(user.password, password);
 

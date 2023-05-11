@@ -3,6 +3,7 @@ import { NavigationContext } from "@react-navigation/native";
 import React from "react";
 import { GameList } from "./GameList";
 import { API_ENDPOINT } from "@env";
+import { Login } from "../user/login";
 
 export const Home = () => {
   const navigation = React.useContext(NavigationContext);
@@ -24,6 +25,7 @@ export const Home = () => {
 
   return (
     <View style={styles.container}>
+      <Login />
       <Button title="Play online" onPress={createGame} color="#f24968" />
       <GameList />
     </View>
