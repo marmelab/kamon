@@ -48,6 +48,7 @@ export const Login = () => {
       <Button
         title="No account ? Register here"
         onPress={() => navigation.navigate("Register")}
+        color="#f24968"
       />
     </>
   );
