@@ -4,6 +4,7 @@ import { UpdateJwtDto } from "./dto/update-jwt.dto";
 import { Repository } from "typeorm";
 import { Jwt } from "./jwt.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "../users/user.entity";
 
 @Injectable()
 export class JwtsService {
@@ -21,16 +22,25 @@ export class JwtsService {
     return this.jwtRepository.save(jwt);
   }
 
+  findOneByUser(user: User) {
+    return this.jwtRepository.findOneBy({
+      user,
+    });
+  }
+
   findAll() {
     return `This action returns all jwts`;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} jwt`;
+    return this.jwtRepository.findOneBy({ id });
   }
 
-  update(id: number, updateJwtDto: UpdateJwtDto) {
-    return `This action updates a #${id} jwt`;
+  async update(id: number, updateJwtDto: UpdateJwtDto) {
+    const toUpdate = await this.findOne(id);
+    const updated = { ...toUpdate, ...updateJwtDto };
+    console.log(updated);
+    return this.jwtRepository.save(updated);
   }
 
   remove(id: number) {
