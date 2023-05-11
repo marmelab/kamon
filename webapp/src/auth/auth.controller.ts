@@ -10,7 +10,7 @@ import {
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { UsersService } from "../users/users.service";
-import { ApiCreatedResponse, ApiExcludeController } from "@nestjs/swagger";
+import { ApiCreatedResponse } from "@nestjs/swagger";
 import { LocalAuthGuard } from "./local-auth.guard";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
 import * as argon2 from "argon2";
@@ -47,7 +47,7 @@ export class AuthController {
     return response.redirect("/me");
   }
 
-  @Post("/auth/register")
+  @Post("/register")
   async register(@Body() createUserDto: CreateUserDto) {
     const alreadyExistingUser = await this.userService.findByUserName(
       createUserDto.username,

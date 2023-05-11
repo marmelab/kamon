@@ -3,16 +3,15 @@ import { useContext, useState } from "react";
 import { NavigationContext } from "@react-navigation/native";
 import { API_ENDPOINT } from "@env";
 import { UserForm } from "./UserForm";
-import { getAccesToken, storeAccessToken } from "../../util/accessToken";
 
-export const Login = () => {
+export const Register = () => {
   const navigation = useContext(NavigationContext);
 
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
-  const login = () => {
-    const url = new URL("/login", API_ENDPOINT);
+  const register = () => {
+    const url = new URL("/register", API_ENDPOINT);
     fetch(url, {
       method: "post",
       headers: {
@@ -23,14 +22,13 @@ export const Login = () => {
     })
       .then((r) => r.json())
       .then((response) => {
-        if (response.statusCode === 404 || response.statusCode === 401) {
-          Alert.alert("Invalid credentials");
+        console.log(response);
+        if (response.error) {
+          Alert.alert(response.error);
+          return;
         }
 
-        if (response.access_token) {
-          storeAccessToken(response.access_token);
-          navigation.navigate("HomeGame");
-        }
+        navigation.navigate("Home");
       })
       .catch((error) => Alert.alert(error));
   };
@@ -43,12 +41,7 @@ export const Login = () => {
         password={password}
         setPassword={setPassword}
       />
-      <Button title="Login" onPress={login} />
-
-      <Button
-        title="No account ? Register here"
-        onPress={() => navigation.navigate("Register")}
-      />
+      <Button title="Register" onPress={register} />
     </>
   );
 };
