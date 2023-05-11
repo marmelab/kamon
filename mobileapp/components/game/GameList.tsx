@@ -8,17 +8,19 @@ import {
 } from "react-native";
 import { API_ENDPOINT } from "@env";
 import { GameListItem } from "./GameListItem";
+import { getAccesToken } from "../../util/accessToken";
 
 export const GameList = () => {
   const [games, setGames] = useState(null);
 
-  useEffect(() => {
+  const fetchGame = async () => {
     const url = new URL("/game/ongoing", API_ENDPOINT);
-
+    const accessToken = await getAccesToken();
     fetch(url, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     })
       .then((r) => r.json())
@@ -27,6 +29,10 @@ export const GameList = () => {
     return () => {
       setGames(null);
     };
+  };
+
+  useEffect(() => {
+    fetchGame();
   }, []);
 
   return (
