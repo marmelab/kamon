@@ -28,6 +28,12 @@ export class JwtsService {
     });
   }
 
+  findOneByToken(token: string) {
+    return this.jwtRepository.findOneBy({
+      token,
+    });
+  }
+
   findAll() {
     return `This action returns all jwts`;
   }
