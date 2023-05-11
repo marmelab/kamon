@@ -9,7 +9,6 @@ import {
   Body,
   Sse,
   NotFoundException,
-  Render,
   Headers,
   UseGuards,
 } from "@nestjs/common";
@@ -72,7 +71,6 @@ export class GameController {
     type: Game,
     description: "Get a game",
   })
-  @Render("index")
   async renderGame(
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
@@ -93,7 +91,7 @@ export class GameController {
       return response.send(game);
     }
 
-    return { game };
+    return response.render("index", { game });
   }
 
   @Sse("sse_game_resfresh")
