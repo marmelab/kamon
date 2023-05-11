@@ -4,18 +4,5 @@ import React from "react";
 import { Login } from "../user/Login";
 
 export const Home = () => {
-  return (
-    <View style={styles.container}>
-      <Login />
-    </View>
-  );
+  return <Login />;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-});
