@@ -72,10 +72,13 @@ export const Game = () => {
     };
   }, []);
 
-  const play = ({ x, y }: TileCoordinate) => {
+  const play = async ({ x, y }: TileCoordinate) => {
     if (!playable) {
       return;
     }
+
+    const accessToken = await getAccesToken();
+
     const tile = findTileByCoordinate(game.board, { x, y });
 
     const { gameState, board } = updateGame(game.board, game.gameState, tile);
@@ -86,6 +89,7 @@ export const Game = () => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
         played: `${x}-${y}`,
