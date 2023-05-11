@@ -23,7 +23,6 @@ export const Login = () => {
     })
       .then((r) => r.json())
       .then((response) => {
-        console.log("response", response);
         if (response.statusCode === 404 || response.statusCode === 401) {
           Alert.alert("Invalid credentials");
         }
