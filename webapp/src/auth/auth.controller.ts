@@ -21,24 +21,6 @@ export class AuthController {
     private userService: UsersService,
   ) {}
 
-  /*@Post("/")
-  @Redirect("/login")
-  async register(@Body() body) {
-    try {
-      const alreadyExistingUser = this.userService.findByUserName(
-        body.username,
-      );
-
-      if (alreadyExistingUser) {
-        return { url: "/" };
-      }
-
-      await this.userService.createUser(body.username, body.password);
-    } catch (error) {
-      return { url: "/" };
-    }
-  }*/
-
   @UseGuards(LocalAuthGuard)
   @Post("login")
   @ApiCreatedResponse({
