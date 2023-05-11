@@ -1,10 +1,13 @@
 import { Alert, Button } from "react-native";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { NavigationContext } from "@react-navigation/native";
 import { API_ENDPOINT } from "@env";
 import { UserForm } from "./UserForm";
 import { getAccesToken, storeAccessToken } from "../../util/accessToken";
 
 export const Login = () => {
+  const navigation = useContext(NavigationContext);
+
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
@@ -27,6 +30,7 @@ export const Login = () => {
 
         if (response.access_token) {
           storeAccessToken(response.access_token);
+          navigation.navigate("HomeGame");
         }
       })
       .catch((error) => Alert.alert(error));
