@@ -11,6 +11,7 @@ import {
   NotFoundException,
   Render,
   Headers,
+  UseGuards,
 } from "@nestjs/common";
 import { Response } from "express";
 import { GameService } from "./game.service";
@@ -23,6 +24,7 @@ import { EventsService } from "../events.service";
 import { UpdateGameDto } from "./dto/update-game.dto";
 import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
 import { Game } from "./game.entity";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
 @Controller()
 export class GameController {
@@ -32,6 +34,7 @@ export class GameController {
   ) {}
 
   @Post("/game/create")
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({
     type: Game,
     description: "create a new game",
@@ -49,6 +52,7 @@ export class GameController {
   }
 
   @Get("/game/ongoing")
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({
     type: [Game],
     description: "Get all ongoing games",
@@ -63,6 +67,7 @@ export class GameController {
   }
 
   @Get("/game/:gameId")
+  @UseGuards(JwtAuthGuard)
   @ApiCreatedResponse({
     type: Game,
     description: "Get a game",
@@ -98,6 +103,7 @@ export class GameController {
   }
 
   @Post("/game/:gameId")
+  @UseGuards(JwtAuthGuard)
   @ApiBody({ type: UpdateGameDto })
   @ApiCreatedResponse({
     type: Game,
