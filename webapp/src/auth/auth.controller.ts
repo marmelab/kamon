@@ -2,20 +2,23 @@ import {
   Body,
   Controller,
   Get,
+  Headers,
   Post,
   Redirect,
   Render,
   Request,
+  Res,
   Session,
   UseGuards,
 } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { UsersService } from "../users/users.service";
-import { ApiExcludeController } from "@nestjs/swagger";
+import { ApiCreatedResponse, ApiExcludeController } from "@nestjs/swagger";
 import { JwtAuthGuard } from "./jwt-auth.guard";
 import { LocalAuthGuard } from "./local-auth.guard";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
 import * as argon2 from "argon2";
+import { Response } from "express";
 
 @Controller()
 export class AuthController {
@@ -23,12 +26,6 @@ export class AuthController {
     private authService: AuthService,
     private userService: UsersService,
   ) {}
-
-  @Get("/")
-  @Render("userForm")
-  registerView() {
-    return { action: "/", title: "Register" };
-  }
 
   /*@Post("/")
   @Redirect("/login")
@@ -48,12 +45,6 @@ export class AuthController {
     }
   }*/
 
-  @Get("/login")
-  @Render("userForm")
-  signView() {
-    return { action: "/login", title: "Login" };
-  }
-
   @UseGuards(JwtAuthGuard)
   @Get("/me")
   me(@Request() req) {
@@ -68,8 +59,25 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post("login")
-  signIn(@Body() signInDto: Record<string, any>) {
-    return this.authService.login(signInDto.username);
+  @ApiCreatedResponse({
+    description: "If credentials are ok, get a JWT",
+  })
+  async signIn(
+    @Body() signInDto: CreateUserDto,
+    @Headers() headers,
+    @Res() response: Response,
+  ) {
+    const token = await this.authService.login(signInDto.username);
+
+    if (headers?.accept && headers.accept === "application/json") {
+      return response.send(token);
+    }
+
+    response.cookie("jwt", token.access_token, {
+      httpOnly: true,
+      secure: true,
+    });
+    return response.redirect("/me");
   }
 
   @Post("/auth/register")
