@@ -7,7 +7,6 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AuthController } from "./auth.controller";
 import { LocalStrategy } from "./local.strategy";
 import { SessionSerializer } from "./session.serializer";
-import { JwtStrategy } from "./jwt.strategy";
 
 @Module({
   imports: [
@@ -24,7 +23,7 @@ import { JwtStrategy } from "./jwt.strategy";
     UsersModule,
     PassportModule.register({ session: true }),
   ],
-  providers: [AuthService, LocalStrategy, SessionSerializer, JwtStrategy],
+  providers: [AuthService, LocalStrategy, SessionSerializer],
   controllers: [AuthController],
   exports: [AuthService],
 })
