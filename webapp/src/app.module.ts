@@ -10,6 +10,7 @@ import * as path from "path";
 import { AuthModule } from "./auth/auth.module";
 import { EventsService } from "./events.service";
 import { GlobalJwtModule } from "./global-jwt/global-jwt.module";
+import { JwtsModule } from './jwts/jwts.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { GlobalJwtModule } from "./global-jwt/global-jwt.module";
     GameModule,
     AuthModule,
     GlobalJwtModule,
+    JwtsModule,
   ],
 
   controllers: [AppController],
