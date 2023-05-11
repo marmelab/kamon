@@ -5,7 +5,6 @@ import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { AuthController } from "./auth.controller";
-import { LocalStrategy } from "./local.strategy";
 import { SessionSerializer } from "./session.serializer";
 
 @Module({
@@ -23,7 +22,7 @@ import { SessionSerializer } from "./session.serializer";
     UsersModule,
     PassportModule.register({ session: true }),
   ],
-  providers: [AuthService, LocalStrategy, SessionSerializer],
+  providers: [AuthService, SessionSerializer],
   controllers: [AuthController],
   exports: [AuthService],
 })

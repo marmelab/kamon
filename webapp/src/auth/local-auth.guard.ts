@@ -1,12 +1,26 @@
-import { ExecutionContext } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from "@nestjs/common";
+import { Request } from "express";
+import { AuthService } from "./auth.service";
 
-export class LocalAuthGuard extends AuthGuard("local") {
+@Injectable()
+export class LocalAuthGuard implements CanActivate {
+  constructor(private authService: AuthService) {}
   async canActivate(context: ExecutionContext) {
-    const result = (await super.canActivate(context)) as boolean;
-    const request = context.switchToHttp().getRequest();
+    const request: Request = context.switchToHttp().getRequest();
+    const user = await this.authService.validateUser(
+      request.body.username,
+      request.body.password,
+    );
 
-    await super.logIn(request);
-    return result;
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    return true;
   }
 }
