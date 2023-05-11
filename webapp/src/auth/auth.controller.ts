@@ -14,7 +14,6 @@ import {
 import { AuthService } from "./auth.service";
 import { UsersService } from "../users/users.service";
 import { ApiCreatedResponse, ApiExcludeController } from "@nestjs/swagger";
-import { JwtAuthGuard } from "./jwt-auth.guard";
 import { LocalAuthGuard } from "./local-auth.guard";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
 import * as argon2 from "argon2";
@@ -44,12 +43,6 @@ export class AuthController {
       return { url: "/" };
     }
   }*/
-
-  @UseGuards(JwtAuthGuard)
-  @Get("/me")
-  me(@Request() req) {
-    return req.user;
-  }
 
   @Get("/logout")
   @Redirect("/login")

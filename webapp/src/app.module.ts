@@ -9,6 +9,7 @@ import { ServeStaticModule } from "@nestjs/serve-static";
 import * as path from "path";
 import { AuthModule } from "./auth/auth.module";
 import { EventsService } from "./events.service";
+import { GlobalJwtModule } from "./global-jwt/global-jwt.module";
 
 @Module({
   imports: [
@@ -32,9 +33,10 @@ import { EventsService } from "./events.service";
       }),
       inject: [ConfigService],
     }),
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     GameModule,
     AuthModule,
+    GlobalJwtModule,
   ],
 
   controllers: [AppController],
