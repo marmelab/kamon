@@ -38,12 +38,13 @@ export const Game = () => {
       },
     })
       .then((r) => r.json())
-      .then((game) => {
-        if (game) {
-          setGame({ board: game.board, gameState: game.gameState });
+      .then((data) => {
+        if (data?.game) {
+          setGame({ board: data.game.board, gameState: data.game.gameState });
         } else {
           setGame({ board: null, gameState: null });
         }
+        setPlayable(data.playable);
       })
       .catch((error) => {
         setGame({ board: null, gameState: null });

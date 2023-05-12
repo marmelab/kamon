@@ -102,12 +102,13 @@ export class GameController {
     const game = await this.gameService.updateBoard(foundGame.id, board);
 
     response.cookie("gameId", `${foundGame.id}`);
+    const playable = this.gameService.isGameBelongToPlayer(foundGame, user);
 
     if (headers?.accept && headers.accept === "application/json") {
-      return response.send(game);
+      return response.send({ game, mode: playable });
     }
 
-    return response.render("index", { game });
+    return response.render("index", { game, mode: playable });
   }
 
   @Sse("sse_game_resfresh")
@@ -130,14 +131,11 @@ export class GameController {
     @Headers() headers,
   ) {
     const foundGame = await this.gameService.findOne(gameId);
-    const sseId = `sse_game_refresh_${foundGame.id}`;
-
     const coords = body.played.split("-").map((el) => {
       return Number(el);
     });
     const [x, y] = coords;
 
-    response.cookie("gameId", foundGame.id);
     const tile = findTileByCoordinate(foundGame.board, { x, y });
     const { gameState: state, board } = updateGame(
       foundGame.board,
@@ -147,12 +145,15 @@ export class GameController {
 
     let game = await this.gameService.updateBoard(foundGame.id, board);
     game = await this.gameService.updateGameState(foundGame.id, state);
+
+    const sseId = `sse_game_refresh_${foundGame.id}`;
     this.eventsService.emit({ data: new Date().toISOString() }, sseId);
 
     if (headers?.accept && headers.accept === "application/json") {
       return response.send(game);
     }
 
+    response.cookie("gameId", foundGame.id);
     return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
   }
 }

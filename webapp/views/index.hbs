@@ -1,7 +1,12 @@
 {{> header }}
     {{> HUD game=game}}
     <main>
-      <form class="board" method="post">
+      {{#if playable }}
+        <form class="board" method="post">
+      {{else}}
+        <div class="board">
+      {{/if}}
+
         {{#each game.board}}
           <ul>
             {{#each this}}
@@ -30,7 +35,11 @@
             {{/each}}
           </ul>
         {{/each}}
+      {{#if playable }}
       </form>
+      {{else}}
+      </div>
+      {{/if}}
     </main>
     <script src="/public/app.js"></script>
 {{> footer }}
