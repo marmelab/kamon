@@ -97,7 +97,7 @@ export class GameService {
     return this.gameRepository.update(id, { ...game, player_black: player });
   }
 
-  isGameBelongToPlayer(game: Game, player: User) {
+  checkGameBelongToPlayer(game: Game, player: User) {
     return (
       player.id === game.player_black.id || player.id === game.player_white.id
     );

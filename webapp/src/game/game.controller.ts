@@ -103,7 +103,7 @@ export class GameController {
     const game = await this.gameService.updateBoard(foundGame.id, board);
 
     response.cookie("gameId", `${foundGame.id}`);
-    const playable = this.gameService.isGameBelongToPlayer(foundGame, user);
+    const playable = this.gameService.checkGameBelongToPlayer(foundGame, user);
 
     if (headers.accept === "application/json") {
       return response.send({ game, playable });
@@ -136,7 +136,7 @@ export class GameController {
 
     const user = await this.userService.findOne(request.user.sub);
 
-    const playable = this.gameService.isGameBelongToPlayer(foundGame, user);
+    const playable = this.gameService.checkGameBelongToPlayer(foundGame, user);
 
     if (!playable) {
       response.status(400);
