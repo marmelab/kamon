@@ -24,12 +24,14 @@ import { UpdateGameDto } from "./dto/update-game.dto";
 import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
 import { Game } from "./game.entity";
 import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
+import { UsersService } from "src/users/users.service";
 
 @Controller()
 export class GameController {
   constructor(
     private gameService: GameService,
     private readonly eventsService: EventsService,
+    private readonly userService: UsersService,
   ) {}
 
   @Post("/game/create")
@@ -43,7 +45,8 @@ export class GameController {
     @Headers() headers,
     @Req() request,
   ) {
-    const game = await this.gameService.createGame();
+    const user = await this.userService.findOne(request.user.sub);
+    const game = await this.gameService.createGame(user);
     if (headers?.accept && headers.accept === "application/json") {
       return response.send(game);
     }

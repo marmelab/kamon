@@ -9,6 +9,7 @@ import {
   highlightAllowedTiles,
 } from "@kamon/core";
 import { UpdateGameDto } from "./dto/update-game.dto";
+import { User } from "../users/user.entity";
 
 export class GameService {
   gameRepository: Repository<Game>;
@@ -51,12 +52,13 @@ export class GameService {
     return foundGame;
   }
 
-  createGame(): Promise<Game | null> {
+  createGame(user: User): Promise<Game | null> {
     const gameState = initGameState();
     const board = highlightAllowedTiles(initRandomGame(), gameState);
     return this.gameRepository.save({
       board,
       gameState,
+      player_black: user,
     });
   }
 
