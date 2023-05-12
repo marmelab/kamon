@@ -1,7 +1,13 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Game } from "./game.entity";
-import { initGameState, initRandomGame, Board, GameState } from "@kamon/core";
+import {
+  initGameState,
+  initRandomGame,
+  Board,
+  GameState,
+  highlightAllowedTiles,
+} from "@kamon/core";
 import { UpdateGameDto } from "./dto/update-game.dto";
 
 export class GameService {
@@ -46,9 +52,11 @@ export class GameService {
   }
 
   createGame(): Promise<Game | null> {
+    const gameState = initGameState();
+    const board = highlightAllowedTiles(initRandomGame(), gameState);
     return this.gameRepository.save({
-      board: initRandomGame(),
-      gameState: initGameState(),
+      board,
+      gameState,
     });
   }
 

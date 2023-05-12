@@ -38,11 +38,12 @@ export class GameController {
     type: Game,
     description: "create a new game",
   })
-  async createNewGame(@Res() response: Response, @Headers() headers) {
-    const newGame = await this.gameService.createGame();
-    const board = highlightAllowedTiles(newGame.board, newGame.gameState);
-    const game = await this.gameService.updateBoard(newGame.id, board);
-
+  async createNewGame(
+    @Res() response: Response,
+    @Headers() headers,
+    @Req() request,
+  ) {
+    const game = await this.gameService.createGame();
     if (headers?.accept && headers.accept === "application/json") {
       return response.send(game);
     }
@@ -56,10 +57,7 @@ export class GameController {
     type: [Game],
     description: "Get all ongoing games",
   })
-  async getOnGoingGames(
-    @Headers() headers,
-    @Res() response: Response,
-  ): Promise<any> {
+  async getOnGoingGames(@Headers() headers, @Res() response: Response) {
     const onGoing = await this.gameService.findOnGoing();
 
     if (onGoing.length < 1) {
@@ -67,7 +65,7 @@ export class GameController {
     }
 
     if (headers?.accept && headers.accept === "application/json") {
-      return onGoing;
+      return response.send(onGoing);
     }
 
     return response.render("listGame", { onGoing });
