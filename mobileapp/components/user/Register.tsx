@@ -22,7 +22,6 @@ export const Register = () => {
     })
       .then((r) => r.json())
       .then((response) => {
-        console.log(response);
         if (response.error) {
           Alert.alert(response.error);
           return;

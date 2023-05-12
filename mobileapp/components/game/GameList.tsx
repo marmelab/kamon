@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -9,8 +9,10 @@ import {
 import { API_ENDPOINT } from "@env";
 import { GameListItem } from "./GameListItem";
 import { getAccesToken } from "../../util/accessToken";
+import { NavigationContext } from "@react-navigation/native";
 
 export const GameList = () => {
+  const navigation = useContext(NavigationContext);
   const [games, setGames] = useState(null);
 
   const fetchGame = async () => {
@@ -32,8 +34,12 @@ export const GameList = () => {
   };
 
   useEffect(() => {
-    fetchGame();
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchGame();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>
