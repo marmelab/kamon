@@ -1,18 +1,16 @@
-import { Controller, Get, Render, Session, UseGuards } from "@nestjs/common";
-import { UsersService } from "./users.service";
-import { AuthenticatedGuard } from "../auth/authenticated.guard";
+import { Controller, Get, Request, UseGuards } from "@nestjs/common";
 import { ApiExcludeController } from "@nestjs/swagger";
+import { UsersService } from "./users.service";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
 
 @Controller()
 @ApiExcludeController()
 export class UserController {
   constructor(private userService: UsersService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get("/me")
-  @UseGuards(AuthenticatedGuard)
-  @Render("me")
-  async me(@Session() session) {
-    const games = await this.userService.findMyGame(session.passport.user.id);
-    return { games, userId: session.passport.user.id };
+  me(@Request() req) {
+    return req.user;
   }
 }

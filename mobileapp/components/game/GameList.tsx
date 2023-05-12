@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   FlatList,
@@ -8,17 +8,21 @@ import {
 } from "react-native";
 import { API_ENDPOINT } from "@env";
 import { GameListItem } from "./GameListItem";
+import { getAccesToken } from "../../util/accessToken";
+import { NavigationContext } from "@react-navigation/native";
 
 export const GameList = () => {
+  const navigation = useContext(NavigationContext);
   const [games, setGames] = useState(null);
 
-  useEffect(() => {
+  const fetchGame = async () => {
     const url = new URL("/game/ongoing", API_ENDPOINT);
-
+    const accessToken = await getAccesToken();
     fetch(url, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     })
       .then((r) => r.json())
@@ -27,7 +31,15 @@ export const GameList = () => {
     return () => {
       setGames(null);
     };
-  }, []);
+  };
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      fetchGame();
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   return (
     <View style={styles.container}>

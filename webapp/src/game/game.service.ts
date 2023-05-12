@@ -1,8 +1,15 @@
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { Game } from "./game.entity";
-import { initGameState, initRandomGame, Board, GameState } from "@kamon/core";
+import {
+  initGameState,
+  initRandomGame,
+  Board,
+  GameState,
+  highlightAllowedTiles,
+} from "@kamon/core";
 import { UpdateGameDto } from "./dto/update-game.dto";
+import { User } from "../users/user.entity";
 
 export class GameService {
   gameRepository: Repository<Game>;
@@ -45,10 +52,13 @@ export class GameService {
     return foundGame;
   }
 
-  createGame(): Promise<Game | null> {
+  createGame(user: User): Promise<Game | null> {
+    const gameState = initGameState();
+    const board = highlightAllowedTiles(initRandomGame(), gameState);
     return this.gameRepository.save({
-      board: initRandomGame(),
-      gameState: initGameState(),
+      board,
+      gameState,
+      player_black: user,
     });
   }
 
@@ -75,5 +85,21 @@ export class GameService {
     const game = await this.findOne(id);
     const gameState = { ...game.gameState, isRunning: false };
     return this.gameRepository.update(id, { ...game, gameState });
+  }
+
+  async setWhitePlayer(id: number, player: User) {
+    const game = await this.findOne(id);
+    return this.gameRepository.update(id, { ...game, player_white: player });
+  }
+
+  async setBlackPlayer(id: number, player: User) {
+    const game = await this.findOne(id);
+    return this.gameRepository.update(id, { ...game, player_black: player });
+  }
+
+  checkGameBelongToPlayer(game: Game, player: User) {
+    return (
+      player.id === game.player_black.id || player.id === game.player_white.id
+    );
   }
 }

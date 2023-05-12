@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
-import { View, ActivityIndicator, Button, Text } from "react-native";
+import { View, ActivityIndicator, Button, Text, Alert } from "react-native";
 import { API_ENDPOINT } from "@env";
-import {
-  Board,
-  GameState,
-  TileCoordinate,
-  findTileByCoordinate,
-  updateGame,
-} from "@kamon/core";
+import { Board, GameState, TileCoordinate } from "@kamon/core";
 import EventSource from "react-native-sse";
 import BoardRenderer from "../board/BoardRenderer";
 import { HUD } from "../HUD/HUD";
 import { useRoute } from "@react-navigation/native";
+import { getAccesToken } from "../../util/accessToken";
 
 type Game = { gameState: GameState; board: Board };
 
@@ -27,19 +22,23 @@ export const Game = () => {
 
   const fetchGameData = async () => {
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
+    const accessToken = await getAccesToken();
+
     fetch(url, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
     })
       .then((r) => r.json())
-      .then((game) => {
-        if (game) {
-          setGame({ board: game.board, gameState: game.gameState });
+      .then((data) => {
+        if (data?.game) {
+          setGame({ board: data.game.board, gameState: data.game.gameState });
         } else {
           setGame({ board: null, gameState: null });
         }
+        setPlayable(data.playable);
       })
       .catch((error) => {
         setGame({ board: null, gameState: null });
@@ -68,30 +67,33 @@ export const Game = () => {
     };
   }, []);
 
-  const play = ({ x, y }: TileCoordinate) => {
+  const play = async ({ x, y }: TileCoordinate) => {
     if (!playable) {
       return;
     }
-    const tile = findTileByCoordinate(game.board, { x, y });
 
-    const { gameState, board } = updateGame(game.board, game.gameState, tile);
+    const accessToken = await getAccesToken();
 
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
-    fetch(url, {
+    const response = await fetch(url, {
       method: "post",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
         played: `${x}-${y}`,
       }),
     });
 
-    setGame({ gameState, board });
-    if (gameState.winner || gameState.isDraw) {
-      setPlayable(false);
+    const data = await response.json();
+    if (response.status !== 201) {
+      Alert.alert(data.error);
+      return;
     }
+
+    setGame({ gameState: data.gameState, board: data.board });
   };
 
   if (game == null) {

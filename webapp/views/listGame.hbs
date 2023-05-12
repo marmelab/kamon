@@ -1,15 +1,5 @@
 {{> header }}
   <aside class="players-hud">
-    <ul>
-      {{#each games}}
-        <li>
-          <div>
-            <a href="/game/{{this.id}}">Game {{this.id}}</a>
-          </div>
-        </li>
-      {{/each}}
-    </ul>
-    
     <form action="/game/create" method="post">
       <input
         class="btn-gradient green large show"
@@ -17,6 +7,15 @@
         value="New game"
       />
     </form>
+    <ul>
+      {{#each onGoing}}
+        <li>
+          <div>
+            <a href="/game/{{this.id}}">Game {{this.id}}</a>
+          </div>
+        </li>
+      {{/each}}
+    </ul>
   </aside>
   <main>
     <div class="board"></div>

@@ -7,6 +7,9 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Home } from "./components/home/Home";
 import { Game } from "./components/game/Game";
+import { Login } from "./components/user/Login";
+import { HomeGame } from "./components/game/HomeGame";
+import { Register } from "./components/user/Register";
 
 function cacheFonts(fonts) {
   return fonts.map((font) => Font.loadAsync(font));
@@ -63,6 +66,9 @@ export default function App() {
             options={{ title: "Welcome to Kamon" }}
           />
           <Stack.Screen name="Game" component={Game} />
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={Register} />
+          <Stack.Screen name="HomeGame" component={HomeGame} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>

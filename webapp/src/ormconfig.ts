@@ -2,6 +2,7 @@ import { DataSource } from "typeorm";
 import { Game } from "./game/game.entity";
 import { User } from "./users/user.entity";
 import { config } from "dotenv";
+import { Jwt } from "./jwts/jwt.entity";
 config();
 
 export const PostgresDataSource = new DataSource({
@@ -11,7 +12,7 @@ export const PostgresDataSource = new DataSource({
   username: process.env["POSTGRES_USER"],
   password: process.env["POSTGRES_PASSWORD"],
   database: process.env["POSTGRES_DATABASE"],
-  entities: [Game, User],
+  entities: [Game, User, Jwt],
   migrations: ["./**/migrations/*.js"],
 });
 

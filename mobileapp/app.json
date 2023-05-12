@@ -33,7 +33,7 @@
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ],
-      "package": "com.adrien_marmelab.KamonMobile"
+      "package": "com.adrien.marmelab.KamonMobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
