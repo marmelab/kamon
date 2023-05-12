@@ -86,7 +86,7 @@ export class GameController {
     @Headers() headers,
     @Req() request,
   ): Promise<any> {
-    const foundGame = await this.gameService.findOne(gameId);
+    let foundGame = await this.gameService.findOne(gameId);
 
     if (!foundGame) {
       throw new NotFoundException();
@@ -96,6 +96,7 @@ export class GameController {
 
     if (!foundGame.player_white && user.id !== foundGame.player_black.id) {
       await this.gameService.setWhitePlayer(foundGame.id, user);
+      foundGame = await this.gameService.findOne(gameId);
     }
 
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);
@@ -105,10 +106,10 @@ export class GameController {
     const playable = this.gameService.isGameBelongToPlayer(foundGame, user);
 
     if (headers?.accept && headers.accept === "application/json") {
-      return response.send({ game, mode: playable });
+      return response.send({ game, playable });
     }
 
-    return response.render("index", { game, mode: playable });
+    return response.render("index", { game, playable });
   }
 
   @Sse("sse_game_resfresh")
@@ -129,8 +130,41 @@ export class GameController {
     @Res() response: Response,
     @Body() body: UpdateGameDto,
     @Headers() headers,
+    @Req() request,
   ) {
     const foundGame = await this.gameService.findOne(gameId);
+
+    const user = await this.userService.findOne(request.user.sub);
+
+    const playable = this.gameService.isGameBelongToPlayer(foundGame, user);
+
+    if (!playable) {
+      response.status(400);
+      return response.send({
+        error: "Game not playable",
+      });
+    }
+
+    if (
+      foundGame.gameState.currentPlayer === "black" &&
+      foundGame.player_black.id !== user.id
+    ) {
+      response.status(400);
+      return response.send({
+        error: "Cannot play: Black turn",
+      });
+    }
+
+    if (
+      foundGame.gameState.currentPlayer === "white" &&
+      foundGame.player_white.id !== user.id
+    ) {
+      response.status(400);
+      return response.send({
+        error: "Cannot play: White turn",
+      });
+    }
+
     const coords = body.played.split("-").map((el) => {
       return Number(el);
     });

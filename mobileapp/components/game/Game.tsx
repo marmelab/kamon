@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
-import { View, ActivityIndicator, Button, Text } from "react-native";
+import { View, ActivityIndicator, Button, Text, Alert } from "react-native";
 import { API_ENDPOINT } from "@env";
-import {
-  Board,
-  GameState,
-  TileCoordinate,
-  findTileByCoordinate,
-  updateGame,
-} from "@kamon/core";
+import { Board, GameState, TileCoordinate } from "@kamon/core";
 import EventSource from "react-native-sse";
 import BoardRenderer from "../board/BoardRenderer";
 import { HUD } from "../HUD/HUD";
@@ -80,12 +74,8 @@ export const Game = () => {
 
     const accessToken = await getAccesToken();
 
-    const tile = findTileByCoordinate(game.board, { x, y });
-
-    const { gameState, board } = updateGame(game.board, game.gameState, tile);
-
     const url = new URL(`/game/${gameId}`, API_ENDPOINT);
-    fetch(url, {
+    const response = await fetch(url, {
       method: "post",
       headers: {
         Accept: "application/json",
@@ -97,10 +87,13 @@ export const Game = () => {
       }),
     });
 
-    setGame({ gameState, board });
-    if (gameState.winner || gameState.isDraw) {
-      setPlayable(false);
+    const data = await response.json();
+    if (response.status !== 201) {
+      Alert.alert(data.error);
+      return;
     }
+
+    setGame({ gameState: data.gameState, board: data.board });
   };
 
   if (game == null) {
