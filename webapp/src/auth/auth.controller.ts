@@ -44,7 +44,7 @@ export class AuthController {
       httpOnly: true,
       secure: true,
     });
-    return response.redirect("/me");
+    return response.redirect("/game/ongoing");
   }
 
   @Post("/register")

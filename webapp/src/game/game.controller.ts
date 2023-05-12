@@ -56,13 +56,21 @@ export class GameController {
     type: [Game],
     description: "Get all ongoing games",
   })
-  async getOnGoingGames(): Promise<Game[]> {
+  async getOnGoingGames(
+    @Headers() headers,
+    @Res() response: Response,
+  ): Promise<any> {
     const onGoing = await this.gameService.findOnGoing();
 
     if (onGoing.length < 1) {
       throw new NotFoundException();
     }
-    return onGoing;
+
+    if (headers?.accept && headers.accept === "application/json") {
+      return onGoing;
+    }
+
+    return response.render("listGame", { onGoing });
   }
 
   @Get("/game/:gameId")
