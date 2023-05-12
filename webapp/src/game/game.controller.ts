@@ -47,7 +47,7 @@ export class GameController {
   ) {
     const user = await this.userService.findOne(request.user.sub);
     const game = await this.gameService.createGame(user);
-    if (headers?.accept && headers.accept === "application/json") {
+    if (headers.accept === "application/json") {
       return response.send(game);
     }
 
@@ -67,7 +67,7 @@ export class GameController {
       throw new NotFoundException();
     }
 
-    if (headers?.accept && headers.accept === "application/json") {
+    if (headers.accept === "application/json") {
       return response.send(onGoing);
     }
 
@@ -105,7 +105,7 @@ export class GameController {
     response.cookie("gameId", `${foundGame.id}`);
     const playable = this.gameService.isGameBelongToPlayer(foundGame, user);
 
-    if (headers?.accept && headers.accept === "application/json") {
+    if (headers.accept === "application/json") {
       return response.send({ game, playable });
     }
 
@@ -183,7 +183,7 @@ export class GameController {
     const sseId = `sse_game_refresh_${foundGame.id}`;
     this.eventsService.emit({ data: new Date().toISOString() }, sseId);
 
-    if (headers?.accept && headers.accept === "application/json") {
+    if (headers.accept === "application/json") {
       return response.send(game);
     }
 

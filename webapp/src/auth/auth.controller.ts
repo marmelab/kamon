@@ -36,7 +36,7 @@ export class AuthController {
   ) {
     const token = await this.authService.login(signInDto.username);
 
-    if (headers?.accept && headers.accept === "application/json") {
+    if (headers.accept === "application/json") {
       return response.send(token);
     }
 
