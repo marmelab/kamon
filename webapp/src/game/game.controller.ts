@@ -84,11 +84,18 @@ export class GameController {
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
     @Headers() headers,
+    @Req() request,
   ): Promise<any> {
     const foundGame = await this.gameService.findOne(gameId);
 
     if (!foundGame) {
       throw new NotFoundException();
+    }
+
+    const user = await this.userService.findOne(request.user.sub);
+
+    if (!foundGame.player_white && user.id !== foundGame.player_black.id) {
+      await this.gameService.setWhitePlayer(foundGame.id, user);
     }
 
     const board = highlightAllowedTiles(foundGame.board, foundGame.gameState);

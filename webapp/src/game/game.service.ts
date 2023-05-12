@@ -86,4 +86,14 @@ export class GameService {
     const gameState = { ...game.gameState, isRunning: false };
     return this.gameRepository.update(id, { ...game, gameState });
   }
+
+  async setWhitePlayer(id: number, player: User) {
+    const game = await this.findOne(id);
+    return this.gameRepository.update(id, { ...game, player_white: player });
+  }
+
+  async setBlackPlayer(id: number, player: User) {
+    const game = await this.findOne(id);
+    return this.gameRepository.update(id, { ...game, player_black: player });
+  }
 }
