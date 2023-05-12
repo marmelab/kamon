@@ -6,7 +6,7 @@ import { GameController } from "./game.controller";
 import { User } from "../users/user.entity";
 import { EventsService } from "../events.service";
 import { JwtsModule } from "../jwts/jwts.module";
-import { UsersModule } from "src/users/users.module";
+import { UsersModule } from "../users/users.module";
 
 @Module({
   imports: [
