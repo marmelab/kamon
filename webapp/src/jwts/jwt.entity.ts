@@ -18,6 +18,6 @@ export class Jwt {
   @Column()
   exp: number;
 
-  @ManyToOne((type) => User)
+  @ManyToOne((type) => User, (user) => user.jwts)
   user: User;
 }

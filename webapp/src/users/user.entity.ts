@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Jwt } from "../jwts/jwt.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -18,4 +19,7 @@ export class User {
   @Column()
   @ApiProperty()
   password: string;
+
+  @OneToMany(() => Jwt, (jwt) => jwt.user)
+  jwts: Jwt[];
 }
