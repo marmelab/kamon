@@ -29,5 +29,16 @@ services:
       postgres_kamon:
         condition: service_healthy
 
+  postgrest:
+    image: postgrest/postgrest
+    ports:
+      - "3001:3001"
+    environment:
+      PGRST_DB_URI: postgres://postgres-kamon:test@db:5432/kamon_db
+      PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3001
+    depends_on:
+      postgres_kamon:
+        condition: service_healthy
+
 volumes:
   postgres:
