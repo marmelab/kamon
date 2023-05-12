@@ -23,8 +23,8 @@ import { EventsService } from "../events.service";
 import { UpdateGameDto } from "./dto/update-game.dto";
 import { ApiBody, ApiCreatedResponse } from "@nestjs/swagger";
 import { Game } from "./game.entity";
-import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
-import { UsersService } from "src/users/users.service";
+import { JwtAuthGuard } from "../auth/jwt-auth.guard";
+import { UsersService } from "../users/users.service";
 
 @Controller()
 export class GameController {
