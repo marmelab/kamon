@@ -25,7 +25,6 @@ export class JwtAuthGuard implements CanActivate {
     }
 
     const jwt = await this.jwtsService.findOneByToken(token);
-    console.log(jwt);
     if (jwt && !jwt.isActive) {
       throw new UnauthorizedException();
     }
