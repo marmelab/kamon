@@ -7,6 +7,9 @@ services:
       POSTGRES_DB: ${POSTGRES_DATABASE}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGREST_ROLE: ${POSTGREST_ROLE}
+      POSTGREST_USER: ${POSTGREST_USER}
+      POSTGREST_PASSWORD: ${POSTGREST_PASSWORD}
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
