@@ -7,7 +7,7 @@ export class AppController {
   @Get("/")
   @Render("userForm")
   registerView() {
-    return { action: "/", title: "Register" };
+    return { action: "/register", title: "Register" };
   }
 
   @Get("/login")
