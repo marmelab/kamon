@@ -4,12 +4,13 @@ services:
     container_name: postgres_kamon
     image: postgres:15.2
     environment:
-      POSTGRES_DB: kamon_db
-      POSTGRES_USER: postgres-kamon
-      POSTGRES_PASSWORD: test
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
     restart: unless-stopped
@@ -34,7 +35,7 @@ services:
     ports:
       - "3001:3000"
     environment:
-      PGRST_DB_URI: postgres://postgres-kamon:test@postgres_kamon:5432/kamon_db
+      PGRST_DB_URI: postgres://${POSTGREST_USER}:${POSTGREST_PASSWORD}@postgres_kamon:5432/${POSTGRES_DATABASE}
       PGRST_OPENAPI_SERVER_PROXY_URI: http://127.0.0.1:3001
       PGRST_DB_SCHEMAS: public
       PGRST_DB_ANON_ROLE: web_anon
