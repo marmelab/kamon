@@ -53,7 +53,7 @@ services:
     expose:
       - "8181"
     environment:
-      API_URL: http://127.0.0.1:3001
+      API_URL: http://localhost:3001
     depends_on:
       - postgrest
 volumes:
