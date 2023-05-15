@@ -1,10 +1,11 @@
 import "./App.css";
-import { Admin, Resource, ListGuesser } from "react-admin";
+import { Admin, Resource } from "react-admin";
 import { dataProvider } from "./dataProvider";
+import { UserList } from "./users";
 
 const App = () => (
   <Admin dataProvider={dataProvider}>
-    <Resource name="user" list={ListGuesser} />
+    <Resource name="user" list={UserList} />
   </Admin>
 );
 
