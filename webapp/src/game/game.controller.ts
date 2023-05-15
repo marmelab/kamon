@@ -63,10 +63,6 @@ export class GameController {
   async getOnGoingGames(@Headers() headers, @Res() response: Response) {
     const onGoing = await this.gameService.findOnGoing();
 
-    if (onGoing.length < 1) {
-      throw new NotFoundException();
-    }
-
     if (headers.accept === "application/json") {
       return response.send(onGoing);
     }
