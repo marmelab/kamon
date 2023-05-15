@@ -22,4 +22,19 @@ export class User {
 
   @OneToMany(() => Jwt, (jwt) => jwt.user)
   jwts: Jwt[];
+
+  @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
+  @ApiProperty()
+  createdAt: Date;
+
+  @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
+  @ApiProperty()
+  updatedAt: Date;
+
+  @Column({
+    unique: true,
+    nullable: true,
+  })
+  @ApiProperty()
+  email: string;
 }
