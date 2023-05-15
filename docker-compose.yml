@@ -58,5 +58,18 @@ services:
       API_URL: http://localhost:3001
     depends_on:
       - kamon_postgrest
+
+  kamon_admin:
+    container_name: kamon_admin
+    build:
+      context: ./
+      dockerfile: ./docker/admin/Dockerfile
+    ports:
+      - 8080:80
+    environment:
+      NODE_ENV: production
+    depends_on:
+      - kamon_postgrest
+
 volumes:
   postgres:

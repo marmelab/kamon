@@ -3,10 +3,10 @@
 As explain in the [PostgREST tutorial](https://postgrest.org/en/stable/tutorials/tut0.html)
 
 Connect to the container
-`docker container exec -it postgres_kamon bash`
+`docker container exec -it kamon_postgres bash`
 
 Connect to the DB to create new users
-`docker container exec -it postgres_kamon psql -U postgres-kamon -d kamon_db`
+`docker container exec -it kamon_postgres psql -U postgres-kamon -d kamon_db`
 
 Create new user
 
