@@ -2848,6 +2848,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@kamon/admin@workspace:admin"
   dependencies:
+    "@raphiniert/ra-data-postgrest": ^1.2.1
     "@types/react": ^18.0.28
     "@types/react-dom": ^18.0.11
     "@typescript-eslint/eslint-plugin": ^5.57.1
@@ -3543,6 +3544,15 @@ __metadata:
   version: 2.11.7
   resolution: "@popperjs/core@npm:2.11.7"
   checksum: 5b6553747899683452a1d28898c1b39173a4efd780e74360bfcda8eb42f1c5e819602769c81a10920fc68c881d07fb40429604517d499567eac079cfa6470f19
+  languageName: node
+  linkType: hard
+
+"@raphiniert/ra-data-postgrest@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "@raphiniert/ra-data-postgrest@npm:1.2.1"
+  peerDependencies:
+    ra-core: ^4.1.0
+  checksum: b04230124204f71af9308a242f7a685f21ac6275bb1fc9297229f91b2521862d652245514bd484b34ba1abeff1f9313d55b1182843bff941dcbfd45ab0de0325
   languageName: node
   linkType: hard
 

@@ -1,12 +1,13 @@
 import "./App.css";
-import { Admin, Resource, ListGuesser } from "react-admin";
-import jsonServerProvider from "ra-data-json-server";
-
-const dataProvider = jsonServerProvider("https://jsonplaceholder.typicode.com");
+import { Admin, Resource } from "react-admin";
+import { UserList } from "./users";
+import postgrestRestProvider from "@raphiniert/ra-data-postgrest";
 
 const App = () => (
-  <Admin dataProvider={dataProvider}>
-    <Resource name="users" list={ListGuesser} />
+  <Admin
+    dataProvider={postgrestRestProvider(import.meta.env.VITE_API_ENDPOINT)}
+  >
+    <Resource name="user" list={UserList} />
   </Admin>
 );
 
