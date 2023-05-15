@@ -60,7 +60,7 @@ services:
       - kamon_postgrest
 
   kamon_admin:
-    container_name: ngixreactapp
+    container_name: kamon_admin
     build:
       context: ./
       dockerfile: ./docker/admin/Dockerfile
