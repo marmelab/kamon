@@ -8,6 +8,7 @@ import {
   ReferenceInput,
   TextField,
 } from "react-admin";
+import { GameVictoryField } from "./ui/gameVictoryField";
 
 const userFilters = [
   <ReferenceInput
@@ -28,9 +29,7 @@ export const GameList = () => {
     <List filters={userFilters}>
       <Datagrid rowClick="edit">
         <BooleanField source="gameState.isRunning" label="Is running" />
-        <BooleanField source="gameState.isDraw" label="Draw" />
-        <BooleanField source="gameState.isPath" label="Path victory" />
-        <BooleanField source="gameState.isLoop" label="Loop victory" />
+        <GameVictoryField source="gameState" />
         <TextField source="gameState.winner" />
         <ReferenceField
           source="playerBlackId"

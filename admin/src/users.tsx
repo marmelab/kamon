@@ -12,6 +12,7 @@ import {
   TextField,
   TextInput,
 } from "react-admin";
+import { GameVictoryField } from "./ui/gameVictoryField";
 
 const userFilters = [
   <TextInput source="username@ilike" label="Username" alwaysOn />,
@@ -47,9 +48,7 @@ export const UserShow = () => {
           >
             <Datagrid>
               <BooleanField source="gameState.isRunning" label="Is running" />
-              <BooleanField source="gameState.isDraw" label="Draw" />
-              <BooleanField source="gameState.isPath" label="Path victory" />
-              <BooleanField source="gameState.isLoop" label="Loop victory" />
+              <GameVictoryField source="gameState" />
               <TextField source="gameState.winner" />
               <ReferenceField
                 source="playerBlackId"
@@ -75,9 +74,8 @@ export const UserShow = () => {
           >
             <Datagrid>
               <BooleanField source="gameState.isRunning" label="Is running" />
-              <BooleanField source="gameState.isDraw" label="Draw" />
-              <BooleanField source="gameState.isPath" label="Path victory" />
-              <BooleanField source="gameState.isLoop" label="Loop victory" />
+              <GameVictoryField source="gameState" />
+
               <TextField source="gameState.winner" />
               <ReferenceField
                 source="playerBlackId"
