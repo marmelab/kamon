@@ -50,4 +50,4 @@ build-admin:
 	yarn workspace @kamon/admin build
 
 test-admin:
-	yarn workspace @kamon/admin test
+	yarn workspace @kamon/admin test --run
