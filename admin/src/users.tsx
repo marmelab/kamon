@@ -46,13 +46,21 @@ export const UserShow = () => {
             sort={{ field: "createdAt", order: "DESC" }}
           >
             <Datagrid>
-              <BooleanField source="gameState.isRunning" />
-              <BooleanField source="gameState.isDraw" />
-              <BooleanField source="gameState.isPath" />
-              <BooleanField source="gameState.isLoop" />
+              <BooleanField source="gameState.isRunning" label="Is running" />
+              <BooleanField source="gameState.isDraw" label="Draw" />
+              <BooleanField source="gameState.isPath" label="Path victory" />
+              <BooleanField source="gameState.isLoop" label="Loop victory" />
               <TextField source="gameState.winner" />
-              <ReferenceField source="playerBlackId" reference="user" />
-              <ReferenceField source="playerWhiteId" reference="user" />
+              <ReferenceField
+                source="playerBlackId"
+                reference="user"
+                label="Black player"
+              />
+              <ReferenceField
+                source="playerWhiteId"
+                reference="user"
+                label="White player"
+              />
               <DateField source="createdAt" showTime={true} />
             </Datagrid>
           </ReferenceManyField>
@@ -66,13 +74,21 @@ export const UserShow = () => {
             sort={{ field: "createdAt", order: "DESC" }}
           >
             <Datagrid>
-              <BooleanField source="gameState.isRunning" />
-              <BooleanField source="gameState.isDraw" />
-              <BooleanField source="gameState.isPath" />
-              <BooleanField source="gameState.isLoop" />
+              <BooleanField source="gameState.isRunning" label="Is running" />
+              <BooleanField source="gameState.isDraw" label="Draw" />
+              <BooleanField source="gameState.isPath" label="Path victory" />
+              <BooleanField source="gameState.isLoop" label="Loop victory" />
               <TextField source="gameState.winner" />
-              <ReferenceField source="playerBlackId" reference="user" />
-              <ReferenceField source="playerWhiteId" reference="user" />
+              <ReferenceField
+                source="playerBlackId"
+                reference="user"
+                label="Black player"
+              />
+              <ReferenceField
+                source="playerWhiteId"
+                reference="user"
+                label="White player"
+              />
               <DateField source="createdAt" showTime={true} />
             </Datagrid>
           </ReferenceManyField>
