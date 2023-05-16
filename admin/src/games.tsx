@@ -36,7 +36,7 @@ export const GameList = () => {
         <ReferenceField source="playerWhiteId" reference="user" />
         <DateField source="createdAt" showTime={true} />
         <FunctionField
-          label="Name"
+          label="Game link"
           render={(record) => (
             <a href={`${WEBAPP_ENDPOINT}/game/${record.id}`} target="_blank">
               See game
