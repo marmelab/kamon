@@ -1,4 +1,3 @@
-import "./App.css";
 import { Admin, Resource } from "react-admin";
 import { UserList } from "./users";
 import postgrestRestProvider from "@raphiniert/ra-data-postgrest";
