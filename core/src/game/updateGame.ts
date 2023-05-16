@@ -49,6 +49,7 @@ export const updateGame = (
         message: `!!!!!! ${gameState.currentPlayer.toUpperCase()} WON 🥳 !!!!!!`,
         winner: gameState.currentPlayer,
         isRunning: false,
+        isPath: true,
       },
       board,
     };

@@ -31,8 +31,10 @@ export const GameList = () => (
         source="board"
         render={(record) => `${JSON.stringify(record).substring(1, 50)}...`}
       />
-      <BooleanField source="gameState.isDraw" />
       <BooleanField source="gameState.isRunning" />
+      <BooleanField source="gameState.isDraw" />
+      <BooleanField source="gameState.isPath" />
+      <BooleanField source="gameState.isLoop" />
       <TextField source="gameState.winner" />
       <ReferenceField source="playerBlackId" reference="user" />
       <ReferenceField source="playerWhiteId" reference="user" />

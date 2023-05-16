@@ -4,6 +4,7 @@ import {
   DateField,
   Edit,
   List,
+  ReferenceField,
   ReferenceManyField,
   Show,
   SimpleForm,
@@ -26,51 +27,61 @@ export const UserList = () => (
   </List>
 );
 
-export const UserShow = () => (
-  <Show>
-    <TabbedShowLayout>
-      <TabbedShowLayout.Tab label="summary">
-        <TextField source="id" />
-        <TextField source="username" />
-        <DateField source="createdAt" showTime={true} />
-        <DateField source="updatedAt" showTime={true} />
-        <TextField source="email" />
-      </TabbedShowLayout.Tab>
+export const UserShow = () => {
+  return (
+    <Show>
+      <TabbedShowLayout>
+        <TabbedShowLayout.Tab label="summary">
+          <TextField source="id" />
+          <TextField source="username" />
+          <DateField source="createdAt" showTime={true} />
+          <DateField source="updatedAt" showTime={true} />
+          <TextField source="email" />
+        </TabbedShowLayout.Tab>
 
-      <TabbedShowLayout.Tab label="Games as black">
-        <ReferenceManyField
-          label="Games as black"
-          reference="game"
-          target="playerBlackId"
-          sort={{ field: "createdAt", order: "DESC" }}
-        >
-          <Datagrid>
-            <TextField source="id" />
-            <BooleanField source="gameState.isDraw" />
-            <BooleanField source="gameState.isRunning" />
-            <DateField source="createdAt" showTime={true} />
-          </Datagrid>
-        </ReferenceManyField>
-      </TabbedShowLayout.Tab>
+        <TabbedShowLayout.Tab label="Games as black">
+          <ReferenceManyField
+            label="Games as black"
+            reference="game"
+            target="playerBlackId"
+            sort={{ field: "createdAt", order: "DESC" }}
+          >
+            <Datagrid>
+              <BooleanField source="gameState.isRunning" />
+              <BooleanField source="gameState.isDraw" />
+              <BooleanField source="gameState.isPath" />
+              <BooleanField source="gameState.isLoop" />
+              <TextField source="gameState.winner" />
+              <ReferenceField source="playerBlackId" reference="user" />
+              <ReferenceField source="playerWhiteId" reference="user" />
+              <DateField source="createdAt" showTime={true} />
+            </Datagrid>
+          </ReferenceManyField>
+        </TabbedShowLayout.Tab>
 
-      <TabbedShowLayout.Tab label="Games as white">
-        <ReferenceManyField
-          label="Games as white"
-          reference="game"
-          target="playerWhiteId"
-          sort={{ field: "createdAt", order: "DESC" }}
-        >
-          <Datagrid>
-            <TextField source="id" />
-            <BooleanField source="gameState.isDraw" />
-            <BooleanField source="gameState.isRunning" />
-            <DateField source="createdAt" showTime={true} />
-          </Datagrid>
-        </ReferenceManyField>
-      </TabbedShowLayout.Tab>
-    </TabbedShowLayout>
-  </Show>
-);
+        <TabbedShowLayout.Tab label="Games as white">
+          <ReferenceManyField
+            label="Games as white"
+            reference="game"
+            target="playerWhiteId"
+            sort={{ field: "createdAt", order: "DESC" }}
+          >
+            <Datagrid>
+              <BooleanField source="gameState.isRunning" />
+              <BooleanField source="gameState.isDraw" />
+              <BooleanField source="gameState.isPath" />
+              <BooleanField source="gameState.isLoop" />
+              <TextField source="gameState.winner" />
+              <ReferenceField source="playerBlackId" reference="user" />
+              <ReferenceField source="playerWhiteId" reference="user" />
+              <DateField source="createdAt" showTime={true} />
+            </Datagrid>
+          </ReferenceManyField>
+        </TabbedShowLayout.Tab>
+      </TabbedShowLayout>
+    </Show>
+  );
+};
 
 export const UserEdit = () => (
   <Edit>

@@ -37,6 +37,8 @@ describe("checkUserMove", () => {
       winner: null,
       turnNumber: 1,
       isDraw: false,
+      isPath: false,
+      isLoop: false,
       remainingTiles: {
         black: 18,
         white: 18,
@@ -59,6 +61,8 @@ describe("checkUserMove", () => {
       winner: null,
       turnNumber: 1,
       isDraw: false,
+      isPath: false,
+      isLoop: false,
       remainingTiles: {
         black: 18,
         white: 18,
@@ -81,6 +85,8 @@ describe("checkUserMove", () => {
       winner: null,
       turnNumber: 1,
       isDraw: false,
+      isPath: false,
+      isLoop: false,
       remainingTiles: {
         black: 18,
         white: 18,

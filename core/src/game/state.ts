@@ -7,6 +7,8 @@ export interface GameState {
   currentPlayer: Player;
   isRunning: boolean;
   isDraw: boolean;
+  isPath: boolean;
+  isLoop: boolean;
   winner?: Player;
   remainingTiles: {
     black: number;
@@ -21,6 +23,8 @@ export const initGameState = (): GameState => ({
   isRunning: true,
   winner: null,
   isDraw: false,
+  isPath: false,
+  isLoop: false,
   remainingTiles: {
     black: 18,
     white: 18,
