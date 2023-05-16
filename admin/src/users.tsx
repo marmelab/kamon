@@ -11,7 +11,6 @@ import {
   TextField,
   TextInput,
 } from "react-admin";
-import { Grid } from "@mui/material";
 
 const userFilters = [
   <TextInput source="username@ilike" label="Username" alwaysOn />,
@@ -19,7 +18,7 @@ const userFilters = [
 
 export const UserList = () => (
   <List filters={userFilters}>
-    <Datagrid rowClick="edit">
+    <Datagrid rowClick="show">
       <TextField source="username" />
       <DateField source="createdAt" showTime={true} />
       <DateField source="updatedAt" showTime={true} />
