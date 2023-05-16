@@ -32,7 +32,6 @@ export const UserShow = () => {
     <Show>
       <TabbedShowLayout>
         <TabbedShowLayout.Tab label="summary">
-          <TextField source="id" />
           <TextField source="username" />
           <DateField source="createdAt" showTime={true} />
           <DateField source="updatedAt" showTime={true} />
