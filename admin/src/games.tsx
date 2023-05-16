@@ -27,10 +27,6 @@ export const GameList = () => {
   return (
     <List filters={userFilters}>
       <Datagrid rowClick="edit">
-        <FunctionField
-          label="Name"
-          render={(record) => `${JSON.stringify(record).substring(1, 50)}...`}
-        />
         <BooleanField source="gameState.isRunning" />
         <BooleanField source="gameState.isDraw" />
         <BooleanField source="gameState.isPath" />
