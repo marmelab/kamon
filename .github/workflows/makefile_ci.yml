@@ -87,6 +87,9 @@ jobs:
           POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }}
           APP_SECRET: ${{ secrets.APP_SECRET }}
 
+      - name: Run Admin tests
+        run: make test-admin
+
   deploy:
     name: Deploy
     if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' }}

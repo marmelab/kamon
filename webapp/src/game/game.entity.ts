@@ -94,4 +94,12 @@ export class Game {
 
   @ManyToOne(() => User, { nullable: true, eager: true })
   player_white: User;
+
+  @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
+  @ApiProperty()
+  createdAt: Date;
+
+  @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
+  @ApiProperty()
+  updatedAt: Date;
 }
