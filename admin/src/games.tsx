@@ -30,7 +30,7 @@ export const GameList = () => {
       <Datagrid rowClick="edit">
         <BooleanField source="gameState.isRunning" label="Is running" />
         <GameVictoryField source="gameState" />
-        <TextField source="gameState.winner" />
+        <TextField source="gameState.winner" label="Winner" />
         <ReferenceField
           source="playerBlackId"
           reference="user"
