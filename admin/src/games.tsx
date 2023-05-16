@@ -27,7 +27,6 @@ export const GameList = () => {
   return (
     <List filters={userFilters}>
       <Datagrid rowClick="edit">
-        <TextField source="id" />
         <FunctionField
           label="Name"
           render={(record) => `${JSON.stringify(record).substring(1, 50)}...`}
