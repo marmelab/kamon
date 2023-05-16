@@ -5,11 +5,25 @@ import {
   FunctionField,
   List,
   ReferenceField,
+  ReferenceInput,
   TextField,
 } from "react-admin";
 
+const userFilters = [
+  <ReferenceInput
+    source="playerBlackId"
+    label="Player black"
+    reference="user"
+  />,
+  <ReferenceInput
+    source="playerWhiteId"
+    label="PLayer white"
+    reference="user"
+  />,
+];
+
 export const GameList = () => (
-  <List>
+  <List filters={userFilters}>
     <Datagrid rowClick="edit">
       <TextField source="id" />
       <FunctionField
@@ -20,12 +34,8 @@ export const GameList = () => (
       <BooleanField source="gameState.isDraw" />
       <BooleanField source="gameState.isRunning" />
       <TextField source="gameState.winner" />
-      <ReferenceField source="playerBlackId" reference="user">
-        <TextField source="username" />
-      </ReferenceField>
-      <ReferenceField source="playerWhiteId" reference="user">
-        <TextField source="username" />
-      </ReferenceField>
+      <ReferenceField source="playerBlackId" reference="user" />
+      <ReferenceField source="playerWhiteId" reference="user" />
       <DateField source="createdAt" showTime={true} />
     </Datagrid>
   </List>

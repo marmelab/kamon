@@ -8,7 +8,7 @@ const App = () => (
   <Admin
     dataProvider={postgrestRestProvider(import.meta.env.VITE_API_ENDPOINT)}
   >
-    <Resource name="user" list={UserList} />
+    <Resource name="user" list={UserList} recordRepresentation="username" />
     <Resource name="game" list={GameList} />
   </Admin>
 );
