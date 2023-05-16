@@ -1,14 +1,17 @@
 import {
+  BooleanField,
   Datagrid,
   DateField,
   Edit,
   List,
+  ReferenceManyField,
   Show,
   SimpleForm,
-  SimpleShowLayout,
+  TabbedShowLayout,
   TextField,
   TextInput,
 } from "react-admin";
+import { Grid } from "@mui/material";
 
 const userFilters = [
   <TextInput source="username@ilike" label="Username" alwaysOn />,
@@ -26,13 +29,45 @@ export const UserList = () => (
 
 export const UserShow = () => (
   <Show>
-    <SimpleShowLayout>
-      <TextField source="id" />
-      <TextField source="username" />
-      <DateField source="createdAt" showTime={true} />
-      <DateField source="updatedAt" showTime={true} />
-      <TextField source="email" />
-    </SimpleShowLayout>
+    <TabbedShowLayout>
+      <TabbedShowLayout.Tab label="summary">
+        <TextField source="id" />
+        <TextField source="username" />
+        <DateField source="createdAt" showTime={true} />
+        <DateField source="updatedAt" showTime={true} />
+        <TextField source="email" />
+      </TabbedShowLayout.Tab>
+
+      <TabbedShowLayout.Tab label="Games as black">
+        <ReferenceManyField
+          label="Games as black"
+          reference="game"
+          target="playerBlackId"
+        >
+          <Datagrid>
+            <TextField source="id" />
+            <BooleanField source="gameState.isDraw" />
+            <BooleanField source="gameState.isRunning" />
+            <DateField source="createdAt" showTime={true} />
+          </Datagrid>
+        </ReferenceManyField>
+      </TabbedShowLayout.Tab>
+
+      <TabbedShowLayout.Tab label="Games as white">
+        <ReferenceManyField
+          label="Games as white"
+          reference="game"
+          target="playerWhiteId"
+        >
+          <Datagrid>
+            <TextField source="id" />
+            <BooleanField source="gameState.isDraw" />
+            <BooleanField source="gameState.isRunning" />
+            <DateField source="createdAt" showTime={true} />
+          </Datagrid>
+        </ReferenceManyField>
+      </TabbedShowLayout.Tab>
+    </TabbedShowLayout>
   </Show>
 );
 
