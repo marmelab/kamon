@@ -18,6 +18,7 @@ export const GameList = () => (
       />
       <BooleanField source="gameState.isDraw" />
       <BooleanField source="gameState.isRunning" />
+      <TextField source="gameState.winner" />
       <ReferenceField source="playerBlackId" reference="user">
         <TextField source="username" />
       </ReferenceField>
