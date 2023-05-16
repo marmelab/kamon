@@ -22,23 +22,33 @@ const userFilters = [
   />,
 ];
 
-export const GameList = () => (
-  <List filters={userFilters}>
-    <Datagrid rowClick="edit">
-      <TextField source="id" />
-      <FunctionField
-        label="Name"
-        source="board"
-        render={(record) => `${JSON.stringify(record).substring(1, 50)}...`}
-      />
-      <BooleanField source="gameState.isRunning" />
-      <BooleanField source="gameState.isDraw" />
-      <BooleanField source="gameState.isPath" />
-      <BooleanField source="gameState.isLoop" />
-      <TextField source="gameState.winner" />
-      <ReferenceField source="playerBlackId" reference="user" />
-      <ReferenceField source="playerWhiteId" reference="user" />
-      <DateField source="createdAt" showTime={true} />
-    </Datagrid>
-  </List>
-);
+export const GameList = () => {
+  const WEBAPP_ENDPOINT = import.meta.env.VITE_WEBAPP_ENDPOINT;
+  return (
+    <List filters={userFilters}>
+      <Datagrid rowClick="edit">
+        <TextField source="id" />
+        <FunctionField
+          label="Name"
+          render={(record) => `${JSON.stringify(record).substring(1, 50)}...`}
+        />
+        <BooleanField source="gameState.isRunning" />
+        <BooleanField source="gameState.isDraw" />
+        <BooleanField source="gameState.isPath" />
+        <BooleanField source="gameState.isLoop" />
+        <TextField source="gameState.winner" />
+        <ReferenceField source="playerBlackId" reference="user" />
+        <ReferenceField source="playerWhiteId" reference="user" />
+        <DateField source="createdAt" showTime={true} />
+        <FunctionField
+          label="Name"
+          render={(record) => (
+            <a href={`${WEBAPP_ENDPOINT}/game/${record.id}`} target="_blank">
+              See game
+            </a>
+          )}
+        />
+      </Datagrid>
+    </List>
+  );
+};
