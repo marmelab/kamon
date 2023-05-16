@@ -43,6 +43,7 @@ export const UserShow = () => (
           label="Games as black"
           reference="game"
           target="playerBlackId"
+          sort={{ field: "createdAt", order: "DESC" }}
         >
           <Datagrid>
             <TextField source="id" />
@@ -58,6 +59,7 @@ export const UserShow = () => (
           label="Games as white"
           reference="game"
           target="playerWhiteId"
+          sort={{ field: "createdAt", order: "DESC" }}
         >
           <Datagrid>
             <TextField source="id" />
