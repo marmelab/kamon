@@ -1,6 +1,7 @@
 import {
   BooleanField,
   Datagrid,
+  DateField,
   FunctionField,
   List,
   ReferenceField,
@@ -25,6 +26,7 @@ export const GameList = () => (
       <ReferenceField source="playerWhiteId" reference="user">
         <TextField source="username" />
       </ReferenceField>
+      <DateField source="createdAt" showTime={true} />
     </Datagrid>
   </List>
 );
