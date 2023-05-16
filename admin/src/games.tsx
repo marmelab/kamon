@@ -44,7 +44,7 @@ export const GameList = () => {
         <DateField source="createdAt" showTime={true} />
         <FunctionField
           label="Game link"
-          render={(record) => (
+          render={(record: any) => (
             <a href={`${WEBAPP_ENDPOINT}/game/${record.id}`} target="_blank">
               See game
             </a>

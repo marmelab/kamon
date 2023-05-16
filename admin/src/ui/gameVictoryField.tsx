@@ -1,7 +1,7 @@
 import { useRecordContext } from "react-admin";
 import { Chip } from "@mui/material";
 
-export const GameVictoryField = (props) => {
+export const GameVictoryField = (props: any) => {
   const record = useRecordContext(props);
   if (!record) {
     return null;
