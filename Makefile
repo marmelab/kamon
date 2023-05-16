@@ -41,3 +41,13 @@ e2e-test-webapp:
 # MOBILE
 run-mobileapp: ## Run an android dev server for mobile app	
 	yarn workspace @kamon/mobileapp start
+
+# ADMIN
+dev-admin:
+	yarn workspace @kamon/admin dev
+
+build-admin:
+	yarn workspace @kamon/admin build
+
+test-admin:
+	yarn workspace @kamon/admin test
