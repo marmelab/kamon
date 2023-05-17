@@ -34,26 +34,6 @@ export class AuthService {
     const user = await this.usersService.findByUserName(username);
     const payload = { username: user.username, sub: user.id };
     const access_token = await this.jwtService.signAsync(payload);
-    const jwt: any = this.jwtService.decode(access_token);
-
-    const oldJwt = await this.jwtsService.findOneByUser(user);
-
-    if (oldJwt) {
-      this.jwtsService.update(oldJwt.id, {
-        token: access_token,
-        iat: jwt.iat,
-        exp: jwt.exp,
-        user: user,
-        isActive: true,
-      });
-    } else {
-      this.jwtsService.create({
-        token: access_token,
-        iat: jwt.iat,
-        exp: jwt.exp,
-        user: user,
-      });
-    }
 
     return {
       access_token,

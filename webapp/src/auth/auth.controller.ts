@@ -81,8 +81,6 @@ export class AuthController {
   @Get("/logout")
   async logout(@Request() request, @Res() response: Response) {
     response.cookie("jwt", "");
-    const user = await this.userService.findOne(request.user.sub);
-    this.authService.logout(user);
     return response.send("logout");
   }
 }

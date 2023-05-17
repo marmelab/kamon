@@ -23,9 +23,14 @@ export class JwtsService {
   }
 
   findOneByUser(user: User) {
-    return this.jwtRepository.findOneBy({
-      user,
-    });
+    return this.jwtRepository
+      .createQueryBuilder()
+      .select("j")
+      .from(Jwt, "j")
+      .addFrom(User, "u")
+      .andWhere('j."userId" = :id')
+      .setParameter("id", user.id)
+      .getOne();
   }
 
   findOneByToken(token: string) {
