@@ -18,6 +18,6 @@ export class Jwt {
   @Column()
   exp: number;
 
-  @ManyToOne((type) => User, (user) => user.jwts)
+  @ManyToOne((type) => User, (user) => user.jwts, { onDelete: "CASCADE" })
   user: User;
 }

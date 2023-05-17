@@ -89,10 +89,10 @@ export class Game {
   })
   gameState: GameState;
 
-  @ManyToOne(() => User, { nullable: true, eager: true })
+  @ManyToOne(() => User, { nullable: true, eager: true, onDelete: "CASCADE" })
   player_black: User;
 
-  @ManyToOne(() => User, { nullable: true, eager: true })
+  @ManyToOne(() => User, { nullable: true, eager: true, onDelete: "CASCADE" })
   player_white: User;
 
   @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
