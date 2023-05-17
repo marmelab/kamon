@@ -29,4 +29,7 @@ GRANT SELECT ON ALL TABLES IN SCHEMA public TO web_anon;
 
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO web_anon;
 
+grant update on public."user" to web_anon;
+grant delete on public."user" to web_anon;
+
 ```
