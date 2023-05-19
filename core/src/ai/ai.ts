@@ -1,4 +1,4 @@
-import { Board, updateBoardState } from "../board";
+import { Board, clearAllowedTilesHighlight, updateBoardState } from "../board";
 import { GameState } from "../game";
 import { getOppositePath, updateGraphState } from "../graph";
 import { Player } from "../player";
@@ -10,8 +10,11 @@ import {
   playTile,
 } from "../tile";
 
-export const getMissingTilesForPath = (player: Player, board: Board) => {
-  const tiles: Tile[] = [];
+export const getMissingTilesForPath = (
+  player: Player,
+  board: Board,
+): PlayableTile[] => {
+  const tiles: PlayableTile[] = [];
 
   board.forEach((line) => {
     line.forEach((tile: PlayableTile, i) => {
@@ -32,4 +35,18 @@ export const getMissingTilesForPath = (player: Player, board: Board) => {
   });
 
   return tiles;
+};
+
+export const highlightMissingTilesForPath = (
+  player: Player,
+  board: Board,
+): Board => {
+  const newBoard = clearAllowedTilesHighlight(board);
+  const tiles = getMissingTilesForPath(player, newBoard);
+  tiles.forEach((tile) => {
+    const { x, y } = findTile(newBoard, tile);
+    newBoard[x][y] = { ...tile, moveAllowed: true };
+  });
+
+  return newBoard;
 };
