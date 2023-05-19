@@ -33,20 +33,22 @@ document.querySelector("#help").addEventListener("submit", (e) => {
   })
     .then((r) => r.json())
     .then((tiles) => {
-      if (tiles.lenght < 1) {
-        messageContainer.text("No help available");
-        setTimeout(() => {
-          messageContainer.innerText = "";
-        }, 3000);
+      if (tiles.length < 1) {
+        messageContainer.innerText = "No help available";
+        return;
       }
+
       tiles.forEach((tile) => {
-        const el = document.querySelector(
+        const hexagon = document.querySelector(
           `.tile--${tile.symbol}.tile--${tile.color}`,
         );
-        el.classList.add("tile--blink");
+        hexagon.classList.add("tile--blink");
       });
+      messageContainer.innerText = "";
     })
     .finally(() => {
-      messageContainer.innerText = "";
+      setTimeout(() => {
+        messageContainer.innerText = "";
+      }, 3000);
     });
 });
