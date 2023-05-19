@@ -8,10 +8,7 @@ describe("findNextMove", () => {
     const { state, board }: { state: GameState; board: Board } =
       getMockFromJson("games/almostPath.json");
     const tiles = getMissingTilesForPath(state.currentPlayer, board);
-    expect(tiles).toEqual([
-      { symbol: "A", color: "yellow" },
-      { symbol: "D", color: "cyan" },
-    ]);
+    expect(tiles).toEqual([{ symbol: "A", color: "yellow" }]);
   });
 
   it("should highlight missing tiles for path", () => {
@@ -100,7 +97,7 @@ describe("findNextMove", () => {
         { symbol: "D", color: "magenta", moveAllowed: undefined },
         { symbol: "F", color: "blue", moveAllowed: undefined },
         { symbol: "A", color: "yellow", moveAllowed: true },
-        { symbol: "D", color: "cyan", moveAllowed: true },
+        { symbol: "D", color: "cyan", moveAllowed: undefined },
         {
           symbol: "B",
           color: "magenta",

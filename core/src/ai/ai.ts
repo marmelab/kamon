@@ -1,6 +1,7 @@
-import { Board, clearAllowedTilesHighlight, updateBoardState } from "../board";
+import { Board, clearAllowedTilesHighlight, getLastPlayedTile } from "../board";
 import { GameState } from "../game";
 import { getOppositePath, updateGraphState } from "../graph";
+import { checkUserMove } from "../move";
 import { Player } from "../player";
 import {
   PlayableTile,
@@ -19,8 +20,19 @@ export const getMissingTilesForPath = (
   board.forEach((line) => {
     line.forEach((tile: PlayableTile, i) => {
       if (!tile) return;
+      if (tile.playedBy) return;
+
+      const lastPlayedTile = getLastPlayedTile(board);
+      if (
+        lastPlayedTile.symbol !== tile.symbol &&
+        lastPlayedTile.color !== tile.color
+      ) {
+        return;
+      }
+
       let updatedBoard = JSON.parse(JSON.stringify(board));
       const { x: lineIndex, y: tileIndex } = findTile(updatedBoard, tile);
+
       const playedTile = playTile(
         findTileByCoordinate(updatedBoard, { x: lineIndex, y: tileIndex }),
         player,
