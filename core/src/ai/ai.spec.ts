@@ -15,10 +15,16 @@ describe("findNextMove", () => {
     const { state, board }: { state: GameState; board: Board } =
       getMockFromJson("games/almostPath2.json");
     const tiles = getMissingTilesForPath(state.currentPlayer, board);
-    console.log(tiles);
     expect(tiles).toEqual([
       { symbol: "E", color: "cyan" },
       { symbol: "E", color: "yellow" },
     ]);
+  });
+
+  it("should not find missing tile for path", () => {
+    const { state, board }: { state: GameState; board: Board } =
+      getMockFromJson("games/impossiblePath.json");
+    const tiles = getMissingTilesForPath(state.currentPlayer, board);
+    expect(tiles).toEqual([]);
   });
 });
