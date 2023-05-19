@@ -63,7 +63,7 @@ export const highlightMissingTilesForPath = (
   return newBoard;
 };
 
-export const getBlockedTiles = (board: Board, player: Player) => {
+export const getBlockedTiles = (player: Player, board: Board) => {
   const lastPlayedTile = getLastPlayedTile(board);
   const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
 

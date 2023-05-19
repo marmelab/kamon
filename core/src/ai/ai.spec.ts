@@ -34,7 +34,7 @@ describe("findNextMoveToBlockOpponent", () => {
     const { state, board }: { state: GameState; board: Board } =
       getMockFromJson("games/almostBlocked.json");
 
-    expect(getBlockedTiles(board, state.currentPlayer)).toEqual([
+    expect(getBlockedTiles(state.currentPlayer, board)).toEqual([
       { symbol: "D", color: "magenta" },
     ]);
   });
