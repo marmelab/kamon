@@ -1,7 +1,7 @@
 import { Board, clearAllowedTilesHighlight, getLastPlayedTile } from "../board";
-import { GameState } from "../game";
+import { GameState, checkIfGameWon } from "../game";
 import { getOppositePath, updateGraphState } from "../graph";
-import { checkUserMove } from "../move";
+import { checkUserMove, getPlayableTilesForNextMove } from "../move";
 import { Player } from "../player";
 import {
   PlayableTile,
@@ -61,4 +61,22 @@ export const highlightMissingTilesForPath = (
   });
 
   return newBoard;
+};
+
+export const getBlockedTiles = (board: Board, player: Player) => {
+  const lastPlayedTile = getLastPlayedTile(board);
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+
+  const tiles: PlayableTile[] = [];
+  playableTiles.forEach((tile: PlayableTile) => {
+    let updatedBoard = JSON.parse(JSON.stringify(board));
+    const { x: lineIndex, y: tileIndex } = findTile(updatedBoard, tile);
+    const playedTile = playTile(tile, player);
+    updatedBoard[lineIndex][tileIndex] = playedTile;
+
+    if (getPlayableTilesForNextMove(updatedBoard, tile).length < 1) {
+      tiles.push(tile);
+    }
+  });
+  return tiles;
 };
