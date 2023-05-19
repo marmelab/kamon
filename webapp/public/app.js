@@ -25,16 +25,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.querySelector("#help").addEventListener("submit", (e) => {
   e.preventDefault();
+  const messageContainer = e.target.querySelector("div");
+
+  messageContainer.innerText = "Computation...";
   fetch(e.target.action, {
     method: "post",
   })
     .then((r) => r.json())
     .then((tiles) => {
+      if (tiles.lenght < 1) {
+        messageContainer.text("No help available");
+        setTimeout(() => {
+          messageContainer.innerText = "";
+        }, 3000);
+      }
       tiles.forEach((tile) => {
         const el = document.querySelector(
           `.tile--${tile.symbol}.tile--${tile.color}`,
         );
         el.classList.add("tile--blink");
       });
+    })
+    .finally(() => {
+      messageContainer.innerText = "";
     });
 });
