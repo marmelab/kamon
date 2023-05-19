@@ -32,18 +32,29 @@ document.querySelector("#help").addEventListener("submit", (e) => {
     method: "post",
   })
     .then((r) => r.json())
-    .then((tiles) => {
-      if (tiles.length < 1) {
+    .then((response) => {
+      if (
+        response.missingTilesForPath.length < 1 &&
+        response.missingTilesForBlocked.length < 1
+      ) {
         messageContainer.innerText = "No help available";
         return;
       }
 
-      tiles.forEach((tile) => {
+      response.missingTilesForPath.forEach((tile) => {
         const hexagon = document.querySelector(
           `.tile--${tile.symbol}.tile--${tile.color}`,
         );
         hexagon.classList.add("tile--blink");
       });
+
+      response.missingTilesForBlocked.forEach((tile) => {
+        const hexagon = document.querySelector(
+          `.tile--${tile.symbol}.tile--${tile.color}`,
+        );
+        hexagon.classList.add("tile--blink--blocked");
+      });
+
       messageContainer.innerText = "";
     })
     .finally(() => {
