@@ -12,7 +12,7 @@ import { ALLOWED_FIRST_MOVES, getPlayableTilesForNextMove } from "../move/move";
 import { Board } from "./boardType";
 import { getLastPlayedTile } from "./boardService";
 
-const clearAllowedTilesHighlight = (board: Board): Board => {
+export const clearAllowedTilesHighlight = (board: Board): Board => {
   const newBoard = JSON.parse(JSON.stringify(board));
   board.forEach((line, y) => {
     line.forEach((tile, x) => {

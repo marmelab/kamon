@@ -22,3 +22,33 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.reload();
   };
 });
+
+document.querySelector("#help").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const messageContainer = e.target.querySelector("div");
+
+  messageContainer.innerText = "Computation...";
+  fetch(e.target.action, {
+    method: "post",
+  })
+    .then((r) => r.json())
+    .then((tiles) => {
+      if (tiles.length < 1) {
+        messageContainer.innerText = "No help available";
+        return;
+      }
+
+      tiles.forEach((tile) => {
+        const hexagon = document.querySelector(
+          `.tile--${tile.symbol}.tile--${tile.color}`,
+        );
+        hexagon.classList.add("tile--blink");
+      });
+      messageContainer.innerText = "";
+    })
+    .finally(() => {
+      setTimeout(() => {
+        messageContainer.innerText = "";
+      }, 3000);
+    });
+});

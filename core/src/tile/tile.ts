@@ -204,15 +204,23 @@ export const findSiblings = (
 
     if (!tileExist) continue;
 
-    if (
-      tileExist &&
-      player &&
-      player !== board[coordsToFind.x][coordsToFind.y].playedBy
-    )
+    if (player && player !== board[coordsToFind.x][coordsToFind.y].playedBy)
       continue;
 
     coords[key] = board[coordsToFind.x][coordsToFind.y];
   }
 
   return coords;
+};
+
+export const findTilesPlayedBy = (player: Player, board: Board) => {
+  const tiles: PlayableTile[] = [];
+  board.forEach((line) => {
+    line.forEach((tile: PlayableTile) => {
+      if (tile?.playedBy !== player) return;
+      tiles.push(tile);
+    });
+  });
+
+  return tiles;
 };

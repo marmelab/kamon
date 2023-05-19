@@ -16,6 +16,7 @@ import { Response } from "express";
 import { GameService } from "./game.service";
 import {
   findTileByCoordinate,
+  getMissingTilesForPath,
   highlightAllowedTiles,
   updateGame,
 } from "@kamon/core";
@@ -185,5 +186,33 @@ export class GameController {
 
     response.cookie("gameId", foundGame.id);
     return response.redirect(`/game/${JSON.stringify(foundGame.id)}`);
+  }
+
+  @Post("/game/:gameId/help")
+  @UseGuards(JwtAuthGuard)
+  async seePossibleMove(
+    @Param("gameId", ParseIntPipe) gameId: number,
+    @Res() response: Response,
+    @Req() request,
+  ) {
+    let game = await this.gameService.findOne(gameId);
+
+    const user = await this.userService.findOne(request.user.sub);
+
+    const playable = this.gameService.checkGameBelongToPlayer(game, user);
+
+    if (!playable) {
+      response.status(400);
+      return response.send({
+        error: "Game not playable",
+      });
+    }
+
+    const board = getMissingTilesForPath(
+      game.gameState.currentPlayer,
+      game.board,
+    );
+
+    return response.send(board);
   }
 }

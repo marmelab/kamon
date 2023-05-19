@@ -65,6 +65,7 @@ export const updateGraphState = (player: Player, board: Board) => {
   board.forEach((line) => {
     line.forEach((tile: PlayableTile) => {
       if (!tile) return;
+      if (tile.playedBy !== player) return;
       const { x, y } = findTile(board, tile);
       const siblings = findSiblings(board, { x, y }, player);
       for (const key in siblings) {

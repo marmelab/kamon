@@ -1,0 +1,228 @@
+{
+  "state": {
+    "isDraw": false,
+    "isLoop": false,
+    "isPath": false,
+    "winner": null,
+    "message": "Black player, it's your turn",
+    "isRunning": true,
+    "turnNumber": 13,
+    "currentPlayer": "black",
+    "remainingTiles": {
+      "black": 12,
+      "white": 12
+    }
+  },
+  "board": [
+    [
+      null,
+      null,
+      null,
+      {
+        "symbol": "A",
+        "color": "magenta"
+      },
+      {
+        "symbol": "A",
+        "color": "red"
+      },
+      {
+        "symbol": "B",
+        "color": "cyan",
+        "playedBy": "black",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "C",
+        "color": "yellow"
+      },
+      null,
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      {
+        "symbol": "B",
+        "color": "blue"
+      },
+      {
+        "symbol": "D",
+        "color": "blue"
+      },
+      {
+        "symbol": "E",
+        "color": "red",
+        "playedBy": "black"
+      },
+      {
+        "symbol": "D",
+        "color": "yellow"
+      },
+      {
+        "symbol": "B",
+        "color": "red"
+      },
+      null,
+      null
+    ],
+    [
+      null,
+      {
+        "symbol": "A",
+        "color": "green",
+        "playedBy": "white",
+        "lastPlayed": true
+      },
+      {
+        "symbol": "C",
+        "color": "red",
+        "playedBy": "white",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "E",
+        "color": "green"
+      },
+      {
+        "symbol": "E",
+        "color": "magenta",
+        "playedBy": "black",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "O",
+        "color": "grey",
+        "playedBy": null
+      },
+      {
+        "symbol": "B",
+        "color": "yellow"
+      },
+      null
+    ],
+    [
+      {
+        "symbol": "C",
+        "color": "blue",
+        "playedBy": "white",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "D",
+        "color": "magenta"
+      },
+      {
+        "symbol": "F",
+        "color": "blue"
+      },
+      {
+        "symbol": "A",
+        "color": "yellow"
+      },
+      {
+        "symbol": "D",
+        "color": "cyan"
+      },
+      {
+        "symbol": "B",
+        "color": "magenta",
+        "playedBy": "white",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "A",
+        "color": "blue",
+        "playedBy": "white",
+        "lastPlayed": false
+      }
+    ],
+    [
+      null,
+      {
+        "symbol": "C",
+        "color": "green"
+      },
+      {
+        "symbol": "B",
+        "color": "green"
+      },
+      {
+        "symbol": "E",
+        "color": "cyan"
+      },
+      {
+        "symbol": "E",
+        "color": "yellow",
+        "playedBy": "black",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "E",
+        "color": "blue",
+        "playedBy": "white",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "A",
+        "color": "cyan"
+      },
+      null
+    ],
+    [
+      null,
+      null,
+      {
+        "symbol": "D",
+        "color": "red"
+      },
+      {
+        "symbol": "F",
+        "color": "red"
+      },
+      {
+        "symbol": "C",
+        "color": "cyan",
+        "playedBy": "black",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "F",
+        "color": "magenta"
+      },
+      {
+        "symbol": "C",
+        "color": "magenta"
+      },
+      null,
+      null
+    ],
+    [
+      null,
+      null,
+      null,
+      {
+        "symbol": "F",
+        "color": "green"
+      },
+      {
+        "symbol": "D",
+        "color": "green",
+        "playedBy": "black",
+        "lastPlayed": false
+      },
+      {
+        "symbol": "F",
+        "color": "yellow"
+      },
+      {
+        "symbol": "F",
+        "color": "cyan"
+      },
+      null,
+      null,
+      null
+    ]
+  ]
+}
