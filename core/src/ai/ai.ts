@@ -69,7 +69,7 @@ export const getBlockedTiles = (player: Player, board: Board) => {
 
   const tiles: PlayableTile[] = [];
   playableTiles.forEach((tile: PlayableTile) => {
-    let updatedBoard = JSON.parse(JSON.stringify(board));
+    let updatedBoard = structuredClone(board);
     const { x: lineIndex, y: tileIndex } = findTile(updatedBoard, tile);
     const playedTile = playTile(tile, player);
     updatedBoard[lineIndex][tileIndex] = playedTile;
