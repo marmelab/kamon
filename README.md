@@ -12,7 +12,7 @@ This project is a set of 5 packages :
 
 Almost all of these packages use a part of @kamon/core.
 
-## Start everything (except @kamon/mobileapp)
+## Developp with Docker
 
 ### Prerequisites
 
@@ -39,12 +39,22 @@ cp -n ./webapp/.env.example ./webapp/.env
 
 Defaults values will works, but you can adapt `./webapp/.env` according to your needs.
 
+#### Configure @kamon/admin
+
+```sh
+cp -n ./admin/.env.example ./admin/.env
+```
+
+Defaults values will works, but you can adapt `./admin/.env` according to your needs.
+
 ### Start the project
 
 This command will build dockers containers and up these
 
 ```sh
-make start
+make start-dev
+# with build
+EXTRA_PARAMS=--build make start-dev
 ```
 
 You can access to applications as follow:
@@ -58,10 +68,12 @@ You can access to applications as follow:
 To stop all
 
 ```sh
-make stop
+make stop-dev
 ```
 
-## Develop packages
+## Develop without Docker
+
+> Disclaimer: you need a database to run the webapp and the API, at this time, you can use Docker to run it
 
 ### Dependencies installation
 
