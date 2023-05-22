@@ -106,8 +106,7 @@ export class GameController {
     if (headers.accept === "application/json") {
       return response.send({ game, playable });
     }
-
-    return response.render("index", { game, playable });
+    return response.render("index", { game, playable, user });
   }
 
   @Sse("sse_game_resfresh")
