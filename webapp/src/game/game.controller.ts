@@ -16,6 +16,7 @@ import { Response } from "express";
 import { GameService } from "./game.service";
 import {
   findTileByCoordinate,
+  getBlockedTiles,
   getMissingTilesForPath,
   highlightAllowedTiles,
   updateGame,
@@ -208,11 +209,16 @@ export class GameController {
       });
     }
 
-    const board = getMissingTilesForPath(
+    const missingTilesForPath = getMissingTilesForPath(
       game.gameState.currentPlayer,
       game.board,
     );
 
-    return response.send(board);
+    const missingTilesForBlocked = getBlockedTiles(
+      game.gameState.currentPlayer,
+      game.board,
+    );
+
+    return response.send({ missingTilesForPath, missingTilesForBlocked });
   }
 }

@@ -1,9 +1,9 @@
 import { Board } from "../board";
 import { GameState } from "../game";
 import { getMockFromJson } from "../mocks/getMock";
-import { getMissingTilesForPath, highlightMissingTilesForPath } from "./ai";
+import { getBlockedTiles, getMissingTilesForPath } from "./ai";
 
-describe("findNextMove", () => {
+describe("findNextMoveForPath", () => {
   it("should find 1 missing tile for path", () => {
     const { state, board }: { state: GameState; board: Board } =
       getMockFromJson("games/almostPath.json");
@@ -26,5 +26,31 @@ describe("findNextMove", () => {
       getMockFromJson("games/impossiblePath.json");
     const tiles = getMissingTilesForPath(state.currentPlayer, board);
     expect(tiles).toEqual([]);
+  });
+});
+
+describe("findNextMoveToBlockOpponent", () => {
+  it("should find 1 tile", () => {
+    const { state, board }: { state: GameState; board: Board } =
+      getMockFromJson("games/almostBlocked.json");
+
+    expect(getBlockedTiles(state.currentPlayer, board)).toEqual([
+      { symbol: "D", color: "magenta" },
+    ]);
+  });
+});
+
+describe("findNextMoveToPathAndBlock", () => {
+  it("should find 2 tiles that make a path or block opponent", () => {
+    const { state, board }: { state: GameState; board: Board } =
+      getMockFromJson("games/almostPathAndBlocked.json");
+
+    expect(getBlockedTiles(state.currentPlayer, board)).toEqual([
+      { symbol: "D", color: "magenta" },
+    ]);
+
+    expect(getMissingTilesForPath(state.currentPlayer, board)).toEqual([
+      { symbol: "F", color: "blue" },
+    ]);
   });
 });

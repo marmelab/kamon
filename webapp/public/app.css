@@ -362,6 +362,11 @@ main {
   animation: blink 1s infinite;
 }
 
+.tile--blink--blocked {
+  animation: blink 1s infinite;
+  background: red;
+}
+
 @keyframes blink {
   0% {
     opacity: 0.5;
