@@ -81,7 +81,7 @@ yarn workspace @kamon/cli build -w
 make run-cli
 
 ## resume a game from a target save file
-yarn start -f my_save_file.json
+yarn workspace @kamon/cli start -f my_save_file.json
 ```
 
 ## @kamon/webapp
@@ -104,39 +104,39 @@ docker compose up -d
 #### Run the migrations
 
 ```sh
-yarn @kamon/webapp db:migrate
+yarn workspace @kamon/webapp db:migrate
 ```
 
 ### Running the app
 
 ```bash
 # development
-yarn @kamon/webapp run start
+yarn workspace @kamon/webapp run start
 # or
 make run-webapp
 
 # watch mode
-yarn @kamon/webapp run start:dev
+yarn workspace @kamon/webapp run start:dev
 
 # production mode
-yarn @kamon/webapp run start:prod
+yarn workspace @kamon/webapp run start:prod
 ```
 
 ### Test
 
 ```bash
 # unit tests
-yarn @kamon/webapp run test
+yarn workspace @kamon/webapp run test
 # or
 make unit-test-webapp
 
 # e2e tests
-yarn @kamon/webapp run test:e2e
+yarn workspace @kamon/webapp run test:e2e
 # or
 make e2e-test-webapp
 
 # test coverage
-yarn @kamon/webapp run test:cov
+yarn workspace @kamon/webapp run test:cov
 ```
 
 ### Build
