@@ -29,8 +29,7 @@ services:
     ports:
       - 80:3000
     volumes:
-      - ./core:/app/core
-      - ./webapp:/app/webapp
+      - .:/app
     depends_on:
       kamon_postgres:
         condition: service_healthy
