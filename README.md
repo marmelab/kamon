@@ -26,7 +26,7 @@ Almost all of these packages use a part of @kamon/core.
 #### Configure Docker
 
 ```sh
-cp ./.env.example ./.env
+cp -n ./.env.example ./.env
 ```
 
 Defaults values will works, but you can adapt `./.env` according to your needs.
@@ -34,7 +34,7 @@ Defaults values will works, but you can adapt `./.env` according to your needs.
 #### Configure @kamon/webapp
 
 ```sh
-cp ./webapp/.env.example ./webapp/.env
+cp -n ./webapp/.env.example ./webapp/.env
 ```
 
 Defaults values will works, but you can adapt `./webapp/.env` according to your needs.
@@ -81,7 +81,7 @@ First to first, make sure you followed the **Before you start** section to confi
 Then start docker containers
 
 ```sh
-docker compose start kamon_postgres -d
+docker compose --env-file=.env start kamon_postgres -d
 ```
 
 ### @kamon/core

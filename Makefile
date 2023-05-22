@@ -17,7 +17,8 @@ docker-build: ## Build docker containers
 	docker compose build
 
 docker-up: ## Start docker containers
-	docker compose up -d
+	cp -n .env.example .env
+	docker compose --env-file=.env --project-name=kamon up -d
 
 # CORE
 build-core:
