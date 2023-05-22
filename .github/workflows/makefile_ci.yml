@@ -62,7 +62,7 @@ jobs:
           cat .env
 
       - name: Run postgres docker
-        run: docker-compose -f "docker-compose.dev.yml" up -d --build
+        run: docker-compose -f "docker-compose.yml" up -d --build
 
       - name: Checking container
         run: docker ps -a
