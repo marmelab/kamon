@@ -7,7 +7,7 @@ start-dev:
 	cp -n ./.env.example ./.env
 	cp -n ./webapp/.env.example ./webapp/.env
 	cp -n ./admin/.env.example ./admin/.env
-	docker compose -f docker-compose.dev.yml --env-file=.env --project-name=kamon-dev up
+	docker compose -f docker-compose.dev.yml --env-file=.env --project-name=kamon-dev up -d $(EXTRA_PARAMS)
 
 stop-dev:
 	docker compose -f docker-compose.dev.yml --env-file=.env --project-name=kamon-dev stop
