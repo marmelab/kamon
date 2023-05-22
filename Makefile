@@ -9,7 +9,7 @@ install: ## Install NodeJS dependencies with Yarn
 start: docker-build docker-up ## Build with docker and start docker containers
 
 stop: ## Stop docker containers
-	docker compose stop
+	docker compose --env-file=.env --project-name=kamon stop 
 
 build: build-core build-webapp build-cli build-admin ## Build all the packages
 
