@@ -81,7 +81,7 @@ First to first, make sure you followed the **Before you start** section to confi
 Then start docker containers
 
 ```sh
-docker compose --env-file=.env start kamon_postgres -d
+docker compose up -d
 ```
 
 ### @kamon/core

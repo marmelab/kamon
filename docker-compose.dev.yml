@@ -1,23 +1,39 @@
 version: "3"
 services:
   kamon_postgres:
-    container_name: kamon_postgres
     image: postgres:15.2
     environment:
-      POSTGRES_DB: kamon_db
-      POSTGRES_USER: postgres-kamon
-      POSTGRES_PASSWORD: test
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGREST_ROLE: ${POSTGREST_ROLE}
+      POSTGREST_USER: ${POSTGREST_USER}
+      POSTGREST_PASSWORD: ${POSTGREST_PASSWORD}
       PGDATA: /data/postgres
     volumes:
       - postgres:/data/postgres
+      - ./db-init-scripts:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ["CMD-SHELL", "pg_isready", "--username=${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 5
+
+  kamon_server:
+    build:
+      context: ./
+      dockerfile: ./docker/webapp/dev/Dockerfile
+    ports:
+      - 80:3000
+    volumes:
+      - ./core:/app/core
+      - ./webapp:/app/webapp
+    depends_on:
+      kamon_postgres:
+        condition: service_healthy
 
 volumes:
   postgres:
