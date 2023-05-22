@@ -1,7 +1,8 @@
-FROM node:alpine as builder
+FROM node:18-buster-slim
 RUN mkdir -p /app
 COPY . /app
 WORKDIR /app
 RUN yarn install
 EXPOSE 3000
-CMD [ "yarn", "workspace", "@kamon/webapp", "start:dev" ]
+WORKDIR /app/webapp
+CMD yarn db:migrate && yarn start:debug
