@@ -6,7 +6,18 @@ help: ## Outputs this help screen
 install: ## Install NodeJS dependencies with Yarn 
 	yarn install
 
-build: build-core build-webapp
+start: docker-build docker-up ## Build with docker and start docker containers
+
+stop: ## Stop docker containers
+	docker compose stop
+
+build: build-core build-webapp build-cli build-admin ## Build all the packages
+
+docker-build: ## Build docker containers
+	docker compose build
+
+docker-up: ## Start docker containers
+	docker compose up -d
 
 # CORE
 build-core:

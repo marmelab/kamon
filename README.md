@@ -10,32 +10,95 @@ This project is a set of 5 packages :
 - @kamon/mobileapp: the game playable on mobile, built with [Expo](https://expo.dev/) and [React Native](https://reactnative.dev/)
 - @kamon/admin: manage users and games, build with [React-admin](https://marmelab.com/react-admin/)
 
-All this package use a part of @kamon/core.
+Almost all of these packages use a part of @kamon/core.
 
-## Dependencies installation
+## Start everything (except @kamon/mobileapp)
 
-All this packages use `yarn workspace`, so to install every dependencies:
+### Prerequisites
+
+- docker
+- docker compose
+- nodeJS
+- yarn
+
+### Before you start
+
+#### Configure Docker
+
+```sh
+cp ./.env.example ./.env
+```
+
+Defaults values will works, but you can adapt `./.env` according to your needs.
+
+#### Configure @kamon/webapp
+
+```sh
+cp ./webapp/.env.example ./webapp/.env
+```
+
+Defaults values will works, but you can adapt `./webapp/.env` according to your needs.
+
+### Start the project
+
+This command will build dockers containers and up these
+
+```sh
+make start
+```
+
+You can access to applications as follow:
+
+- Webapp: http://127.0.0.1
+- Webapp Swagger: http://127.0.0.1/api
+- Admin: http://127.0.0.1:8080
+- PostgREST: http://127.0.0.1:3001
+- PostgREST Swagger: http://127.0.0.1:8181
+
+To stop all
+
+```sh
+make stop
+```
+
+## Develop packages
+
+### Dependencies installation
+
+All this packages use `yarn workspace`, first, install every dependencies:
 
 ```sh
 cd kamon
 make install
 ```
 
-## @kamon/core
+#### Run Docker to access database
 
-### Requirements
+Some packages like @kamon/webapp, @kamon/admin need a database.
+
+First to first, make sure you followed the **Before you start** section to configure applications with `.env` files.
+
+Then start docker containers
+
+```sh
+docker compose start kamon_postgres -d
+```
+
+### @kamon/core
+
+#### Requirements
 
 - Node.js ^18
 - yarn
 
-### Developing
+#### Developing
 
 ```sh
 ## Re-run the script on change
 yarn workspace @kamon/core watch
 ```
 
-### Build
+#### Build
 
 ```sh
 # build once
@@ -45,27 +108,27 @@ make build-core
 yarn workspace @kamon/core build -w
 ```
 
-### Test
+#### Test
 
 ```sh
 make test-core
 ```
 
-## @kamon/cli
+### @kamon/cli
 
-### Requirements
+#### Requirements
 
 - Node.js ^18
 - yarn
 
-### Developing
+#### Developing
 
 ```sh
 ## Re-run the script on change
 yarn workspace @kamon/cli dev
 ```
 
-### Build
+#### Build
 
 ```sh
 # build once
@@ -75,7 +138,7 @@ make build-cli
 yarn workspace @kamon/cli build -w
 ```
 
-### Play
+#### Play
 
 ```sh
 ## initialize a new game
@@ -85,30 +148,28 @@ make run-cli
 yarn workspace @kamon/cli start -f my_save_file.json
 ```
 
-## @kamon/webapp
+### @kamon/webapp
 
 This package is build over [NestJS](https://nestjs.com/), so all available command in NestJS are available here.
 
-You need `docker compose` that will run a PostgresSql and the app.
+#### Configure access to database
 
-### Install
+Edit the `.env` file in `./webapp` as follow
 
-Create a `.env` based on `.env.local` and configure it.
-
-Next, run
-
-```sh
-docker compose build
-docker compose up -d
+```
+#POSTGRES_HOST=kamon_postgres
+POSTGRES_HOST=0.0.0.0 # access database in dev mode
 ```
 
-#### Run the migrations
+#### Install
+
+##### Run the migrations
 
 ```sh
 yarn workspace @kamon/webapp db:migrate
 ```
 
-### Running the app
+#### Running the app
 
 ```bash
 # development
@@ -123,7 +184,7 @@ yarn workspace @kamon/webapp run start:dev
 yarn workspace @kamon/webapp run start:prod
 ```
 
-### Test
+#### Test
 
 ```bash
 # unit tests
@@ -140,7 +201,7 @@ make e2e-test-webapp
 yarn workspace @kamon/webapp run test:cov
 ```
 
-### Build
+#### Build
 
 ```sh
 yarn workspace @kamon/webapp build
@@ -148,7 +209,7 @@ yarn workspace @kamon/webapp build
 make build-webapp
 ```
 
-## @kamon/mobileapp
+### @kamon/mobileapp
 
 This package is build over [Expo](https://expo.dev/) and [React Native](https://reactnative.dev/).
 
@@ -157,7 +218,7 @@ Before you want to run the app, you need to run `@kamon/webapp` because it's the
 Create a `.env` based on `.env.local` and configure it. To use a local API (eg: localhost), use the same IP that Expo expose to you.  
 Exemple: your Expo application run on `http://192.168.86.27:19000`, your API endpoint should look like `http://192.168.86.27:3000`. That's it.
 
-### Developping
+#### Developping
 
 Install Expo Go on your phone and run
 
@@ -165,7 +226,7 @@ Install Expo Go on your phone and run
 make run-mobileapp
 ```
 
-### Build
+#### Build
 
 First, you need an [Expo account](https://expo.dev/accounts/) to build on the Expo Cloud.
 
@@ -182,11 +243,11 @@ To build the application as an APK, run this
 eas build --platform android --profile apk
 ```
 
-## @kamon/admin
+### @kamon/admin
 
 This package is build over [React-admin](https://marmelab.com/react-admin/), and allow admin to manage users and games.
 
-### Developping
+#### Developping
 
 ```sh
 make dev-admin
@@ -194,7 +255,7 @@ make dev-admin
 yarn workspace @kamon/admin dev
 ```
 
-### Build
+#### Build
 
 ```sh
 make dev-admin
@@ -202,7 +263,7 @@ make dev-admin
 yarn workspace @kamon/admin build
 ```
 
-### Test
+#### Test
 
 ```sh
 make test-admin
