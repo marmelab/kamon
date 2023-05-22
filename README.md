@@ -2,12 +2,13 @@
 
 Kamon Game on CLI, web, mobile.
 
-This project is a set of 4 packages :
+This project is a set of 5 packages :
 
 - @kamon/core: the logic of the game
 - @kamon/cli: the game playable in CLI
-- @kamon/webapp: the game playable on a browser and the API
-- @kamon/mobileapp: the game playable on mobile
+- @kamon/webapp: the game playable on a browser and the API, built on the top of [NestJS](https://nestjs.com/)
+- @kamon/mobileapp: the game playable on mobile, built with [Expo](https://expo.dev/) and [React Native](https://reactnative.dev/)
+- @kamon/admin: manage users and games, build with [React-admin](https://marmelab.com/react-admin/)
 
 All this package use a part of @kamon/core.
 
@@ -86,7 +87,7 @@ yarn workspace @kamon/cli start -f my_save_file.json
 
 ## @kamon/webapp
 
-This package is build over NestJS, so all available command in NestJS are available here.
+This package is build over [NestJS](https://nestjs.com/), so all available command in NestJS are available here.
 
 You need `docker compose` that will run a PostgresSql and the app.
 
@@ -149,7 +150,7 @@ make build-webapp
 
 ## @kamon/mobileapp
 
-This package is build over React-Native and Expo.
+This package is build over [Expo](https://expo.dev/) and [React Native](https://reactnative.dev/).
 
 Before you want to run the app, you need to run `@kamon/webapp` because it's the API of the game.
 
@@ -179,4 +180,32 @@ To build the application as an APK, run this
 
 ```sh
 eas build --platform android --profile apk
+```
+
+## @kamon/admin
+
+This package is build over [React-admin](https://marmelab.com/react-admin/), and allow admin to manage users and games.
+
+### Developping
+
+```sh
+make dev-admin
+# or
+yarn workspace @kamon/admin dev
+```
+
+### Build
+
+```sh
+make dev-admin
+# or
+yarn workspace @kamon/admin build
+```
+
+### Test
+
+```sh
+make test-admin
+# or
+yarn workspace @kamon/admin test --run
 ```
