@@ -1,12 +1,8 @@
 <aside class="players-hud">
   <div class="user-info">
-    {{#if (eq game.player_black.id user.id) }}
-      <p>You are playing as</p> <h6>black</h6>
-    {{/if}}
-
-    {{#if (eq game.player_white.id user.id) }}
-      <p>You are playing as</p> <h6>white</h6>
-    {{/if}}
+    You are playing as
+    {{#if (eq game.player_black.id user.id) }}<span class="user-info__player">black</span>{{/if}}
+    {{#if (eq game.player_white.id user.id) }}<span class="user-info__player">white</span>{{/if}}
   </div>
 
       <div class="turn-counter">
