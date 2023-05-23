@@ -1,6 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const eventSource = new EventSource("/sse_game_resfresh");
-  console.log(eventSource);
   eventSource.onmessage = (data) => {
     window.location.reload();
   };
