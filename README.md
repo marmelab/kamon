@@ -12,40 +12,12 @@ This project is a set of 5 packages :
 
 Almost all of these packages use a part of @kamon/core.
 
-## Developp with Docker
+## Develop with Docker
 
 ### Prerequisites
 
 - docker
 - docker compose
-- nodeJS
-- yarn
-
-### Before you start
-
-#### Configure Docker
-
-```sh
-cp -n ./.env.example ./.env
-```
-
-Defaults values will works, but you can adapt `./.env` according to your needs.
-
-#### Configure @kamon/webapp
-
-```sh
-cp -n ./webapp/.env.example ./webapp/.env
-```
-
-Defaults values will works, but you can adapt `./webapp/.env` according to your needs.
-
-#### Configure @kamon/admin
-
-```sh
-cp -n ./admin/.env.example ./admin/.env
-```
-
-Defaults values will works, but you can adapt `./admin/.env` according to your needs.
 
 ### Start the project
 
