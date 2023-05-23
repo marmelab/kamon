@@ -40,10 +40,12 @@
       
       {{#if playable }}
         <button id="toggleHighlight">See possible move</button>
-        <form action="/game/{{game.id}}/help" method="post" id="help">
-          <button type="submit">Help</button>
-          <div></div>
-        </form>
+        {{#gt game.gameState.turnNumber 0}}
+          <form action="/game/{{game.id}}/help" method="post" id="help">
+            <button type="submit">Help</button>
+            <div></div>
+          </form>
+        {{/gt}}
       {{/if}}
 
     </aside>
