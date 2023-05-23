@@ -58,3 +58,23 @@ export const getBlockedTiles = (player: Player, board: Board) => {
   });
   return tiles;
 };
+
+export const simulatePlaying = (player: Player, board: Board) => {
+  const tiles: PlayableTile[] = [];
+  const lastPlayedTile = getLastPlayedTile(board);
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+
+  playableTiles.forEach((tile: PlayableTile, turn) => {
+    let updatedBoard = structuredClone(board);
+    updatedBoard = play(player, updatedBoard, tile);
+    console.log(updatedBoard);
+    //simulatePlaying(player, updatedBoard);
+  });
+};
+
+export const play = (player: Player, board: Board, tile: PlayableTile) => {
+  const { x: lineIndex, y: tileIndex } = findTile(board, tile);
+  const playedTile = playTile(tile, player);
+  board[lineIndex][tileIndex] = playedTile;
+  return board;
+};

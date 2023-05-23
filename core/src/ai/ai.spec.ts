@@ -1,7 +1,7 @@
 import { Board } from "../board";
 import { GameState } from "../game";
 import { getMockFromJson } from "../mocks/getMock";
-import { getBlockedTiles, getMissingTilesForPath } from "./ai";
+import { getBlockedTiles, getMissingTilesForPath, simulatePlaying } from "./ai";
 
 describe("findNextMoveForPath", () => {
   it("should find 1 missing tile for path", () => {
@@ -26,6 +26,13 @@ describe("findNextMoveForPath", () => {
       getMockFromJson("games/impossiblePath.json");
     const tiles = getMissingTilesForPath(state.currentPlayer, board);
     expect(tiles).toEqual([]);
+  });
+
+  it("should compute best  path", () => {
+    const { state, board }: { state: GameState; board: Board } =
+      getMockFromJson("games/almostPath3.json");
+    const tiles = simulatePlaying(state.currentPlayer, board);
+    //expect(tiles).toEqual([]);
   });
 });
 
