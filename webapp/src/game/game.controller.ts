@@ -101,7 +101,7 @@ export class GameController {
     const game = await this.gameService.updateBoard(foundGame.id, board);
 
     response.cookie("gameId", `${foundGame.id}`);
-    let playable = this.gameService.checkPlayableGame(foundGame, user);
+    const playable = this.gameService.checkPlayableGame(foundGame, user);
 
     if (headers.accept === "application/json") {
       return response.send({ game, playable, user });
