@@ -3,6 +3,15 @@
 help: ## Outputs this help screen
 	@grep -E '(^[a-zA-Z0-9_-]+:.*?##.*$$)|(^##)' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}{printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}' | sed -e 's/\[32m##/[33m/'
 
+start-dev:
+	cp -n ./.env.example ./.env
+	cp -n ./webapp/.env.example ./webapp/.env
+	cp -n ./admin/.env.example ./admin/.env
+	docker compose -f docker-compose.dev.yml --env-file=.env --project-name=kamon-dev up -d $(EXTRA_PARAMS)
+
+stop-dev:
+	docker compose -f docker-compose.dev.yml --env-file=.env --project-name=kamon-dev stop
+
 install: ## Install NodeJS dependencies with Yarn 
 	yarn install
 
@@ -17,7 +26,9 @@ docker-build: ## Build docker containers
 	docker compose build
 
 docker-up: ## Start docker containers
-	cp -n .env.example .env
+	cp -n ./.env.example ./.env
+	cp -n ./webapp/.env.example ./webapp/.env
+	cp -n ./admin/.env.example ./admin/.env
 	docker compose --env-file=.env --project-name=kamon up -d
 
 # CORE

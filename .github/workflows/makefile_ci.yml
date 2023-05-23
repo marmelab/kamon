@@ -30,6 +30,9 @@ jobs:
       - name: Building Web App
         run: make build-webapp
 
+      - name: Building Admin
+        run: make build-admin
+
   test:
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +65,7 @@ jobs:
           cat .env
 
       - name: Run postgres docker
-        run: docker-compose -f "docker-compose.dev.yml" up -d --build
+        run: docker-compose -f "docker-compose.test.yml" up -d --build
 
       - name: Checking container
         run: docker ps -a
@@ -80,7 +83,7 @@ jobs:
       - name: Run Webapp e2e tests
         run: make e2e-test-webapp
         env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOS }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
           POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
           POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
