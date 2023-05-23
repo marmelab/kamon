@@ -31,8 +31,7 @@ services:
       - ./webapp:/app/webapp
       - /app/core/node_modules
       - /app/webapp/node_modules
-      # - /app/core/dist
-      # - /app/webapp/dist
+      - /app/core/dist
     ports:
       - 80:3000
     depends_on:
