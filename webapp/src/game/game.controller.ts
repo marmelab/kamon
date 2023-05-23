@@ -101,13 +101,12 @@ export class GameController {
     const game = await this.gameService.updateBoard(foundGame.id, board);
 
     response.cookie("gameId", `${foundGame.id}`);
-    const playable = this.gameService.checkGameBelongToPlayer(foundGame, user);
+    const playable = this.gameService.checkPlayableGame(foundGame, user);
 
     if (headers.accept === "application/json") {
-      return response.send({ game, playable });
+      return response.send({ game, playable, user });
     }
-
-    return response.render("index", { game, playable });
+    return response.render("index", { game, playable, user });
   }
 
   @Sse("sse_game_resfresh")

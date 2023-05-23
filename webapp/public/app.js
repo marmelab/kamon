@@ -1,4 +1,11 @@
-document.querySelector("#toggleHighlight").addEventListener("click", (e) => {
+document.addEventListener("DOMContentLoaded", () => {
+  const eventSource = new EventSource("/sse_game_resfresh");
+  eventSource.onmessage = (data) => {
+    window.location.reload();
+  };
+});
+
+document.querySelector("#toggleHighlight")?.addEventListener("click", (e) => {
   if (e.target.dataset.highlighted == "true") {
     document.querySelectorAll(".tile").forEach((tile) => {
       tile.classList.remove("tile--allowed-move-false");
@@ -16,14 +23,7 @@ document.querySelector("#toggleHighlight").addEventListener("click", (e) => {
   });
 });
 
-document.addEventListener("DOMContentLoaded", () => {
-  const eventSource = new EventSource("/sse_game_resfresh");
-  eventSource.onmessage = (data) => {
-    window.location.reload();
-  };
-});
-
-document.querySelector("#help").addEventListener("submit", (e) => {
+document.querySelector("#help")?.addEventListener("submit", (e) => {
   e.preventDefault();
   const messageContainer = e.target.querySelector("div");
 
