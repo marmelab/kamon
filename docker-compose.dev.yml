@@ -26,17 +26,20 @@ services:
     build:
       context: ./
       dockerfile: ./docker/webapp/dev/Dockerfile
-    ports:
-      - 80:3000
     volumes:
       - ./core:/app/core
       - ./webapp:/app/webapp
+      - /app/core/node_modules
+      - /app/webapp/node_modules
+      # - /app/core/dist
+      # - /app/webapp/dist
+    ports:
+      - 80:3000
     depends_on:
       kamon_postgres:
         condition: service_healthy
 
   kamon_postgrest:
-    container_name: kamon_postgrest
     image: postgrest/postgrest
     ports:
       - "3001:3000"
@@ -50,7 +53,6 @@ services:
         condition: service_healthy
 
   kamon_postgrest_swagger:
-    container_name: kamon_postgrest_swagger
     image: swaggerapi/swagger-ui
     ports:
       - "8181:8080"
@@ -66,9 +68,7 @@ services:
       context: ./
       dockerfile: ./docker/admin/dev/Dockerfile
     ports:
-      - 8080:5173
-    volumes:
-      - ./admin:/app/admin
+      - 8080:80
     depends_on:
       - kamon_postgrest
 
