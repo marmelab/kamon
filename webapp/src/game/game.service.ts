@@ -102,4 +102,21 @@ export class GameService {
       player.id === game.player_black.id || player.id === game.player_white.id
     );
   }
+
+  checkPlayerTurn(game: Game, player: User) {
+    return (
+      (game.gameState.currentPlayer === "black" &&
+        player.id === game.player_black.id) ||
+      (game.gameState.currentPlayer === "white" &&
+        player.id === game.player_white.id)
+    );
+  }
+
+  checkPlayableGame(game: Game, player: User) {
+    return (
+      this.checkGameBelongToPlayer(game, player) &&
+      this.checkPlayerTurn(game, player) &&
+      game.gameState.isRunning
+    );
+  }
 }

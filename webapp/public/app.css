@@ -177,6 +177,17 @@ main {
   position: relative;
 }
 
+.user-info {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.user-info__player {
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
 .message {
   margin: 20px;
   font-size: 1.5rem;

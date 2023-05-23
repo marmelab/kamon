@@ -1,4 +1,10 @@
 <aside class="players-hud">
+  <div class="user-info">
+    You are playing as
+    {{#if (eq game.player_black.id user.id) }}<span class="user-info__player">black</span>{{/if}}
+    {{#if (eq game.player_white.id user.id) }}<span class="user-info__player">white</span>{{/if}}
+  </div>
+
       <div class="turn-counter">
           <h6>Turn</h6>
           <em>{{game.gameState.turnNumber}}</em>
@@ -31,12 +37,15 @@
           {{/if}}
           <div>{{game.gameState.message}}</div>
       </div>
-
-      <button id="toggleHighlight">See possible move</button>
       
-      <form action="/game/{{game.id}}/help" method="post" id="help">
-        <button type="submit">Help</button>
-        <div></div>
-      </form>
+      {{#if playable }}
+        <button id="toggleHighlight">See possible move</button>
+        {{#gt game.gameState.turnNumber 0}}
+          <form action="/game/{{game.id}}/help" method="post" id="help">
+            <button type="submit">Help</button>
+            <div></div>
+          </form>
+        {{/gt}}
+      {{/if}}
 
     </aside>
