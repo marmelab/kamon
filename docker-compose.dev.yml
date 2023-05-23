@@ -67,7 +67,7 @@ services:
       context: ./
       dockerfile: ./docker/admin/dev/Dockerfile
     ports:
-      - 8080:80
+      - 8080:5173
     depends_on:
       - kamon_postgrest
 
