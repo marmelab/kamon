@@ -18,28 +18,35 @@ export const corners = {
 
 export const createGraph = (board: Board, player: Player) => {
   const graph = Graph();
-
   for (const key in corners) {
     const corner = corners[key];
     graph.addNode(corner[0]);
     graph.addNode(corner[1]);
   }
 
-  board.forEach((line, i) => {
-    if (i === 0) {
+  board.forEach((line, x) => {
+    if (x === 0) {
       line.forEach((tile: PlayableTile) => {
-        if (tile != undefined)
-          graph.addEdge(
-            corners.green[0],
-            getTileName(tile),
-            getWeight(tile, player),
-          );
+        if (!tile || tile?.playedBy === switchPlayer(player)) return;
+
+        graph.addEdge(
+          corners.green[0],
+          getTileName(tile),
+          getWeight(tile, player),
+        );
       });
     }
 
-    if (i >= 0 && i <= 3) {
+    if (x >= 0 && x <= 3) {
       const firstTile = findFirstPlayableTile(line);
       const lastTile = findLastPlayableTile(line);
+
+      if (
+        firstTile?.playedBy === switchPlayer(player) ||
+        lastTile?.playedBy === switchPlayer(player)
+      )
+        return;
+
       graph.addEdge(
         corners.yellow[0],
         getTileName(firstTile),
@@ -52,9 +59,16 @@ export const createGraph = (board: Board, player: Player) => {
       );
     }
 
-    if (i >= 3 && i <= 6) {
+    if (x >= 3 && x <= 6) {
       const firstTile = findFirstPlayableTile(line);
       const lastTile = findLastPlayableTile(line);
+
+      if (
+        firstTile?.playedBy === switchPlayer(player) ||
+        lastTile?.playedBy === switchPlayer(player)
+      )
+        return;
+
       graph.addEdge(
         corners.blue[0],
         getTileName(firstTile),
@@ -67,14 +81,14 @@ export const createGraph = (board: Board, player: Player) => {
       );
     }
 
-    if (i === board.length - 1) {
+    if (x === board.length - 1) {
       line.forEach((tile: PlayableTile) => {
-        if (tile != undefined)
-          graph.addEdge(
-            getTileName(tile),
-            corners.green[1],
-            getWeight(tile, player),
-          );
+        if (!tile || tile?.playedBy === switchPlayer(player)) return;
+        graph.addEdge(
+          getTileName(tile),
+          corners.green[1],
+          getWeight(tile, player),
+        );
       });
     }
   });
@@ -119,12 +133,5 @@ export const getOppositePath = (
 };
 
 const getWeight = (tile: PlayableTile, player: Player = null) => {
-  if (tile?.playedBy === player) {
-    return 0;
-  }
-  if (tile?.playedBy === switchPlayer(player)) {
-    return 999;
-  }
-
-  return 1;
+  return tile?.playedBy === player ? 0 : 1;
 };
