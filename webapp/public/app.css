@@ -381,15 +381,18 @@ main {
 @keyframes blink {
   0% {
     opacity: 0.5;
+    color: white;
   }
 
   50% {
     opacity: 1;
     scale: 1.1;
+    color: red;
   }
 
   100% {
     opacity: 0.5;
+    color: white;
   }
 }
 
