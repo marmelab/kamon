@@ -16,7 +16,7 @@ export const corners = {
   yellow: ["yellow-start", "yellow-end"],
 };
 
-export const createGraph = (board: Board, player: Player = null) => {
+export const createGraph = (board: Board, player: Player) => {
   const graph = Graph();
 
   for (const key in corners) {
@@ -123,7 +123,7 @@ const getWeight = (tile: PlayableTile, player: Player = null) => {
     return 0;
   }
   if (tile?.playedBy === switchPlayer(player)) {
-    return 2;
+    return 999;
   }
 
   return 1;
