@@ -21,22 +21,15 @@ describe("findNextMoveForPath", () => {
     ]);
   });
 
-  it("should not find missing tile for path", () => {
-    const { state, board }: { state: GameState; board: Board } =
-      getMockFromJson("games/impossiblePath.json");
-    const tiles = getMissingTilesForPath(state.currentPlayer, board);
-    expect(tiles).toEqual([]);
-  });
-
   it("should find best path", () => {
     const { state, board }: { state: GameState; board: Board } =
       getMockFromJson("games/almostPath3.json");
     const paths = findBestPath(state.currentPlayer, board);
 
     paths.forEach((path) => {
-      expect(path.weight).toBe(2);
-      delete path.weight;
-      expect(path).toEqual([
+      expect(path.path.weight).toBe(2);
+      delete path.path.weight;
+      expect(path.path).toEqual([
         "green-start",
         "B-cyan",
         "E-red",

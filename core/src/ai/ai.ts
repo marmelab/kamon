@@ -1,10 +1,6 @@
+import path from "path";
 import { Board, clearAllowedTilesHighlight, getLastPlayedTile } from "../board";
-import {
-  corners,
-  createGraph,
-  getOppositePath,
-  updateGraphState,
-} from "../graph";
+import { corners, createGraph } from "../graph";
 import { getPlayableTilesForNextMove } from "../move";
 import { Player, switchPlayer } from "../player";
 import {
@@ -19,23 +15,12 @@ export const getMissingTilesForPath = (
   player: Player,
   board: Board,
 ): PlayableTile[] => {
-  const tiles: PlayableTile[] = [];
-  const lastPlayedTile = getLastPlayedTile(board);
-  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
-
-  playableTiles.forEach((tile: PlayableTile) => {
-    let updatedBoard = structuredClone(board);
-    const { x: lineIndex, y: tileIndex } = findTile(updatedBoard, tile);
-    const playedTile = playTile(tile, player);
-    updatedBoard[lineIndex][tileIndex] = playedTile;
-
-    const graph = updateGraphState(player, updatedBoard);
-    if (getOppositePath(graph).length > 0) {
-      tiles.push(tile);
-    }
-  });
-
-  return tiles;
+  const paths = findBestPath(player, board).map(({ tile }) => tile);
+  return paths.filter(
+    (e, i) =>
+      paths.findIndex((a) => a.color === e.color && a.symbol === e.symbol) ===
+      i,
+  );
 };
 
 export const highlightMissingTilesForPath = (
@@ -74,6 +59,7 @@ export const findBestPath = (player: Player, board: Board) => {
   const lastPlayedTile = getLastPlayedTile(board);
   const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
   const potentialPaths = [];
+
   playableTiles.forEach((tile: PlayableTile) => {
     const updatedBoard = structuredClone(board);
     const { x, y } = findTile(updatedBoard, tile);
@@ -107,21 +93,28 @@ export const findBestPath = (player: Player, board: Board) => {
     }
 
     try {
-      potentialPaths.push(
-        graph.shortestPath(corners.green[0], corners.green[1]),
-      );
+      potentialPaths.push({
+        tile,
+        path: graph.shortestPath(corners.green[0], corners.green[1]),
+      });
 
-      potentialPaths.push(graph.shortestPath(corners.blue[0], corners.blue[1]));
+      potentialPaths.push({
+        tile,
+        path: graph.shortestPath(corners.blue[0], corners.blue[1]),
+      });
 
-      potentialPaths.push(
-        graph.shortestPath(corners.yellow[0], corners.yellow[1]),
-      );
+      potentialPaths.push({
+        tile,
+        path: graph.shortestPath(corners.yellow[0], corners.yellow[1]),
+      });
     } catch {
       potentialPaths.push([]);
     }
   });
 
   return potentialPaths
-    .sort((currentPath, nextPath) => currentPath.weight - nextPath.weight)
-    .filter((path, index, paths) => path.weight === paths[0].weight);
+    .sort(
+      (currentPath, nextPath) => currentPath.path.weight - nextPath.path.weight,
+    )
+    .filter((path, index, paths) => path.path.weight === paths[0].path.weight);
 };
