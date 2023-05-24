@@ -11,30 +11,20 @@ import {
   playTile,
 } from "../tile";
 
-export const getMissingTilesForPath = (
-  player: Player,
-  board: Board,
-): PlayableTile[] => {
-  const paths = findBestPath(player, board).map(({ tile }) => tile);
-  return paths.filter(
-    (e, i) =>
-      paths.findIndex((a) => a.color === e.color && a.symbol === e.symbol) ===
-      i,
-  );
-};
-
-export const highlightMissingTilesForPath = (
-  player: Player,
-  board: Board,
-): Board => {
-  const newBoard = clearAllowedTilesHighlight(board);
-  const tiles = getMissingTilesForPath(player, newBoard);
-  tiles.forEach((tile) => {
-    const { x, y } = findTile(newBoard, tile);
-    newBoard[x][y] = { ...tile, moveAllowed: true };
+export const getMissingTilesForPath = (player: Player, board: Board) => {
+  const lastPlayedTile = getLastPlayedTile(board);
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+  const paths = findBestPath(player, board);
+  const tiles = [];
+  paths.forEach((path) => {
+    path.forEach((node) => {
+      playableTiles.forEach((playableTile: PlayableTile) => {
+        if (getTileName(playableTile) === node) tiles.push(playableTile);
+      });
+    });
   });
 
-  return newBoard;
+  return tiles;
 };
 
 export const getBlockedTiles = (player: Player, board: Board) => {
@@ -93,28 +83,27 @@ export const findBestPath = (player: Player, board: Board) => {
     }
 
     try {
-      potentialPaths.push({
-        tile,
-        path: graph.shortestPath(corners.green[0], corners.green[1]),
-      });
-
-      potentialPaths.push({
-        tile,
-        path: graph.shortestPath(corners.blue[0], corners.blue[1]),
-      });
-
-      potentialPaths.push({
-        tile,
-        path: graph.shortestPath(corners.yellow[0], corners.yellow[1]),
-      });
+      potentialPaths.push(
+        graph.shortestPath(corners.green[0], corners.green[1]),
+      );
+    } catch {
+      potentialPaths.push([]);
+    }
+    try {
+      potentialPaths.push(graph.shortestPath(corners.blue[0], corners.blue[1]));
+    } catch {
+      potentialPaths.push([]);
+    }
+    try {
+      potentialPaths.push(
+        graph.shortestPath(corners.yellow[0], corners.yellow[1]),
+      );
     } catch {
       potentialPaths.push([]);
     }
   });
 
   return potentialPaths
-    .sort(
-      (currentPath, nextPath) => currentPath.path.weight - nextPath.path.weight,
-    )
-    .filter((path, index, paths) => path.path.weight === paths[0].path.weight);
+    .sort((currentPath, nextPath) => currentPath.weight - nextPath.weight)
+    .filter((path, index, paths) => path.weight === paths[0].weight);
 };
