@@ -71,48 +71,57 @@ export const getBlockedTiles = (player: Player, board: Board) => {
 };
 
 export const findBestPath = (player: Player, board: Board) => {
-  const graph = createGraph(board, player);
+  const lastPlayedTile = getLastPlayedTile(board);
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+  const potentialPaths = [];
+  playableTiles.forEach((tile: PlayableTile) => {
+    const updatedBoard = structuredClone(board);
+    const { x, y } = findTile(updatedBoard, tile);
+    const playedTile = playTile(tile, player);
+    updatedBoard[x][y] = playedTile;
+    const graph = createGraph(updatedBoard, player);
 
-  for (const lines of board) {
-    for (const tile of lines) {
-      if (!tile) continue;
-      const { x, y } = findTile(board, tile);
-      const siblings = findSiblings(board, {
-        x,
-        y,
-      });
-      for (const key in siblings) {
-        const sibling = siblings[key];
-        if (!sibling) continue;
+    for (const lines of updatedBoard) {
+      for (const tile of lines) {
+        if (!tile) continue;
+        const { x, y } = findTile(updatedBoard, tile);
+        const siblings = findSiblings(updatedBoard, {
+          x,
+          y,
+        });
+        for (const key in siblings) {
+          const sibling = siblings[key];
+          if (!sibling) continue;
+          if (sibling?.playedBy === switchPlayer(player)) continue;
 
-        let weight = 1;
-        if (sibling?.playedBy === switchPlayer(player)) weight = 2;
-        if (sibling?.playedBy === player && tile.playedBy === player)
-          weight = 0;
+          const weight =
+            sibling?.playedBy === player && tile.playedBy === player ? 0 : 1;
 
-        graph.addEdge(
-          getTileName(tile as PlayableTile),
-          getTileName(sibling),
-          weight,
-        );
+          graph.addEdge(
+            getTileName(tile as PlayableTile),
+            getTileName(sibling),
+            weight,
+          );
+        }
       }
     }
-  }
 
-  try {
-    console.log(graph.shortestPath(corners.green[0], corners.green[1]));
-  } catch (error) {}
-  try {
-    console.log(graph.shortestPath(corners.blue[0], corners.blue[1]));
-  } catch (error) {}
-  try {
-    console.log(graph.shortestPath(corners.yellow[0], corners.yellow[1]));
-  } catch (error) {}
-};
+    try {
+      potentialPaths.push(
+        graph.shortestPath(corners.green[0], corners.green[1]),
+      );
 
-export const play = (player: Player, board: Board, tile: PlayableTile) => {
-  const { x: lineIndex, y: tileIndex } = findTile(board, tile);
-  const playedTile = playTile(tile, player);
-  board[lineIndex][tileIndex] = playedTile;
-  return board;
+      potentialPaths.push(graph.shortestPath(corners.blue[0], corners.blue[1]));
+
+      potentialPaths.push(
+        graph.shortestPath(corners.yellow[0], corners.yellow[1]),
+      );
+    } catch {
+      potentialPaths.push([]);
+    }
+  });
+
+  return potentialPaths
+    .sort((currentPath, nextPath) => currentPath.weight - nextPath.weight)
+    .filter((path, index, paths) => path.weight === paths[0].weight);
 };

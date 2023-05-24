@@ -28,11 +28,26 @@ describe("findNextMoveForPath", () => {
     expect(tiles).toEqual([]);
   });
 
-  it("should compute best  path", () => {
+  it("should find best path", () => {
     const { state, board }: { state: GameState; board: Board } =
       getMockFromJson("games/almostPath3.json");
-    const tiles = findBestPath(state.currentPlayer, board);
-    //expect(tiles).toEqual([]);
+    const paths = findBestPath(state.currentPlayer, board);
+
+    paths.forEach((path) => {
+      expect(path.weight).toBe(2);
+      delete path.weight;
+      expect(path).toEqual([
+        "green-start",
+        "B-cyan",
+        "E-red",
+        "E-magenta",
+        "A-yellow",
+        "E-cyan",
+        "C-cyan",
+        "D-green",
+        "green-end",
+      ]);
+    });
   });
 });
 
