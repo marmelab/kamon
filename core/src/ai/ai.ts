@@ -1,8 +1,19 @@
 import { Board, clearAllowedTilesHighlight, getLastPlayedTile } from "../board";
-import { getOppositePath, updateGraphState } from "../graph";
+import {
+  corners,
+  createGraph,
+  getOppositePath,
+  updateGraphState,
+} from "../graph";
 import { getPlayableTilesForNextMove } from "../move";
-import { Player } from "../player";
-import { PlayableTile, findTile, playTile } from "../tile";
+import { Player, switchPlayer } from "../player";
+import {
+  PlayableTile,
+  findSiblings,
+  findTile,
+  getTileName,
+  playTile,
+} from "../tile";
 
 export const getMissingTilesForPath = (
   player: Player,
@@ -59,17 +70,44 @@ export const getBlockedTiles = (player: Player, board: Board) => {
   return tiles;
 };
 
-export const simulatePlaying = (player: Player, board: Board) => {
-  const tiles: PlayableTile[] = [];
-  const lastPlayedTile = getLastPlayedTile(board);
-  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+export const findBestPath = (player: Player, board: Board) => {
+  const graph = createGraph(board, player);
 
-  playableTiles.forEach((tile: PlayableTile, turn) => {
-    let updatedBoard = structuredClone(board);
-    updatedBoard = play(player, updatedBoard, tile);
-    console.log(updatedBoard);
-    //simulatePlaying(player, updatedBoard);
-  });
+  for (const lines of board) {
+    for (const tile of lines) {
+      if (!tile) continue;
+      const { x, y } = findTile(board, tile);
+      const siblings = findSiblings(board, {
+        x,
+        y,
+      });
+      for (const key in siblings) {
+        const sibling = siblings[key];
+        if (!sibling) continue;
+
+        let weight = 1;
+        if (sibling?.playedBy === switchPlayer(player)) weight = 2;
+        if (sibling?.playedBy === player && tile.playedBy === player)
+          weight = 0;
+
+        graph.addEdge(
+          getTileName(tile as PlayableTile),
+          getTileName(sibling),
+          weight,
+        );
+      }
+    }
+  }
+
+  try {
+    console.log(graph.shortestPath(corners.green[0], corners.green[1]));
+  } catch (error) {}
+  try {
+    console.log(graph.shortestPath(corners.blue[0], corners.blue[1]));
+  } catch (error) {}
+  try {
+    console.log(graph.shortestPath(corners.yellow[0], corners.yellow[1]));
+  } catch (error) {}
 };
 
 export const play = (player: Player, board: Board, tile: PlayableTile) => {

@@ -130,7 +130,9 @@ export const findLastPlayableTile = (
   return line[6] as PlayableTile;
 };
 
-export const findFirstPlayableTile = (line: Tile[]): Tile | undefined => {
+export const findFirstPlayableTile = (
+  line: Tile[],
+): PlayableTile | undefined => {
   const playable = line.find((tile) => tile != undefined);
   return playable as PlayableTile | undefined;
 };
