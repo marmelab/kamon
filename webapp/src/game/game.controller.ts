@@ -220,4 +220,32 @@ export class GameController {
 
     return response.send({ missingTilesForPath, missingTilesForBlocked });
   }
+
+  @Post("/game/:gameId/initbot")
+  @UseGuards(JwtAuthGuard)
+  async initBot(
+    @Param("gameId", ParseIntPipe) gameId: number,
+    @Res() response: Response,
+    @Req() request,
+  ) {
+    let game = await this.gameService.findOne(gameId);
+
+    const user = await this.userService.findOne(request.user.sub);
+
+    if (!this.gameService.checkGameBelongToPlayer(game, user)) {
+      response.status(400);
+      return response.send({
+        error: "Game is not belong to you",
+      });
+    }
+
+    if (game.player_black && game.player_white) {
+      response.status(400);
+      return response.send({
+        error: "All player are already defined",
+      });
+    }
+
+    return response.send("Processing to play against a bot");
+  }
 }

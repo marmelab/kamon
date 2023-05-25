@@ -5,47 +5,51 @@
     {{#if (eq game.player_white.id user.id) }}<span class="user-info__player">white</span>{{/if}}
   </div>
 
-      <div class="turn-counter">
-          <h6>Turn</h6>
-          <em>{{game.gameState.turnNumber}}</em>
-      </div>
-      <div class="players">
-          <div class="player-container black">
-              <i class="fa fa-user-alt"></i>
-              <div class="hexagon-container">
-                <em class="hexagon-text {{#if (eq game.gameState.currentPlayer "black") }}hexagon-text--dark{{/if}}">
-                  {{game.gameState.remainingTiles.black}}</em>
-                <div class="hexagon-icon {{#if (eq game.gameState.currentPlayer "black") }}hexagon-icon--gold{{/if}}"></div>
-              </div>
-          </div>
-          <div class="player-container white">
-              <i class="fa fa-user-alt"></i>
-              <div class="hexagon-container">
-                <em class="hexagon-text {{#if (eq game.gameState.currentPlayer "white") }}hexagon-text--dark{{/if}}">
-                  {{game.gameState.remainingTiles.white}}</em>
-                <div class="hexagon-icon {{#if (eq game.gameState.currentPlayer "white") }}hexagon-icon--gold{{/if}}"></div>
-              </div>
+  <div class="turn-counter">
+      <h6>Turn</h6>
+      <em>{{game.gameState.turnNumber}}</em>
+  </div>
+  <div class="players">
+      <div class="player-container black">
+          <i class="fa fa-user-alt"></i>
+          <div class="hexagon-container">
+            <em class="hexagon-text {{#if (eq game.gameState.currentPlayer "black") }}hexagon-text--dark{{/if}}">
+              {{game.gameState.remainingTiles.black}}</em>
+            <div class="hexagon-icon {{#if (eq game.gameState.currentPlayer "black") }}hexagon-icon--gold{{/if}}"></div>
           </div>
       </div>
-      <div class="message">
-          {{#if game.gameState.winner}}
-              <div>{{game.gameState.winner}} won !</div>
-          {{else if game.gameState.draw}}
-              <div>Draw</div>
-          {{else}}
-              <div>Currently playing: {{game.gameState.currentPlayer}}</div>
-          {{/if}}
-          <div>{{game.gameState.message}}</div>
+      <div class="player-container white">
+          <i class="fa fa-user-alt"></i>
+          <div class="hexagon-container">
+            <em class="hexagon-text {{#if (eq game.gameState.currentPlayer "white") }}hexagon-text--dark{{/if}}">
+              {{game.gameState.remainingTiles.white}}</em>
+            <div class="hexagon-icon {{#if (eq game.gameState.currentPlayer "white") }}hexagon-icon--gold{{/if}}"></div>
+          </div>
       </div>
-      
-      {{#if playable }}
-        <button id="toggleHighlight">See possible move</button>
-        {{#gt game.gameState.turnNumber 0}}
-          <form action="/game/{{game.id}}/help" method="post" id="help">
-            <button type="submit">Help</button>
-            <div></div>
-          </form>
-        {{/gt}}
+  </div>
+  <div class="message">
+      {{#if game.gameState.winner}}
+          <div>{{game.gameState.winner}} won !</div>
+      {{else if game.gameState.draw}}
+          <div>Draw</div>
+      {{else}}
+          <div>Currently playing: {{game.gameState.currentPlayer}}</div>
       {{/if}}
+      <div>{{game.gameState.message}}</div>
+  </div>
+  
+  {{#if playable }}
+    <button id="toggleHighlight">See possible move</button>
+    {{#gt game.gameState.turnNumber 0}}
+      <form action="/game/{{game.id}}/help" method="post" id="help">
+        <button type="submit">Help</button>
+        <div></div>
+      </form>
+    {{/gt}}
+  {{/if}}
 
-    </aside>
+  <form action="/game/{{game.id}}/initbot" method="post">
+    <button type="submit">Play vs a bot</button>
+  </form>
+
+</aside>
