@@ -94,8 +94,7 @@ export const findBestPath = (player: Player, board: Board) => {
           if (!sibling) continue;
           if (sibling?.playedBy === switchPlayer(player)) continue;
 
-          const weight =
-            sibling?.playedBy === player && tile.playedBy === player ? 0 : 1;
+          const weight = sibling?.playedBy === player ? 0 : 1;
 
           graph.addEdge(
             getTileName(tile as PlayableTile),
