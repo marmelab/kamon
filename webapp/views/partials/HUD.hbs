@@ -48,8 +48,9 @@
     {{/gt}}
   {{/if}}
 
-  <form action="/game/{{game.id}}/initbot" method="post">
-    <button type="submit">Play vs a bot</button>
-  </form>
-
+  {{#isFalsey game.isSolo }}
+    <form action="/game/{{game.id}}/initbot" method="post">
+      <button type="submit">Play vs a bot</button>
+    </form>
+  {{/isFalsey}}
 </aside>

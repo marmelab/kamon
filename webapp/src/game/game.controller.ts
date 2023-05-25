@@ -227,6 +227,7 @@ export class GameController {
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
     @Req() request,
+    @Headers() headers,
   ) {
     let game = await this.gameService.findOne(gameId);
 
@@ -246,6 +247,12 @@ export class GameController {
       });
     }
 
-    return response.send("Processing to play against a bot");
+    await this.gameService.setSolo(game.id);
+
+    if (headers.accept === "application/json") {
+      return response.send(game);
+    }
+
+    return response.redirect(`/game/${JSON.stringify(game.id)}`);
   }
 }
