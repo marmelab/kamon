@@ -42,6 +42,12 @@
         <button id="toggleHighlight">See possible move</button>
         {{#gt game.gameState.turnNumber 0}}
           <form action="/game/{{game.id}}/help" method="post" id="help">
+            <fieldset>
+              <select name="level">
+                <option selected value="onlyTiles">Just the tiles</option>
+                <option value="allThePaths">All the paths</option>
+              </select>
+            </fieldset>
             <button type="submit">Help</button>
             <div></div>
           </form>
