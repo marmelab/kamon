@@ -185,7 +185,7 @@ describe("createGraph", () => {
     const game = getMockFromJson("games/externalTilesArePlayed.json");
     const graph = createGraph(game.board, BLACK_PLAYER);
     const serialized = graph.serialize();
-    expect(serialized.links.length).toBe(14);
+    expect(serialized.links.length).toBe(20);
     expect(serialized).toEqual({
       nodes: [
         { id: "green-start" },
@@ -194,13 +194,17 @@ describe("createGraph", () => {
         { id: "C-yellow" },
         { id: "green-end" },
         { id: "blue-start" },
+        { id: "C-blue" },
         { id: "D-red" },
         { id: "F-green" },
         { id: "blue-end" },
         { id: "yellow-start" },
+        { id: "B-blue" },
         { id: "A-green" },
         { id: "yellow-end" },
+        { id: "B-red" },
         { id: "B-yellow" },
+        { id: "A-blue" },
         { id: "C-magenta" },
         { id: "F-cyan" },
         { id: "D-green" },
@@ -210,12 +214,18 @@ describe("createGraph", () => {
         { source: "green-start", target: "B-cyan", weight: 1 },
         { source: "green-start", target: "C-yellow", weight: 1 },
         { source: "C-yellow", target: "blue-end", weight: 1 },
+        { source: "blue-start", target: "C-blue", weight: 0 },
         { source: "blue-start", target: "D-red", weight: 0 },
         { source: "blue-start", target: "F-green", weight: 0 },
         { source: "F-green", target: "green-end", weight: 0 },
         { source: "yellow-start", target: "A-magenta", weight: 0 },
+        { source: "yellow-start", target: "B-blue", weight: 1 },
         { source: "yellow-start", target: "A-green", weight: 0 },
+        { source: "yellow-start", target: "C-blue", weight: 0 },
+        { source: "B-red", target: "blue-end", weight: 0 },
         { source: "B-yellow", target: "blue-end", weight: 0 },
+        { source: "A-blue", target: "blue-end", weight: 1 },
+        { source: "A-blue", target: "yellow-end", weight: 0 },
         { source: "C-magenta", target: "yellow-end", weight: 0 },
         { source: "F-cyan", target: "yellow-end", weight: 0 },
         { source: "F-cyan", target: "green-end", weight: 0 },

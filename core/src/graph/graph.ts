@@ -27,7 +27,8 @@ export const createGraph = (board: Board, player: Player) => {
   board.forEach((line, x) => {
     if (x === 0) {
       line.forEach((tile: PlayableTile) => {
-        if (!tile || tile?.playedBy === switchPlayer(player)) return;
+        if (!tile) return;
+        if (tile.playedBy && tile.playedBy === switchPlayer(player)) return;
 
         graph.addEdge(
           corners.green[0],
@@ -42,8 +43,10 @@ export const createGraph = (board: Board, player: Player) => {
       const lastTile = findLastPlayableTile(line);
 
       if (
-        firstTile?.playedBy === switchPlayer(player) ||
-        lastTile?.playedBy === switchPlayer(player)
+        firstTile.playedBy &&
+        firstTile.playedBy === switchPlayer(player) &&
+        lastTile.playedBy &&
+        lastTile.playedBy === switchPlayer(player)
       )
         return;
 
@@ -64,8 +67,10 @@ export const createGraph = (board: Board, player: Player) => {
       const lastTile = findLastPlayableTile(line);
 
       if (
-        firstTile?.playedBy === switchPlayer(player) ||
-        lastTile?.playedBy === switchPlayer(player)
+        firstTile.playedBy &&
+        firstTile.playedBy === switchPlayer(player) &&
+        lastTile.playedBy &&
+        lastTile.playedBy === switchPlayer(player)
       )
         return;
 
@@ -83,7 +88,8 @@ export const createGraph = (board: Board, player: Player) => {
 
     if (x === board.length - 1) {
       line.forEach((tile: PlayableTile) => {
-        if (!tile || tile?.playedBy === switchPlayer(player)) return;
+        if (!tile) return;
+        if (tile.playedBy && tile.playedBy === switchPlayer(player)) return;
         graph.addEdge(
           getTileName(tile),
           corners.green[1],

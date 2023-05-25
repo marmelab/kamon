@@ -27,9 +27,9 @@ describe("findNextMoveForPath", () => {
     const paths = findBestPath(state.currentPlayer, board);
 
     paths.forEach((path) => {
-      expect(path.path.weight).toBe(2);
-      delete path.path.weight;
-      expect(path.path).toEqual([
+      expect(path.weight).toBe(2);
+      delete path.weight;
+      expect(path).toEqual([
         "green-start",
         "B-cyan",
         "E-red",
