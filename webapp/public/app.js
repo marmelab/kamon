@@ -52,7 +52,6 @@ document.querySelector("#help")?.addEventListener("submit", (e) => {
           `.tile--${tile.symbol}.tile--${tile.color}`,
         );
         if (hexagon) {
-          hexagon.classList.add("tile--blink");
           hexagon.style.color = tile.pathColor;
         }
       });
