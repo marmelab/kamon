@@ -1,5 +1,5 @@
 import path from "path";
-import { Board, clearAllowedTilesHighlight, getLastPlayedTile } from "../board";
+import { Board, getLastPlayedTile } from "../board";
 import { corners, createGraph } from "../graph";
 import { getPlayableTilesForNextMove } from "../move";
 import { Player, switchPlayer } from "../player";
@@ -16,10 +16,15 @@ export const getMissingTilesForPath = (player: Player, board: Board) => {
   const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
   const paths = findBestPath(player, board);
   const tiles = [];
+
   paths.forEach((path) => {
     path.forEach((node) => {
       playableTiles.forEach((playableTile: PlayableTile) => {
-        if (getTileName(playableTile) === node) tiles.push(playableTile);
+        if (
+          getTileName(playableTile) === node &&
+          !tiles.find((tile) => getTileName(tile) === node)
+        )
+          tiles.push(playableTile);
       });
     });
   });

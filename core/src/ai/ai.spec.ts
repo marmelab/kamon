@@ -66,7 +66,6 @@ describe("findNextMoveToPathAndBlock", () => {
 
     expect(getMissingTilesForPath(state.currentPlayer, board)).toEqual([
       { symbol: "F", color: "blue" },
-      { symbol: "F", color: "blue" },
     ]);
   });
 });
