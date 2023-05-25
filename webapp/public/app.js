@@ -26,10 +26,18 @@ document.querySelector("#toggleHighlight")?.addEventListener("click", (e) => {
 document.querySelector("#help")?.addEventListener("submit", (e) => {
   e.preventDefault();
   const messageContainer = e.target.querySelector("div");
+  const level = e.target.querySelector("[name=level]");
 
   messageContainer.innerText = "Computation...";
   fetch(e.target.action, {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
     method: "post",
+    body: JSON.stringify({
+      level: level.value,
+    }),
   })
     .then((r) => r.json())
     .then((response) => {
@@ -43,14 +51,17 @@ document.querySelector("#help")?.addEventListener("submit", (e) => {
         const hexagon = document.querySelector(
           `.tile--${tile.symbol}.tile--${tile.color}`,
         );
-        hexagon.classList.add("tile--blink");
+        if (hexagon) {
+          hexagon.style.color = tile.pathColor;
+          hexagon.classList.add("tile--blink");
+        }
       });
 
       missingTilesForBlocked.forEach((tile) => {
         const hexagon = document.querySelector(
           `.tile--${tile.symbol}.tile--${tile.color}`,
         );
-        hexagon.classList.add("tile--blink--blocked");
+        if (hexagon) hexagon.classList.add("tile--blink--blocked");
       });
 
       messageContainer.innerText = "";

@@ -16,6 +16,7 @@ import { Response } from "express";
 import { GameService } from "./game.service";
 import {
   findTileByCoordinate,
+  getAllMissingTilesForPath,
   getBlockedTiles,
   getMissingTilesForPath,
   highlightAllowedTiles,
@@ -194,6 +195,7 @@ export class GameController {
     @Param("gameId", ParseIntPipe) gameId: number,
     @Res() response: Response,
     @Req() request,
+    @Body() body,
   ) {
     let game = await this.gameService.findOne(gameId);
 
@@ -208,10 +210,18 @@ export class GameController {
       });
     }
 
-    const missingTilesForPath = getMissingTilesForPath(
-      game.gameState.currentPlayer,
-      game.board,
-    );
+    let missingTilesForPath;
+    if (body?.level === "allThePaths") {
+      missingTilesForPath = getAllMissingTilesForPath(
+        game.gameState.currentPlayer,
+        game.board,
+      );
+    } else {
+      missingTilesForPath = getMissingTilesForPath(
+        game.gameState.currentPlayer,
+        game.board,
+      );
+    }
 
     const missingTilesForBlocked = getBlockedTiles(
       game.gameState.currentPlayer,

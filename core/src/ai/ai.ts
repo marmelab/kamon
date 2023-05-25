@@ -1,4 +1,3 @@
-import path from "path";
 import { Board, getLastPlayedTile } from "../board";
 import { corners, createGraph } from "../graph";
 import { getPlayableTilesForNextMove } from "../move";
@@ -28,6 +27,25 @@ export const getMissingTilesForPath = (player: Player, board: Board) => {
       });
     });
   });
+
+  return tiles;
+};
+
+export const getAllMissingTilesForPath = (player: Player, board: Board) => {
+  const paths = findBestPath(player, board);
+
+  const tiles = paths
+    .map((path) => {
+      let pathColor;
+      return path.map((node) => {
+        const [symbol, color] = node.split("-");
+        if (color === "start" || color === "end") {
+          pathColor = symbol;
+        }
+        return { symbol, color, pathWeight: path.weight, pathColor };
+      });
+    })
+    .flatMap((tile) => tile);
 
   return tiles;
 };
@@ -65,6 +83,7 @@ export const findBestPath = (player: Player, board: Board) => {
     for (const lines of updatedBoard) {
       for (const tile of lines) {
         if (!tile) continue;
+        if (tile.symbol === "O") continue;
         const { x, y } = findTile(updatedBoard, tile);
         const siblings = findSiblings(updatedBoard, {
           x,

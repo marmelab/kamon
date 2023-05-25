@@ -30,11 +30,7 @@ export const createGraph = (board: Board, player: Player) => {
         if (!tile) return;
         if (tile.playedBy && tile.playedBy === switchPlayer(player)) return;
 
-        graph.addEdge(
-          corners.green[0],
-          getTileName(tile),
-          getWeight(tile, player),
-        );
+        graph.addEdge(corners.green[0], getTileName(tile));
       });
     }
 
@@ -50,16 +46,8 @@ export const createGraph = (board: Board, player: Player) => {
       )
         return;
 
-      graph.addEdge(
-        corners.yellow[0],
-        getTileName(firstTile),
-        getWeight(firstTile, player),
-      );
-      graph.addEdge(
-        getTileName(lastTile),
-        corners.blue[1],
-        getWeight(lastTile, player),
-      );
+      graph.addEdge(corners.yellow[0], getTileName(firstTile));
+      graph.addEdge(getTileName(lastTile), corners.blue[1]);
     }
 
     if (x >= 3 && x <= 6) {
@@ -74,27 +62,15 @@ export const createGraph = (board: Board, player: Player) => {
       )
         return;
 
-      graph.addEdge(
-        corners.blue[0],
-        getTileName(firstTile),
-        getWeight(firstTile, player),
-      );
-      graph.addEdge(
-        getTileName(lastTile),
-        corners.yellow[1],
-        getWeight(firstTile, player),
-      );
+      graph.addEdge(corners.blue[0], getTileName(firstTile));
+      graph.addEdge(getTileName(lastTile), corners.yellow[1]);
     }
 
     if (x === board.length - 1) {
       line.forEach((tile: PlayableTile) => {
         if (!tile) return;
         if (tile.playedBy && tile.playedBy === switchPlayer(player)) return;
-        graph.addEdge(
-          getTileName(tile),
-          corners.green[1],
-          getWeight(tile, player),
-        );
+        graph.addEdge(getTileName(tile), corners.green[1]);
       });
     }
   });
@@ -136,8 +112,4 @@ export const getOppositePath = (
     }
   }
   return path;
-};
-
-const getWeight = (tile: PlayableTile, player: Player = null) => {
-  return tile?.playedBy === player ? 0 : 1;
 };

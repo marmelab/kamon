@@ -25,9 +25,8 @@ describe("findNextMoveForPath", () => {
     const { state, board }: { state: GameState; board: Board } =
       getMockFromJson("games/almostPath3.json");
     const paths = findBestPath(state.currentPlayer, board);
-
     paths.forEach((path) => {
-      expect(path.weight).toBe(2);
+      expect(path.weight).toBe(4);
       delete path.weight;
       expect(path).toEqual([
         "green-start",
