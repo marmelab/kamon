@@ -48,7 +48,11 @@ export class AuthController {
   }
 
   @Post("/register")
-  async register(@Body() createUserDto: CreateUserDto) {
+  async register(
+    @Body() createUserDto: CreateUserDto,
+    @Res() response: Response,
+    @Headers() headers,
+  ) {
     const alreadyExistingUser = await this.userService.findByUserName(
       createUserDto.username,
     );
@@ -72,9 +76,12 @@ export class AuthController {
       createUserDto.password,
     );
 
-    const { password, ...rest } = user;
+    if (headers.accept === "application/json") {
+      const { password, ...rest } = user;
+      return rest;
+    }
 
-    return rest;
+    return response.redirect("/login");
   }
 
   @UseGuards(JwtAuthGuard)
