@@ -10,6 +10,23 @@ import {
   playTile,
 } from "../tile";
 
+export const playAsAI = (player: Player, board: Board) => {
+  const blockeTiles = getBlockedTiles(player, board);
+  if (blockeTiles.length > 0) {
+    return blockeTiles[0];
+  }
+
+  const tilesForPath = getMissingTilesForPath(player, board);
+  if (tilesForPath.length > 0) {
+    return tilesForPath[0];
+  }
+
+  const lastPlayedTile = getLastPlayedTile(board);
+  const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);
+
+  return playableTiles[0];
+};
+
 export const getMissingTilesForPath = (player: Player, board: Board) => {
   const lastPlayedTile = getLastPlayedTile(board);
   const playableTiles = getPlayableTilesForNextMove(board, lastPlayedTile);

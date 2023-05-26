@@ -15,11 +15,13 @@ import {
 import { Response } from "express";
 import { GameService } from "./game.service";
 import {
+  WHITE_PLAYER,
   findTileByCoordinate,
   getAllMissingTilesForPath,
   getBlockedTiles,
   getMissingTilesForPath,
   highlightAllowedTiles,
+  playAsAI,
   updateGame,
 } from "@kamon/core";
 import { EventsService } from "../events.service";
@@ -93,7 +95,11 @@ export class GameController {
 
     const user = await this.userService.findOne(request.user.sub);
 
-    if (!foundGame.player_white && user.id !== foundGame.player_black.id) {
+    if (
+      !foundGame.player_white &&
+      user.id !== foundGame.player_black.id &&
+      !foundGame.isSolo
+    ) {
       await this.gameService.setWhitePlayer(foundGame.id, user);
       foundGame = await this.gameService.findOne(gameId);
     }
@@ -102,7 +108,8 @@ export class GameController {
     const game = await this.gameService.updateBoard(foundGame.id, board);
 
     response.cookie("gameId", `${foundGame.id}`);
-    const playable = this.gameService.checkPlayableGame(foundGame, user);
+    //const playable = this.gameService.checkPlayableGame(foundGame, user);
+    const playable = true;
 
     if (headers.accept === "application/json") {
       return response.send({ game, playable, user });
@@ -154,6 +161,7 @@ export class GameController {
     }
 
     if (
+      !foundGame.isSolo &&
       foundGame.gameState.currentPlayer === "white" &&
       foundGame.player_white.id !== user.id
     ) {
@@ -177,6 +185,22 @@ export class GameController {
 
     let game = await this.gameService.updateBoard(foundGame.id, board);
     game = await this.gameService.updateGameState(foundGame.id, state);
+
+    if (
+      game.isSolo &&
+      game.gameState.isRunning &&
+      game.gameState.currentPlayer === WHITE_PLAYER
+    ) {
+      const tile = playAsAI(game.gameState.currentPlayer, game.board);
+      const { gameState: state, board } = updateGame(
+        game.board,
+        game.gameState,
+        tile,
+      );
+
+      game = await this.gameService.updateBoard(game.id, board);
+      game = await this.gameService.updateGameState(game.id, state);
+    }
 
     const sseId = `sse_game_refresh_${foundGame.id}`;
     this.eventsService.emit({ data: new Date().toISOString() }, sseId);
