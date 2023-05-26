@@ -54,11 +54,11 @@
     {{/gt}}
   {{/if}}
 
-  {{#isFalsey game.isSolo }}
+  {{#not game.player_white }}
     <form action="/game/{{game.id}}/initbot" method="post">
       <button type="submit">Play vs a bot</button>
     </form>
-  {{/isFalsey}}
+  {{/not}}
 
   <a class="btn btn-two cyan" href="/game/ongoing"> &#60; Back to games</a>
 </aside>
