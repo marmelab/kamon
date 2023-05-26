@@ -1,8 +1,16 @@
 <aside class="players-hud">
   <div class="user-info">
     You are playing as
-    {{#if (eq game.player_black.id user.id) }}<span class="user-info__player">black</span>{{/if}}
-    {{#if (eq game.player_white.id user.id) }}<span class="user-info__player">white</span>{{/if}}
+    {{#if (eq game.player_black.id user.id) }}
+      black VS {{game.player_white.username}}
+    {{/if}}
+    {{#if (eq game.player_white.id user.id) }}
+      white VS {{game.player_black.username}}
+    {{/if}}
+
+    {{#if game.isSolo }}
+      vs KamBot
+    {{/if}}
   </div>
 
   <div class="turn-counter">
@@ -37,7 +45,7 @@
       {{/if}}
       <div>{{game.gameState.message}}</div>
   </div>
-  
+
   {{#if playable }}
     <button id="toggleHighlight">See possible move</button>
     {{#gt game.gameState.turnNumber 0}}
@@ -55,9 +63,12 @@
   {{/if}}
 
   {{#not game.player_white }}
-    <form action="/game/{{game.id}}/initbot" method="post">
-      <button class="btn btn-two red btn-gradient" type="submit">🤖 Play vs a bot</button>
-    </form>
+    {{#not game.isSolo }}
+      <form action="/game/{{game.id}}/initbot" method="post">
+        <button class="btn btn-two red btn-gradient" type="submit">🤖 Play vs a bot</button>
+      </form>
+    {{/not}}
+
   {{/not}}
 
   <a class="btn btn-two cyan" href="/game/ongoing"> &#60; Back to games</a>
