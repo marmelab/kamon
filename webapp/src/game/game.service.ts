@@ -119,4 +119,9 @@ export class GameService {
       game.gameState.isRunning
     );
   }
+
+  async setSolo(id: number) {
+    const game = await this.findOne(id);
+    return this.gameRepository.update(id, { ...game, isSolo: true });
+  }
 }

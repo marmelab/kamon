@@ -102,4 +102,8 @@ export class Game {
   @Column({ type: "timestamptz", default: () => "CURRENT_TIMESTAMP" })
   @ApiProperty()
   updatedAt: Date;
+
+  @Column({ type: "boolean", default: false, nullable: true })
+  @ApiProperty()
+  isSolo: boolean;
 }
