@@ -19,9 +19,10 @@
                     {{#if this.lastPlayed}}<span
                         class="tile--last-played"
                       ></span>{{/if}}
-                    {{#if this.playedBy}}<span
-                        class="tile--played-by-{{this.playedBy}}"
-                      ></span>{{/if}}
+                    {{#if this.playedBy}}
+                      <span class="tile--played-by-{{this.playedBy}}"></span>
+                      <span class="tile--played-by-{{this.playedBy}}-bg"></span>
+                      {{/if}}
                     {{#unless this.playedBy}}
                       <input
                         type="submit"
